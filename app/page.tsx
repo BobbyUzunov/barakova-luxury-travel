@@ -75,7 +75,7 @@ const navItems = [
 export default function Home() {
   return (
     <main className="min-h-screen overflow-hidden bg-[var(--ivory)] text-[var(--charcoal)]">
-      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-10">
+      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4 lg:px-10">
         <nav className="site-header mx-auto max-w-7xl">
           <a className="brand-lockup" href="#home">
             <span>Barakova Luxury Travel</span>
@@ -98,21 +98,21 @@ export default function Home() {
 
       <section
         id="home"
-        className="hero-section relative min-h-[96svh] px-5 pb-16 pt-36 text-[var(--charcoal)] sm:px-8 lg:px-12"
+        className="hero-section relative min-h-[100svh] px-5 pb-14 pt-40 text-[var(--charcoal)] sm:px-8 sm:pt-36 lg:px-12"
       >
         <div className="hero-bg" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,243,236,0.92),rgba(248,243,236,0.58)_45%,rgba(248,243,236,0.2)),linear-gradient(180deg,rgba(248,243,236,0.16),rgba(248,243,236,0.88))]" />
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[var(--ivory)] to-transparent" />
 
         <div className="relative z-10 mx-auto flex min-h-[72svh] max-w-7xl items-end lg:items-center">
-          <div className="max-w-3xl animate-rise rounded-[2rem] bg-white/20 pb-2 backdrop-blur-[1px] lg:bg-transparent lg:backdrop-blur-0">
-            <p className="mb-5 text-xs font-bold uppercase tracking-[0.32em] text-[var(--soft-brown)] sm:text-sm">
+          <div className="hero-copy max-w-3xl animate-rise rounded-[1.6rem] bg-white/24 p-4 backdrop-blur-[2px] sm:rounded-[2rem] sm:p-5 lg:bg-transparent lg:p-0 lg:backdrop-blur-0">
+            <p className="hero-label mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[var(--soft-brown)] sm:mb-5 sm:text-sm sm:tracking-[0.32em]">
               PRIVATE LUXURY TRAVEL CONSULTING
             </p>
-            <h1 className="font-serif text-5xl leading-[0.98] text-balance sm:text-6xl lg:text-7xl">
+            <h1 className="hero-title font-serif text-[2.45rem] leading-[1.03] text-balance sm:text-6xl lg:text-7xl">
               Луксозни пътувания, подбрани с внимание към всеки детайл
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[rgba(45,42,38,0.76)] sm:text-xl">
+            <p className="hero-subtitle mt-5 max-w-2xl text-base leading-7 text-[rgba(45,42,38,0.76)] sm:mt-6 sm:text-xl sm:leading-8">
               Персонални travel консултации с Богдана Баракова за клиенти,
               които търсят стил, комфорт и безупречно организирано пътуване.
             </p>
