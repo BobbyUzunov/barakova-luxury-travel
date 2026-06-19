@@ -130,6 +130,43 @@ h2 {
   outline-offset: 4px;
 }
 
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.05rem;
+  border: 1px solid rgba(122, 102, 82, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.48);
+  color: var(--charcoal);
+  cursor: pointer;
+  font-size: clamp(0.7rem, 2.7vw, 0.76rem);
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  line-height: 1;
+  padding: 1rem 1.28rem;
+  text-transform: uppercase;
+  box-shadow: 0 14px 38px rgba(45, 42, 38, 0.08);
+  backdrop-filter: blur(12px);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(200, 169, 106, 0.68);
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: 0 20px 48px rgba(45, 42, 38, 0.12);
+  transform: translateY(-3px);
+}
+
+.btn-secondary:focus-visible {
+  outline: 3px solid rgba(200, 169, 106, 0.34);
+  outline-offset: 4px;
+}
+
 .header-cta {
   min-height: 2.7rem;
   padding: 0.78rem 0.86rem;
@@ -138,18 +175,20 @@ h2 {
   white-space: nowrap;
 }
 
+.hero-copy .btn-primary,
+.hero-copy .btn-secondary {
+  width: 100%;
+}
+
 .hero-section {
   isolation: isolate;
 }
 
-.hero-bg {
+.hero-image {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(248, 243, 236, 0.12), rgba(248, 243, 236, 0.42)),
-    url("https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=2400&q=85");
-  background-position: 66% center;
-  background-size: cover;
+  object-fit: cover;
+  object-position: 54% center;
 }
 
 .section-shell {
@@ -419,6 +458,12 @@ h2 {
   animation: rise 820ms ease both;
 }
 
+.hero-copy.animate-rise {
+  animation:
+    rise 820ms ease both,
+    hero-float 7s ease-in-out 900ms infinite alternate;
+}
+
 .animate-soft-in {
   animation: soft-in 680ms ease both;
 }
@@ -444,6 +489,10 @@ h2 {
   .hero-label {
     letter-spacing: 0.12em;
   }
+
+  .hero-image {
+    object-position: 55% center;
+  }
 }
 
 @keyframes rise {
@@ -468,6 +517,15 @@ h2 {
   }
 }
 
+@keyframes hero-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-8px);
+  }
+}
+
 @media (min-width: 640px) {
   .section-shell {
     padding: 5.6rem 2rem;
@@ -475,6 +533,11 @@ h2 {
 
   .btn-primary {
     padding-inline: 1.55rem;
+  }
+
+  .hero-copy .btn-primary,
+  .hero-copy .btn-secondary {
+    width: auto;
   }
 
   .site-header {
@@ -496,8 +559,8 @@ h2 {
     gap: 0.8rem 1.25rem;
   }
 
-  .hero-bg {
-    background-position: 60% center;
+  .hero-image {
+    object-position: 54% center;
   }
 
   .lux-card,
@@ -541,8 +604,8 @@ h2 {
     padding: 7.25rem 3rem;
   }
 
-  .hero-bg {
-    background-position: 58% center;
+  .hero-image {
+    object-position: center center;
   }
 
   .about-panel {
@@ -561,6 +624,7 @@ h2 {
   *::before,
   *::after {
     animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 1ms !important;
   }

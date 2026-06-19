@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const services = [
   "Луксозни почивки",
   "Honeymoon пътувания",
@@ -98,27 +100,41 @@ export default function Home() {
 
       <section
         id="home"
-        className="hero-section relative min-h-[100svh] px-5 pb-14 pt-40 text-[var(--charcoal)] sm:px-8 sm:pt-36 lg:px-12"
+        className="hero-section relative min-h-[94svh] px-5 pb-14 pt-40 text-[var(--charcoal)] sm:min-h-[92svh] sm:px-8 sm:pt-36 lg:min-h-[96svh] lg:px-12"
       >
-        <div className="hero-bg" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,243,236,0.92),rgba(248,243,236,0.58)_45%,rgba(248,243,236,0.2)),linear-gradient(180deg,rgba(248,243,236,0.16),rgba(248,243,236,0.88))]" />
+        <Image
+          src="/hero-bogdana-beach.jpeg"
+          alt="Богдана Баракова на плаж с поглед към морето"
+          fill
+          priority
+          quality={90}
+          sizes="100vw"
+          className="hero-image"
+        />
+        <div className="absolute inset-0 bg-[rgba(248,243,236,0.18)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,243,236,0.82),rgba(248,243,236,0.42)_44%,rgba(248,243,236,0.08)),linear-gradient(180deg,rgba(248,243,236,0.08),rgba(248,243,236,0.58))]" />
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[var(--ivory)] to-transparent" />
 
-        <div className="relative z-10 mx-auto flex min-h-[72svh] max-w-7xl items-end lg:items-center">
+        <div className="hero-inner relative z-10 mx-auto flex min-h-[68svh] max-w-7xl items-center justify-center text-center sm:min-h-[66svh] lg:min-h-[72svh] lg:justify-start lg:text-left">
           <div className="hero-copy max-w-3xl animate-rise rounded-[1.6rem] bg-white/24 p-4 backdrop-blur-[2px] sm:rounded-[2rem] sm:p-5 lg:bg-transparent lg:p-0 lg:backdrop-blur-0">
             <p className="hero-label mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[var(--soft-brown)] sm:mb-5 sm:text-sm sm:tracking-[0.32em]">
               PRIVATE LUXURY TRAVEL CONSULTING
             </p>
             <h1 className="hero-title font-serif text-[2.45rem] leading-[1.03] text-balance sm:text-6xl lg:text-7xl">
-              Луксозни пътувания, подбрани с внимание към всеки детайл
+              Луксозни пътувания, създадени специално за теб
             </h1>
             <p className="hero-subtitle mt-5 max-w-2xl text-base leading-7 text-[rgba(45,42,38,0.76)] sm:mt-6 sm:text-xl sm:leading-8">
-              Персонални travel консултации с Богдана Баракова за клиенти,
-              които търсят стил, комфорт и безупречно организирано пътуване.
+              Персонални консултации за хора, които търсят стил, комфорт и
+              внимателно подбрани преживявания по целия свят.
             </p>
-            <button className="btn-primary mt-9" type="button">
-              Изпрати запитване
-            </button>
+            <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:justify-center lg:justify-start">
+              <button className="btn-primary" type="button">
+                Заяви персонална консултация
+              </button>
+              <button className="btn-secondary" type="button">
+                Разгледай дестинациите
+              </button>
+            </div>
           </div>
         </div>
       </section>
