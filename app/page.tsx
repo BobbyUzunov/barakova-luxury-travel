@@ -16,6 +16,13 @@ const trustItems = [
   "Внимание към всеки детайл",
 ];
 
+const profileStats = [
+  "Десетки посетени държави",
+  "Стотици забележителности",
+  "Персонален подход",
+  "Подбрани преживявания",
+];
+
 const steps = [
   "Споделяш мечтаната дестинация",
   "Уточняваме стил, бюджет и предпочитания",
@@ -224,9 +231,28 @@ export default function Home() {
       </section>
 
       <section className="section-shell" id="about">
-        <div className="about-panel grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
-          <div className="about-image" />
-          <div>
+        <div className="about-panel profile-panel grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+          <div className="profile-gallery">
+            <div className="profile-photo profile-photo-main">
+              <Image
+                src="/images/barakova-1.jpg"
+                alt="Портрет на Богдана Баракова"
+                fill
+                sizes="(min-width: 1024px) 42vw, (min-width: 640px) 82vw, 92vw"
+                className="profile-image"
+              />
+            </div>
+            <div className="profile-photo profile-photo-secondary">
+              <Image
+                src="/images/barakova-2.jpg"
+                alt="Богдана Баракова, luxury travel consultant"
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 640px) 82vw, 0vw"
+                className="profile-image"
+              />
+            </div>
+          </div>
+          <div className="profile-content">
             <p className="eyebrow">Профил</p>
             <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
               Запознайте се с Богдана Баракова
@@ -256,6 +282,14 @@ export default function Home() {
                 Моята мисия е да превърна мечтаната дестинация в добре
                 планирано и незабравимо преживяване.
               </p>
+            </div>
+            <div className="profile-stats mt-7">
+              {profileStats.map((stat) => (
+                <div className="profile-stat" key={stat}>
+                  <span />
+                  <p>{stat}</p>
+                </div>
+              ))}
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <span className="about-pill">Luxury consulting</span>

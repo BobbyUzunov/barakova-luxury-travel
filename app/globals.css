@@ -380,20 +380,50 @@ h2 {
 .about-panel {
   border: 1px solid rgba(200, 169, 106, 0.22);
   border-radius: 2rem;
-  background: rgba(255, 255, 255, 0.72);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(248, 243, 236, 0.68)),
+    rgba(255, 255, 255, 0.72);
   padding: 0.82rem;
   box-shadow: 0 34px 96px rgba(45, 42, 38, 0.11);
   backdrop-filter: blur(18px);
 }
 
-.about-image {
-  min-height: 21rem;
-  border-radius: 1.45rem;
-  background:
-    linear-gradient(180deg, rgba(248, 243, 236, 0.02), rgba(45, 42, 38, 0.22)),
-    url("https://images.unsplash.com/photo-1491349174775-aaafddd81942?auto=format&fit=crop&w=1000&q=82");
-  background-position: center 32%;
-  background-size: cover;
+.profile-gallery {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+}
+
+.profile-photo {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 1.55rem;
+  background: var(--warm-beige);
+  box-shadow: 0 26px 76px rgba(45, 42, 38, 0.13);
+}
+
+.profile-photo-main {
+  min-height: 28rem;
+}
+
+.profile-photo-secondary {
+  display: none;
+  min-height: 19rem;
+}
+
+.profile-image {
+  object-fit: cover;
+  object-position: center 24%;
+  transition: transform 520ms ease;
+}
+
+.profile-photo:hover .profile-image {
+  transform: scale(1.035);
+}
+
+.profile-content {
+  padding: 0.45rem;
 }
 
 .about-copy p {
@@ -417,6 +447,38 @@ h2 {
   font-size: 1.18rem;
   font-style: italic;
   line-height: 1.5;
+}
+
+.profile-stats {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.profile-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(200, 169, 106, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+  padding: 0.78rem 0.95rem;
+}
+
+.profile-stat span {
+  width: 0.55rem;
+  height: 0.55rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--champagne);
+  box-shadow: 0 0 0 0.34rem rgba(200, 169, 106, 0.16);
+}
+
+.profile-stat p {
+  margin: 0;
+  color: rgba(45, 42, 38, 0.72);
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.25;
 }
 
 .about-pill {
@@ -577,8 +639,21 @@ h2 {
     min-height: 20rem;
   }
 
-  .about-image {
+  .profile-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-photo-main {
+    min-height: 34rem;
+  }
+
+  .profile-photo-secondary {
+    display: block;
     min-height: 28rem;
+  }
+
+  .profile-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -610,6 +685,30 @@ h2 {
 
   .about-panel {
     padding: 1.4rem 3.2rem 1.4rem 1.4rem;
+  }
+
+  .profile-gallery {
+    min-height: 43rem;
+    padding: 0 3.2rem 3.2rem 0;
+  }
+
+  .profile-photo-main {
+    min-height: 39rem;
+  }
+
+  .profile-photo-secondary {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: block;
+    width: 45%;
+    min-height: 20rem;
+    border: 0.42rem solid rgba(248, 243, 236, 0.9);
+    box-shadow: 0 28px 76px rgba(45, 42, 38, 0.2);
+  }
+
+  .profile-content {
+    padding: 1rem 0;
   }
 }
 
