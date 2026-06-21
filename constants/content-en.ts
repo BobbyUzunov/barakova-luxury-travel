@@ -15,9 +15,9 @@ export const contentEn = {
   headerCta: "Send inquiry",
   hero: {
     label: "PERSONAL LUXURY TRAVEL CONSULTING",
-    title: "Luxury journeys crafted around you",
+    title: "Your dream escape, planned down to the finest detail",
     subtitle:
-      "Personal travel consulting for clients seeking comfort, style and carefully selected experiences around the world.",
+      "Personal travel consulting for clients who want a luxury experience without stress, noise, or endless searching.",
     primaryCta: "Request a Private Consultation",
     secondaryCta: "Explore destinations",
   },
@@ -34,32 +34,32 @@ export const contentEn = {
     {
       title: "Luxury Vacations",
       description:
-        "Curated hotel, resort, and experience recommendations tailored to your style, budget, and expectations.",
+        "Selected hotels, resorts, and experiences for travelers who value comfort, style, and calm.",
     },
     {
       title: "Wedding and Romantic Trips",
       description:
-        "Special journeys for couples, honeymoons, anniversaries, and moments that deserve an unforgettable atmosphere.",
+        "Ideas for honeymoons, anniversaries, and intimate milestones shaped with attention to atmosphere and detail.",
     },
     {
       title: "Boutique Hotels",
       description:
-        "A selection of small, stylish, distinctive stays with attention to detail and a sense of warmth.",
+        "Small, stylish, characterful stays that bring a sense of individuality, warmth, and class.",
     },
     {
       title: "Premium Family Vacations",
       description:
-        "Comfortable solutions for families seeking calm, safety, and a well-organized vacation.",
+        "Family trips where comfort, safety, and thoughtful organization come first.",
     },
     {
       title: "Exotic Destinations",
       description:
-        "Ideas for distant places, beautiful beaches, cultural experiences, and special itineraries.",
+        "Distant routes, beautiful beaches, culture, nature, and experiences beyond standard offers.",
     },
     {
       title: "Personal Itineraries",
       description:
-        "Individual planning based on your time, interests, travel pace, and preferences.",
+        "Planning shaped around your rhythm, budget, interests, and preferred style of travel.",
     },
   ],
   steps: [
@@ -82,56 +82,56 @@ export const contentEn = {
     {
       name: "Maldives",
       description:
-        "Overwater villas, crystal-clear water, silence, and a complete sense of escape.",
+        "Overwater villas, white sand, crystal-clear water, and a complete sense of escape from everyday life.",
       image:
         "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=900&q=80",
     },
     {
       name: "Dubai",
       description:
-        "Luxury hotels, modern architecture, gourmet experiences, and impressive vacation possibilities.",
+        "Luxury hotels, modern architecture, gourmet experiences, and premium urban energy.",
       image:
         "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=80",
     },
     {
       name: "Bali",
       description:
-        "Exotic nature, boutique villas, spiritual atmosphere, and a balance of adventure and relaxation.",
+        "Boutique villas, tropical nature, spiritual atmosphere, and a balance of relaxation and discovery.",
       image:
         "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
     },
     {
       name: "Seychelles",
       description:
-        "Wild beaches, granite rocks, tranquility, and one of the most romantic feelings in the Indian Ocean.",
+        "Wild beaches, tranquility, romance, and one of the most beautiful moods in the Indian Ocean.",
       image:
         "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=900&q=80",
     },
     {
       name: "Greece",
       description:
-        "Boutique islands, beautiful sunsets, seafood cuisine, and elegant Mediterranean atmosphere.",
+        "Boutique islands, sea-inspired cuisine, sunsets, and an elegant Mediterranean atmosphere.",
       image:
         "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&w=900&q=80",
     },
     {
       name: "Italy",
       description:
-        "Romance, culture, delicious cuisine, lakes, coastlines, and cities with unmistakable style.",
+        "Culture, romance, beautiful cuisine, lakes, coastlines, and unmistakable Italian style.",
       image:
         "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=900&q=80",
     },
     {
       name: "Thailand",
       description:
-        "Tropical beaches, temples, islands, spa experiences, and rich local culture.",
+        "Tropical beaches, temples, spa experiences, islands, and rich local culture.",
       image:
         "https://images.unsplash.com/photo-1506665531195-3566af2b4dfa?auto=format&fit=crop&w=900&q=80",
     },
     {
       name: "French Riviera",
       description:
-        "Elegance, yachts, boutique hotels, sea views, and a sense of classic European luxury.",
+        "European elegance, yachts, sea views, boutique hotels, and classic luxury.",
       image:
         "https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=900&q=80",
     },
@@ -144,22 +144,22 @@ export const contentEn = {
     {
       title: "Personal Approach",
       description:
-        "Every proposal is aligned with your wishes, travel style, and sense of comfort.",
+        "Every proposal is selected around your wishes, travel style, and personal idea of comfort.",
     },
     {
       title: "Selected Luxury Proposals",
       description:
-        "You receive a selection of carefully chosen places, not random mass-market offers.",
+        "You receive a thoughtful selection, not random mass-market offers.",
     },
     {
       title: "Time Saved",
       description:
-        "You avoid hours of searching, comparing, and doubting, and receive clear, suitable options.",
+        "You avoid hours of searching and comparing, and receive clear, meaningful, suitable options.",
     },
     {
       title: "Attention to Every Detail",
       description:
-        "From location and hotel to on-site experiences, everything is arranged with the complete feeling in mind.",
+        "From the hotel and location to the experiences on site, everything is arranged with the complete feeling in mind.",
     },
   ],
   profileStats: [
@@ -171,6 +171,8 @@ export const contentEn = {
   about: {
     eyebrow: "Profile",
     title: "Meet Bogdana Barakova",
+    intro:
+      "Behind Barakova Luxury Travel is personal experience, dozens of countries visited, and a passion for journeys that become real memories.",
     paragraphs: [
       "Hello, I am Bogdana Barakova — a traveler at heart and someone who believes every trip can become a special experience when planned with attention to detail.",
       "Over the years, I have visited dozens of countries and hundreds of remarkable places. I always look for the balance between style, comfort, quality, and authentic experience — not just a beautiful destination, but a journey that leaves a memory.",
@@ -178,7 +180,7 @@ export const contentEn = {
     ],
     mission:
       "My mission is to turn the dream destination into a well-planned and unforgettable experience.",
-    tags: ["Luxury consulting", "Boutique selection", "Tailored planning"],
+    tags: ["Luxury consulting", "Boutique selection", "Personal planning"],
   },
   finalCta: {
     eyebrow: "Contact",

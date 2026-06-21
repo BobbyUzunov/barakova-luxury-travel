@@ -53,6 +53,7 @@ export type SiteContent = {
   about: {
     eyebrow: string;
     title: string;
+    intro: string;
     paragraphs: string[];
     mission: string;
     tags: string[];

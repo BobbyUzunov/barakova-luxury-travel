@@ -491,6 +491,15 @@ h2 {
   padding: 0.45rem;
 }
 
+.about-intro {
+  max-width: 41rem;
+  color: var(--soft-brown);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.2rem, 5vw, 1.55rem);
+  font-style: italic;
+  line-height: 1.48;
+}
+
 .about-copy p {
   margin: 0;
 }

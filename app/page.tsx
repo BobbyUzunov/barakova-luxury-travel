@@ -227,6 +227,7 @@ export default function Home() {
             <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
               {content.about.title}
             </h2>
+            <p className="about-intro mt-5">{content.about.intro}</p>
             <div className="about-copy mt-5 space-y-4 text-base leading-7 text-[rgba(45,42,38,0.72)] sm:text-lg sm:leading-8">
               {content.about.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
