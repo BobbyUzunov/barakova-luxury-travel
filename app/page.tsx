@@ -1,7 +1,39 @@
+"use client";
+
 import Image from "next/image";
-import { contentBg as content } from "../constants/content-bg";
+import { useEffect, useMemo, useState } from "react";
+import { contentBg } from "../constants/content-bg";
+import { contentEn } from "../constants/content-en";
+import {
+  defaultLocale,
+  languageOptions,
+  type Locale,
+} from "../constants/content";
+
+const contentByLocale = {
+  bg: contentBg,
+  en: contentEn,
+} as const;
+
+const localeStorageKey = "barakova-luxury-travel-locale";
 
 export default function Home() {
+  const [locale, setLocale] = useState<Locale>(defaultLocale);
+  const content = useMemo(() => contentByLocale[locale], [locale]);
+
+  useEffect(() => {
+    const savedLocale = window.localStorage.getItem(localeStorageKey);
+
+    if (savedLocale === "bg" || savedLocale === "en") {
+      setLocale(savedLocale);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(localeStorageKey, locale);
+    document.documentElement.lang = locale;
+  }, [locale]);
+
   return (
     <main className="min-h-screen overflow-hidden bg-[var(--ivory)] text-[var(--charcoal)]">
       <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4 lg:px-10">
@@ -11,7 +43,12 @@ export default function Home() {
             <small>{content.brand.subtitle}</small>
           </a>
 
-          <div className="header-nav" aria-label="Основна навигация">
+          <div
+            className="header-nav"
+            aria-label={
+              locale === "bg" ? "Основна навигация" : "Primary navigation"
+            }
+          >
             {content.navItems.map((item) => (
               <a href={item.href} key={item.label}>
                 {item.label}
@@ -19,9 +56,30 @@ export default function Home() {
             ))}
           </div>
 
-          <button className="btn-primary header-cta" type="button">
-            Изпрати запитване
-          </button>
+          <div className="header-actions">
+            <div
+              className="language-switcher"
+              aria-label={locale === "bg" ? "Избор на език" : "Language"}
+            >
+              {languageOptions.map((option, index) => (
+                <span className="language-option" key={option.locale}>
+                  {index > 0 && <span className="language-divider">|</span>}
+                  <button
+                    aria-pressed={locale === option.locale}
+                    className={locale === option.locale ? "is-active" : ""}
+                    onClick={() => setLocale(option.locale)}
+                    type="button"
+                  >
+                    {option.label}
+                  </button>
+                </span>
+              ))}
+            </div>
+
+            <button className="btn-primary header-cta" type="button">
+              {content.headerCta}
+            </button>
+          </div>
         </nav>
       </header>
 
@@ -31,7 +89,7 @@ export default function Home() {
       >
         <Image
           src="/hero-bogdana-beach.jpeg"
-          alt="Богдана Баракова на плаж с поглед към морето"
+          alt={content.imageAlts.hero}
           fill
           priority
           quality={90}
@@ -67,8 +125,8 @@ export default function Home() {
 
       <section className="section-shell pt-12" id="services">
         <div className="section-heading">
-          <p>Услуги</p>
-          <h2>Как мога да ти помогна</h2>
+          <p>{content.servicesSection.eyebrow}</p>
+          <h2>{content.servicesSection.title}</h2>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {content.services.map((service, index) => (
@@ -88,12 +146,11 @@ export default function Home() {
       <section className="section-shell">
         <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
           <div className="section-heading text-left">
-            <p>Процес</p>
-            <h2>Как работи консултацията</h2>
-            <span>
-              Внимателен, спокоен и ясен процес, в който всеки детайл се
-              подрежда около вашите предпочитания, бюджет и усещане за комфорт.
-            </span>
+            <p>{content.processSection.eyebrow}</p>
+            <h2>{content.processSection.title}</h2>
+            {content.processSection.description && (
+              <span>{content.processSection.description}</span>
+            )}
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
             {content.steps.map((step, index) => (
@@ -108,8 +165,8 @@ export default function Home() {
 
       <section className="section-shell" id="destinations">
         <div className="section-heading">
-          <p>Дестинации</p>
-          <h2>Луксозни дестинации по света</h2>
+          <p>{content.destinationsSection.eyebrow}</p>
+          <h2>{content.destinationsSection.title}</h2>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {content.destinations.map((destination) => (
@@ -129,8 +186,8 @@ export default function Home() {
 
       <section className="section-shell">
         <div className="section-heading">
-          <p>Доверие</p>
-          <h2>Защо клиентите избират Barakova Luxury Travel</h2>
+          <p>{content.trustSection.eyebrow}</p>
+          <h2>{content.trustSection.title}</h2>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {content.trustItems.map((item, index) => (
@@ -149,7 +206,7 @@ export default function Home() {
             <div className="profile-photo profile-photo-main">
               <Image
                 src="/images/barakova-1.jpg"
-                alt="Портрет на Богдана Баракова"
+                alt={content.imageAlts.profileMain}
                 fill
                 sizes="(min-width: 1024px) 42vw, (min-width: 640px) 82vw, 92vw"
                 className="profile-image"
@@ -158,7 +215,7 @@ export default function Home() {
             <div className="profile-photo profile-photo-secondary">
               <Image
                 src="/images/barakova-2.jpg"
-                alt="Богдана Баракова, консултант за луксозни пътувания"
+                alt={content.imageAlts.profileSecondary}
                 fill
                 sizes="(min-width: 1024px) 20vw, (min-width: 640px) 82vw, 0vw"
                 className="profile-image"

@@ -1,3 +1,5 @@
+import type { SiteContent } from "./content";
+
 export const contentBg = {
   brand: {
     name: "Barakova Luxury Travel",
@@ -10,6 +12,7 @@ export const contentBg = {
     { label: "За мен", href: "#about" },
     { label: "Контакт", href: "#contact" },
   ],
+  headerCta: "Изпрати запитване",
   hero: {
     label: "ПЕРСОНАЛНИ КОНСУЛТАЦИИ ЗА ЛУКСОЗНИ ПЪТУВАНИЯ",
     title: "Луксозни пътувания, създадени специално за теб",
@@ -17,6 +20,16 @@ export const contentBg = {
       "Персонални консултации за хора, които търсят стил, комфорт и внимателно подбрани преживявания по целия свят.",
     primaryCta: "Заяви персонална консултация",
     secondaryCta: "Разгледай дестинациите",
+  },
+  imageAlts: {
+    hero: "Богдана Баракова на плаж с поглед към морето",
+    profileMain: "Портрет на Богдана Баракова",
+    profileSecondary:
+      "Богдана Баракова, консултант за луксозни пътувания",
+  },
+  servicesSection: {
+    eyebrow: "Услуги",
+    title: "Как мога да ти помогна",
   },
   services: [
     {
@@ -56,6 +69,16 @@ export const contentBg = {
     "Получаваш подбрани предложения",
     "Избираш спокойно най-подходящата почивка",
   ],
+  processSection: {
+    eyebrow: "Процес",
+    title: "Как работи консултацията",
+    description:
+      "Внимателен, спокоен и ясен процес, в който всеки детайл се подрежда около вашите предпочитания, бюджет и усещане за комфорт.",
+  },
+  destinationsSection: {
+    eyebrow: "Дестинации",
+    title: "Луксозни дестинации по света",
+  },
   destinations: [
     {
       name: "Малдиви",
@@ -114,6 +137,10 @@ export const contentBg = {
         "https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=900&q=80",
     },
   ],
+  trustSection: {
+    eyebrow: "Доверие",
+    title: "Защо клиентите избират Barakova Luxury Travel",
+  },
   trustItems: [
     {
       title: "Персонален подход",
@@ -160,4 +187,4 @@ export const contentBg = {
     subtitle: "Нека създадем вашето следващо луксозно преживяване.",
     button: "Изпрати запитване",
   },
-};
+} satisfies SiteContent;

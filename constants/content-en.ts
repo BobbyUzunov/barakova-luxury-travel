@@ -1,3 +1,5 @@
+import type { SiteContent } from "./content";
+
 export const contentEn = {
   brand: {
     name: "Barakova Luxury Travel",
@@ -10,13 +12,23 @@ export const contentEn = {
     { label: "About", href: "#about" },
     { label: "Contact", href: "#contact" },
   ],
+  headerCta: "Send inquiry",
   hero: {
     label: "PERSONAL LUXURY TRAVEL CONSULTING",
-    title: "Luxury journeys created especially for you",
+    title: "Luxury journeys crafted around you",
     subtitle:
-      "Personal consultations for people seeking style, comfort, and carefully selected experiences around the world.",
-    primaryCta: "Request a personal consultation",
+      "Personal travel consulting for clients seeking comfort, style and carefully selected experiences around the world.",
+    primaryCta: "Request a Private Consultation",
     secondaryCta: "Explore destinations",
+  },
+  imageAlts: {
+    hero: "Bogdana Barakova on a beach facing the sea",
+    profileMain: "Portrait of Bogdana Barakova",
+    profileSecondary: "Bogdana Barakova, luxury travel consultant",
+  },
+  servicesSection: {
+    eyebrow: "Services",
+    title: "How I can help",
   },
   services: [
     {
@@ -56,6 +68,16 @@ export const contentEn = {
     "You receive selected proposals",
     "You choose the most suitable vacation with confidence",
   ],
+  processSection: {
+    eyebrow: "Process",
+    title: "How the consultation works",
+    description:
+      "A calm, thoughtful and clear process where every detail is shaped around your preferences, budget and sense of comfort.",
+  },
+  destinationsSection: {
+    eyebrow: "Destinations",
+    title: "Luxury destinations around the world",
+  },
   destinations: [
     {
       name: "Maldives",
@@ -114,6 +136,10 @@ export const contentEn = {
         "https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=900&q=80",
     },
   ],
+  trustSection: {
+    eyebrow: "Trust",
+    title: "Why clients choose Barakova Luxury Travel",
+  },
   trustItems: [
     {
       title: "Personal Approach",
@@ -160,4 +186,4 @@ export const contentEn = {
     subtitle: "Let us create your next luxury experience.",
     button: "Send inquiry",
   },
-};
+} satisfies SiteContent;
