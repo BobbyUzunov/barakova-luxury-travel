@@ -182,6 +182,46 @@ export const contentEn = {
       "My mission is to turn the dream destination into a well-planned and unforgettable experience.",
     tags: ["Luxury consulting", "Boutique selection", "Personal planning"],
   },
+  signature: {
+    eyebrow: "Signature by Bogdana",
+    title: "Bogdana's Favorite Destinations",
+    subtitle:
+      "Places I have personally visited and would recommend again.",
+    storyQuote:
+      "The best journeys are not measured in kilometers, but in memories.",
+    recommendationLabel: "Why I recommend it",
+    signature: "— Bogdana Barakova",
+    destinations: [
+      {
+        name: "Maldives",
+        reason:
+          "Because they are one of the few places in the world where you can truly disconnect from everyday life and enjoy peace, nature, and real comfort.",
+        image:
+          "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1200&q=88",
+      },
+      {
+        name: "Bali",
+        reason:
+          "Bali combines exotic atmosphere, culture, and incredible nature. It is a destination that offers both relaxation and adventure.",
+        image:
+          "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=88",
+      },
+      {
+        name: "Italy",
+        reason:
+          "Italy is a place that always impresses with its atmosphere, cuisine, culture, and beautiful coastal towns.",
+        image:
+          "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=88",
+      },
+      {
+        name: "Seychelles",
+        reason:
+          "Seychelles are the perfect choice for travelers seeking romance, calm, and some of the most beautiful beaches in the world.",
+        image:
+          "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=88",
+      },
+    ],
+  },
   finalCta: {
     eyebrow: "Contact",
     title: "Ready for your next unforgettable journey?",

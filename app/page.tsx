@@ -431,6 +431,37 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="signature-section section-shell">
+        <div className="section-divider" />
+        <blockquote className="story-quote">
+          {content.signature.storyQuote}
+        </blockquote>
+        <div className="section-heading">
+          <p>{content.signature.eyebrow}</p>
+          <h2>{content.signature.title}</h2>
+          <span>{content.signature.subtitle}</span>
+        </div>
+
+        <div className="signature-grid mt-12">
+          {content.signature.destinations.map((destination) => (
+            <article className="signature-card" key={destination.name}>
+              <div className="signature-image">
+                <DestinationImage
+                  alt={destination.name}
+                  src={destination.image}
+                />
+              </div>
+              <div className="signature-copy">
+                <span>{content.signature.recommendationLabel}</span>
+                <h3>{destination.name}</h3>
+                <p>{destination.reason}</p>
+                <small>{content.signature.signature}</small>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="contact-section px-5 pb-8 sm:px-8 lg:px-12" id="contact">
         <div className="contact-panel mx-auto max-w-7xl">
           <div className="contact-intro">

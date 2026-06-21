@@ -16,6 +16,12 @@ export type Destination = {
   image: string;
 };
 
+export type SignatureDestination = {
+  name: string;
+  reason: string;
+  image: string;
+};
+
 export type SectionIntro = {
   eyebrow: string;
   title: string;
@@ -57,6 +63,15 @@ export type SiteContent = {
     paragraphs: string[];
     mission: string;
     tags: string[];
+  };
+  signature: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    storyQuote: string;
+    recommendationLabel: string;
+    signature: string;
+    destinations: SignatureDestination[];
   };
   finalCta: {
     eyebrow: string;
