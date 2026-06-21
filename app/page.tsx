@@ -19,7 +19,10 @@ const localeStorageKey = "barakova-luxury-travel-locale";
 
 export default function Home() {
   const [locale, setLocale] = useState<Locale>(defaultLocale);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const content = useMemo(() => contentByLocale[locale], [locale]);
+  const menuLabel = locale === "bg" ? "Меню" : "Menu";
+  const closeMenuLabel = locale === "bg" ? "Затвори менюто" : "Close menu";
 
   useEffect(() => {
     const savedLocale = window.localStorage.getItem(localeStorageKey);
@@ -67,7 +70,10 @@ export default function Home() {
                   <button
                     aria-pressed={locale === option.locale}
                     className={locale === option.locale ? "is-active" : ""}
-                    onClick={() => setLocale(option.locale)}
+                    onClick={() => {
+                      setLocale(option.locale);
+                      setIsMenuOpen(false);
+                    }}
                     type="button"
                   >
                     {option.label}
@@ -77,6 +83,39 @@ export default function Home() {
             </div>
 
             <button className="btn-primary header-cta" type="button">
+              {content.headerCta}
+            </button>
+
+            <button
+              aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? closeMenuLabel : menuLabel}
+              className="menu-toggle"
+              onClick={() => setIsMenuOpen((current) => !current)}
+              type="button"
+            >
+              <span />
+              <span />
+            </button>
+          </div>
+
+          <div
+            className={`mobile-menu ${isMenuOpen ? "is-open" : ""}`}
+            id="mobile-menu"
+          >
+            {content.navItems.map((item) => (
+              <a
+                href={item.href}
+                key={item.label}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+            <button
+              className="btn-primary mobile-menu-cta"
+              onClick={() => setIsMenuOpen(false)}
+              type="button"
+            >
               {content.headerCta}
             </button>
           </div>
@@ -96,8 +135,8 @@ export default function Home() {
           sizes="100vw"
           className="hero-image"
         />
-        <div className="absolute inset-0 bg-[rgba(248,243,236,0.18)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,243,236,0.82),rgba(248,243,236,0.42)_44%,rgba(248,243,236,0.08)),linear-gradient(180deg,rgba(248,243,236,0.08),rgba(248,243,236,0.58))]" />
+        <div className="hero-soft-overlay absolute inset-0" />
+        <div className="hero-gradient-overlay absolute inset-0" />
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[var(--ivory)] to-transparent" />
 
         <div className="hero-inner relative z-10 mx-auto flex min-h-[68svh] max-w-7xl items-center justify-center text-center sm:min-h-[66svh] lg:min-h-[72svh] lg:justify-start lg:text-left">

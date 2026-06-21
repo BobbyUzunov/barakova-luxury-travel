@@ -3,13 +3,13 @@ import type { SiteContent } from "./content";
 export const contentBg = {
   brand: {
     name: "Barakova Luxury Travel",
-    subtitle: "от Богдана Баракова",
+    subtitle: "by Богдана Баракова",
   },
   navItems: [
     { label: "Начало", href: "#home" },
     { label: "Услуги", href: "#services" },
     { label: "Дестинации", href: "#destinations" },
-    { label: "За мен", href: "#about" },
+    { label: "За Богдана", href: "#about" },
     { label: "Контакт", href: "#contact" },
   ],
   headerCta: "Заяви персонална консултация",
