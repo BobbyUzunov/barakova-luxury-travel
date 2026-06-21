@@ -135,7 +135,9 @@ export default function Home() {
               style={{ animationDelay: `${index * 70}ms` }}
               key={service.title}
             >
-              <span className="card-number">0{index + 1}</span>
+              <span className="card-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
               <h3>{service.title}</h3>
               <p>{service.description}</p>
             </article>
@@ -192,7 +194,7 @@ export default function Home() {
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {content.trustItems.map((item, index) => (
             <article className="trust-card" key={item.title}>
-              <span>0{index + 1}</span>
+              <span>{String(index + 1).padStart(2, "0")}</span>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
             </article>

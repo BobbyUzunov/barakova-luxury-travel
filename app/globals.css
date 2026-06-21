@@ -334,10 +334,14 @@ h2 {
 
 .card-number,
 .trust-card span {
+  display: inline-block;
   color: rgba(122, 102, 82, 0.68);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 2.05rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .lux-card h3,
