@@ -82,51 +82,58 @@ export const contentBg = {
   destinations: [
     {
       name: "Малдиви",
-      description:
-        "Вили над океана, бял пясък, кристална вода и усещане за пълно откъсване от ежедневието.",
-      image: "/images/destinations/maldives.jpg",
-    },
-    {
-      name: "Дубай",
-      description:
-        "Луксозни хотели, модерна архитектура, гурме преживявания и премиум градска енергия.",
-      image: "/images/destinations/dubai.jpg",
-    },
-    {
-      name: "Бали",
-      description:
-        "Бутикови вили, тропическа природа, духовна атмосфера и баланс между релакс и приключение.",
-      image: "/images/destinations/bali.jpg",
+      description: "Вили над океана, спокойствие и усещане за пълен лукс.",
+      image:
+        "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1200&q=88",
     },
     {
       name: "Сейшели",
       description:
-        "Диви плажове, спокойствие, романтика и едно от най-красивите усещания в Индийския океан.",
-      image: "/images/destinations/seychelles.jpg",
+        "Една от най-красивите островни дестинации в света.",
+      image:
+        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=88",
     },
     {
-      name: "Гърция",
+      name: "Бали",
       description:
-        "Бутикови острови, морска кухня, залези и елегантна средиземноморска атмосфера.",
-      image: "/images/destinations/greece.jpg",
+        "Бутикови вили, екзотика и незабравими гледки.",
+      image:
+        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=88",
     },
     {
-      name: "Италия",
+      name: "Мавриций",
       description:
-        "Култура, романтика, вкусна кухня, езера, крайбрежия и неподражаем италиански стил.",
-      image: "/images/destinations/italy.jpg",
+        "Перфектна комбинация между релакс и премиум обслужване.",
+      image:
+        "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?auto=format&fit=crop&w=1200&q=88",
     },
     {
-      name: "Тайланд",
+      name: "Занзибар",
       description:
-        "Тропически плажове, храмове, спа преживявания, острови и богата местна култура.",
-      image: "/images/destinations/thailand.jpg",
+        "Тропически плажове и автентична островна атмосфера.",
+      image:
+        "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=1200&q=88",
     },
     {
-      name: "Френска Ривиера",
+      name: "Санторини",
       description:
-        "Европейска елегантност, яхти, морски гледки, бутикови хотели и класически лукс.",
-      image: "/images/destinations/french-riviera.jpg",
+        "Романтика, залези и емблематични гледки към Егейско море.",
+      image:
+        "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1200&q=88",
+    },
+    {
+      name: "Дубай",
+      description:
+        "Съвременен лукс, впечатляваща архитектура и световна класа хотели.",
+      image:
+        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=88",
+    },
+    {
+      name: "Амалфи и Капри",
+      description:
+        "Италианска елегантност, крайбрежни пейзажи и изключителна кухня.",
+      image:
+        "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1200&q=88",
     },
   ],
   trustSection: {
