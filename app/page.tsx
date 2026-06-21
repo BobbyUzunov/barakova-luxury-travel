@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { contentBg } from "../constants/content-bg";
 import { contentEn } from "../constants/content-en";
 import {
@@ -16,13 +16,35 @@ const contentByLocale = {
 } as const;
 
 const localeStorageKey = "barakova-luxury-travel-locale";
+const initialFormValues = {
+  fullName: "",
+  email: "",
+  phone: "",
+  destination: "",
+  travelPeriod: "",
+  travelers: "",
+  budget: "",
+  message: "",
+  website: "",
+};
+
+type ContactFormValues = typeof initialFormValues;
+type ContactFormErrors = Partial<
+  Record<"fullName" | "email" | "phone" | "form", string>
+>;
 
 export default function Home() {
   const [locale, setLocale] = useState<Locale>(defaultLocale);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [formValues, setFormValues] =
+    useState<ContactFormValues>(initialFormValues);
+  const [formErrors, setFormErrors] = useState<ContactFormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const content = useMemo(() => contentByLocale[locale], [locale]);
   const menuLabel = locale === "bg" ? "Меню" : "Menu";
   const closeMenuLabel = locale === "bg" ? "Затвори менюто" : "Close menu";
+  const requiredLabel = content.contact.requiredMark;
 
   useEffect(() => {
     const savedLocale = window.localStorage.getItem(localeStorageKey);
@@ -36,6 +58,80 @@ export default function Home() {
     window.localStorage.setItem(localeStorageKey, locale);
     document.documentElement.lang = locale;
   }, [locale]);
+
+  const scrollToContact = () => {
+    setIsMenuOpen(false);
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const validateForm = () => {
+    const nextErrors: ContactFormErrors = {};
+
+    if (!formValues.fullName.trim()) {
+      nextErrors.fullName = content.contact.validation.fullName;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email.trim())) {
+      nextErrors.email = content.contact.validation.email;
+    }
+
+    if (!formValues.phone.trim()) {
+      nextErrors.phone = content.contact.validation.phone;
+    }
+
+    setFormErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const updateFormValue = (
+    field: keyof ContactFormValues,
+    value: string,
+  ) => {
+    setFormValues((current) => ({ ...current, [field]: value }));
+    setFormErrors((current) => ({
+      ...current,
+      ...(field === "fullName" ||
+      field === "email" ||
+      field === "phone"
+        ? { [field]: undefined }
+        : {}),
+      form: undefined,
+    }));
+  };
+
+  const handleContactSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...formValues, locale }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Contact request failed");
+      }
+
+      setIsSubmitted(true);
+      setFormValues(initialFormValues);
+      setFormErrors({});
+    } catch {
+      setFormErrors({ form: content.contact.validation.submitError });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <main className="min-h-screen overflow-hidden bg-[var(--ivory)] text-[var(--charcoal)]">
@@ -82,7 +178,11 @@ export default function Home() {
               ))}
             </div>
 
-            <button className="btn-primary header-cta" type="button">
+            <button
+              className="btn-primary header-cta"
+              onClick={scrollToContact}
+              type="button"
+            >
               {content.headerCta}
             </button>
 
@@ -113,7 +213,7 @@ export default function Home() {
             ))}
             <button
               className="btn-primary mobile-menu-cta"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={scrollToContact}
               type="button"
             >
               {content.headerCta}
@@ -151,7 +251,11 @@ export default function Home() {
               {content.hero.subtitle}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:justify-center lg:justify-start">
-              <button className="btn-primary" type="button">
+              <button
+                className="btn-primary"
+                onClick={scrollToContact}
+                type="button"
+              >
                 {content.hero.primaryCta}
               </button>
               <button className="btn-secondary" type="button">
@@ -296,20 +400,200 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-5 pb-8 sm:px-8 lg:px-12" id="contact">
-        <div className="final-cta mx-auto max-w-7xl px-6 py-16 text-center sm:px-10 lg:py-22">
-          <p className="eyebrow justify-center">{content.finalCta.eyebrow}</p>
-          <h2 className="mx-auto mt-4 max-w-3xl font-serif text-4xl leading-tight text-white sm:text-5xl">
-            {content.finalCta.title}
-          </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-white/76">
-            {content.finalCta.subtitle}
-          </p>
-          <button className="btn-primary mt-8" type="button">
-            {content.finalCta.button}
-          </button>
+      <section className="contact-section px-5 pb-8 sm:px-8 lg:px-12" id="contact">
+        <div className="contact-panel mx-auto max-w-7xl">
+          <div className="contact-intro">
+            <p className="eyebrow">{content.contact.eyebrow}</p>
+            <h2>{content.contact.title}</h2>
+            <p>{content.contact.subtitle}</p>
+
+            <div className="contact-trust-card">
+              <h3>{content.contact.trustTitle}</h3>
+              <div className="contact-trust-grid">
+                {content.contact.trustItems.map((item) => (
+                  <div className="contact-trust-item" key={item}>
+                    <span>✓</span>
+                    <p>{item}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="contact-form-shell">
+            {isSubmitted ? (
+              <div className="success-card" role="status">
+                <span>✓</span>
+                <h3>{content.contact.success.title}</h3>
+                <p>{content.contact.success.message}</p>
+                <button
+                  className="btn-secondary"
+                  onClick={() => setIsSubmitted(false)}
+                  type="button"
+                >
+                  {content.contact.success.reset}
+                </button>
+              </div>
+            ) : (
+              <form className="contact-form" onSubmit={handleContactSubmit}>
+                <div className="form-grid">
+                  <label>
+                    <span>
+                      {content.contact.fields.fullName} {requiredLabel}
+                    </span>
+                    <input
+                      aria-invalid={Boolean(formErrors.fullName)}
+                      autoComplete="name"
+                      name="fullName"
+                      onChange={(event) =>
+                        updateFormValue("fullName", event.target.value)
+                      }
+                      type="text"
+                      value={formValues.fullName}
+                    />
+                    {formErrors.fullName && (
+                      <small>{formErrors.fullName}</small>
+                    )}
+                  </label>
+
+                  <label>
+                    <span>
+                      {content.contact.fields.email} {requiredLabel}
+                    </span>
+                    <input
+                      aria-invalid={Boolean(formErrors.email)}
+                      autoComplete="email"
+                      name="email"
+                      onChange={(event) =>
+                        updateFormValue("email", event.target.value)
+                      }
+                      type="email"
+                      value={formValues.email}
+                    />
+                    {formErrors.email && <small>{formErrors.email}</small>}
+                  </label>
+
+                  <label>
+                    <span>
+                      {content.contact.fields.phone} {requiredLabel}
+                    </span>
+                    <input
+                      aria-invalid={Boolean(formErrors.phone)}
+                      autoComplete="tel"
+                      name="phone"
+                      onChange={(event) =>
+                        updateFormValue("phone", event.target.value)
+                      }
+                      type="tel"
+                      value={formValues.phone}
+                    />
+                    {formErrors.phone && <small>{formErrors.phone}</small>}
+                  </label>
+
+                  <label>
+                    <span>{content.contact.fields.destination}</span>
+                    <input
+                      name="destination"
+                      onChange={(event) =>
+                        updateFormValue("destination", event.target.value)
+                      }
+                      type="text"
+                      value={formValues.destination}
+                    />
+                  </label>
+
+                  <label>
+                    <span>{content.contact.fields.travelPeriod}</span>
+                    <input
+                      name="travelPeriod"
+                      onChange={(event) =>
+                        updateFormValue("travelPeriod", event.target.value)
+                      }
+                      type="text"
+                      value={formValues.travelPeriod}
+                    />
+                  </label>
+
+                  <label>
+                    <span>{content.contact.fields.travelers}</span>
+                    <input
+                      min="1"
+                      name="travelers"
+                      onChange={(event) =>
+                        updateFormValue("travelers", event.target.value)
+                      }
+                      type="number"
+                      value={formValues.travelers}
+                    />
+                  </label>
+
+                  <label className="form-grid-wide">
+                    <span>{content.contact.fields.budget}</span>
+                    <input
+                      name="budget"
+                      onChange={(event) =>
+                        updateFormValue("budget", event.target.value)
+                      }
+                      type="text"
+                      value={formValues.budget}
+                    />
+                  </label>
+                </div>
+
+                <label className="form-message">
+                  <span>{content.contact.fields.message}</span>
+                  <textarea
+                    name="message"
+                    onChange={(event) =>
+                      updateFormValue("message", event.target.value)
+                    }
+                    placeholder={content.contact.placeholders.message}
+                    rows={5}
+                    value={formValues.message}
+                  />
+                </label>
+
+                <label className="honeypot-field" aria-hidden="true">
+                  <span>{content.contact.fields.honeypot}</span>
+                  <input
+                    autoComplete="off"
+                    name="website"
+                    onChange={(event) =>
+                      updateFormValue("website", event.target.value)
+                    }
+                    tabIndex={-1}
+                    type="text"
+                    value={formValues.website}
+                  />
+                </label>
+
+                {formErrors.form && (
+                  <p className="form-submit-error">{formErrors.form}</p>
+                )}
+
+                <button
+                  className="btn-primary form-submit"
+                  disabled={isSubmitting}
+                  type="submit"
+                >
+                  {isSubmitting ? content.contact.submitting : content.contact.submit}
+                </button>
+              </form>
+            )}
+          </div>
         </div>
       </section>
+
+      {/* TODO: Replace with real WhatsApp number */}
+      <a
+        aria-label="WhatsApp"
+        className="whatsapp-button"
+        href="https://wa.me/359XXXXXXXXX"
+        rel="noreferrer"
+        target="_blank"
+      >
+        WA
+      </a>
     </main>
   );
 }

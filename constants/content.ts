@@ -64,6 +64,41 @@ export type SiteContent = {
     subtitle: string;
     button: string;
   };
+  contact: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    trustTitle: string;
+    trustItems: string[];
+    fields: {
+      fullName: string;
+      email: string;
+      phone: string;
+      destination: string;
+      travelPeriod: string;
+      travelers: string;
+      budget: string;
+      message: string;
+      honeypot: string;
+    };
+    placeholders: {
+      message: string;
+    };
+    requiredMark: string;
+    submit: string;
+    submitting: string;
+    validation: {
+      fullName: string;
+      email: string;
+      phone: string;
+      submitError: string;
+    };
+    success: {
+      title: string;
+      message: string;
+      reset: string;
+    };
+  };
 };
 
 export const defaultLocale: Locale = "bg";

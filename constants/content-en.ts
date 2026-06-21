@@ -188,4 +188,46 @@ export const contentEn = {
     subtitle: "Let us create your next luxury experience.",
     button: "Send inquiry",
   },
+  contact: {
+    eyebrow: "Inquiry",
+    title: "Request your private consultation",
+    subtitle:
+      "Share what you are looking for and receive carefully selected ideas for your next journey.",
+    trustTitle: "Why send an inquiry?",
+    trustItems: [
+      "Personal approach",
+      "Selected proposals",
+      "Time saved",
+      "Attention to every detail",
+    ],
+    fields: {
+      fullName: "Full name",
+      email: "Email",
+      phone: "Phone",
+      destination: "Desired destination",
+      travelPeriod: "Travel period",
+      travelers: "Number of travelers",
+      budget: "Approximate budget",
+      message: "Message",
+      honeypot: "Website",
+    },
+    placeholders: {
+      message: "Briefly tell us what you are looking for...",
+    },
+    requiredMark: "*",
+    submit: "Request a Private Consultation",
+    submitting: "Sending...",
+    validation: {
+      fullName: "Please enter your full name.",
+      email: "Please enter a valid email address.",
+      phone: "Please enter a phone number.",
+      submitError:
+        "There was a problem sending your inquiry. Please try again.",
+    },
+    success: {
+      title: "Thank you for your inquiry.",
+      message: "We will contact you as soon as possible.",
+      reset: "Send another inquiry",
+    },
+  },
 } satisfies SiteContent;
