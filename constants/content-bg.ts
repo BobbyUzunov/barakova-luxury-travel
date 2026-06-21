@@ -84,57 +84,49 @@ export const contentBg = {
       name: "Малдиви",
       description:
         "Вили над океана, бял пясък, кристална вода и усещане за пълно откъсване от ежедневието.",
-      image:
-        "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/maldives.jpg",
     },
     {
       name: "Дубай",
       description:
         "Луксозни хотели, модерна архитектура, гурме преживявания и премиум градска енергия.",
-      image:
-        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/dubai.jpg",
     },
     {
       name: "Бали",
       description:
         "Бутикови вили, тропическа природа, духовна атмосфера и баланс между релакс и приключение.",
-      image:
-        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/bali.jpg",
     },
     {
       name: "Сейшели",
       description:
         "Диви плажове, спокойствие, романтика и едно от най-красивите усещания в Индийския океан.",
-      image:
-        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/seychelles.jpg",
     },
     {
       name: "Гърция",
       description:
         "Бутикови острови, морска кухня, залези и елегантна средиземноморска атмосфера.",
-      image:
-        "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/greece.jpg",
     },
     {
       name: "Италия",
       description:
         "Култура, романтика, вкусна кухня, езера, крайбрежия и неподражаем италиански стил.",
-      image:
-        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/italy.jpg",
     },
     {
       name: "Тайланд",
       description:
         "Тропически плажове, храмове, спа преживявания, острови и богата местна култура.",
-      image:
-        "https://images.unsplash.com/photo-1506665531195-3566af2b4dfa?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/thailand.jpg",
     },
     {
       name: "Френска Ривиера",
       description:
         "Европейска елегантност, яхти, морски гледки, бутикови хотели и класически лукс.",
-      image:
-        "https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/french-riviera.jpg",
     },
   ],
   trustSection: {

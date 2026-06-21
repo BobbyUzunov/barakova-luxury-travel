@@ -16,6 +16,8 @@ const contentByLocale = {
 } as const;
 
 const localeStorageKey = "barakova-luxury-travel-locale";
+// TODO: Replace this fallback after all destination photos are uploaded.
+const destinationImageFallback = "/hero-bogdana-beach.jpeg";
 const initialFormValues = {
   fullName: "",
   email: "",
@@ -32,6 +34,31 @@ type ContactFormValues = typeof initialFormValues;
 type ContactFormErrors = Partial<
   Record<"fullName" | "email" | "phone" | "form", string>
 >;
+
+function DestinationImage({
+  alt,
+  src,
+}: {
+  alt: string;
+  src: string;
+}) {
+  const [imageSrc, setImageSrc] = useState(src);
+
+  useEffect(() => {
+    setImageSrc(src);
+  }, [src]);
+
+  return (
+    <Image
+      src={imageSrc}
+      alt={alt}
+      fill
+      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+      className="destination-image"
+      onError={() => setImageSrc(destinationImageFallback)}
+    />
+  );
+}
 
 export default function Home() {
   const [locale, setLocale] = useState<Locale>(defaultLocale);
@@ -316,13 +343,17 @@ export default function Home() {
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {content.destinations.map((destination) => (
             <article className="destination-card" key={destination.name}>
-              <div
-                className="destination-image"
-                style={{ backgroundImage: `url(${destination.image})` }}
-              />
-              <div>
-                <p>{destination.description}</p>
+              <div className="destination-media">
+                <DestinationImage
+                  alt={destination.name}
+                  src={destination.image}
+                />
+                <div className="destination-overlay" />
                 <h3>{destination.name}</h3>
+              </div>
+              <div className="destination-content">
+                <span />
+                <p>{destination.description}</p>
               </div>
             </article>
           ))}

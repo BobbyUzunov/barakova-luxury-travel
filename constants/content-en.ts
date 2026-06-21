@@ -83,57 +83,49 @@ export const contentEn = {
       name: "Maldives",
       description:
         "Overwater villas, white sand, crystal-clear water, and a complete sense of escape from everyday life.",
-      image:
-        "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/maldives.jpg",
     },
     {
       name: "Dubai",
       description:
         "Luxury hotels, modern architecture, gourmet experiences, and premium urban energy.",
-      image:
-        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/dubai.jpg",
     },
     {
       name: "Bali",
       description:
         "Boutique villas, tropical nature, spiritual atmosphere, and a balance of relaxation and discovery.",
-      image:
-        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/bali.jpg",
     },
     {
       name: "Seychelles",
       description:
         "Wild beaches, tranquility, romance, and one of the most beautiful moods in the Indian Ocean.",
-      image:
-        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/seychelles.jpg",
     },
     {
       name: "Greece",
       description:
         "Boutique islands, sea-inspired cuisine, sunsets, and an elegant Mediterranean atmosphere.",
-      image:
-        "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/greece.jpg",
     },
     {
       name: "Italy",
       description:
         "Culture, romance, beautiful cuisine, lakes, coastlines, and unmistakable Italian style.",
-      image:
-        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/italy.jpg",
     },
     {
       name: "Thailand",
       description:
         "Tropical beaches, temples, spa experiences, islands, and rich local culture.",
-      image:
-        "https://images.unsplash.com/photo-1506665531195-3566af2b4dfa?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/thailand.jpg",
     },
     {
       name: "French Riviera",
       description:
         "European elegance, yachts, sea views, boutique hotels, and classic luxury.",
-      image:
-        "https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=900&q=80",
+      image: "/images/destinations/french-riviera.jpg",
     },
   ],
   trustSection: {
