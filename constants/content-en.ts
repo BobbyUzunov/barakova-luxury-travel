@@ -230,4 +230,24 @@ export const contentEn = {
       reset: "Send another inquiry",
     },
   },
+  footer: {
+    quote: "Your next unforgettable journey begins here.",
+    brandText:
+      "Personal consulting for luxury journeys, selected with attention to every detail.",
+    navigationTitle: "Navigation",
+    contactsTitle: "Contacts",
+    languageTitle: "Languages",
+    languageNames: {
+      bg: "Български",
+      en: "English",
+    },
+    contacts: {
+      email: "bogdana@barakovaluxurytravel.com",
+      whatsapp: "+359XXXXXXXXX",
+      instagram: "@barakovaluxurytravel",
+    },
+    copyright: "© 2026 Barakova Luxury Travel",
+    rights: "All rights reserved.",
+    developerCredit: "Website crafted by Bobby Uzunov",
+  },
 } satisfies SiteContent;

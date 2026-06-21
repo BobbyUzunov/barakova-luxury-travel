@@ -230,4 +230,24 @@ export const contentBg = {
       reset: "Изпрати ново запитване",
     },
   },
+  footer: {
+    quote: "Следващото ви незабравимо пътуване започва оттук.",
+    brandText:
+      "Персонални консултации за луксозни пътувания, подбрани с внимание към всеки детайл.",
+    navigationTitle: "Навигация",
+    contactsTitle: "Контакти",
+    languageTitle: "Езици",
+    languageNames: {
+      bg: "Български",
+      en: "English",
+    },
+    contacts: {
+      email: "bogdana@barakovaluxurytravel.com",
+      whatsapp: "+359XXXXXXXXX",
+      instagram: "@barakovaluxurytravel",
+    },
+    copyright: "© 2026 Barakova Luxury Travel",
+    rights: "Всички права запазени.",
+    developerCredit: "Website crafted by Bobby Uzunov",
+  },
 } satisfies SiteContent;

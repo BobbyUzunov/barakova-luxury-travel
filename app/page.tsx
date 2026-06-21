@@ -615,6 +615,83 @@ export default function Home() {
         </div>
       </section>
 
+      <footer className="site-footer px-5 pb-8 sm:px-8 lg:px-12">
+        <div className="footer-divider mx-auto max-w-7xl" />
+        <p className="footer-quote mx-auto max-w-4xl">
+          {content.footer.quote}
+        </p>
+
+        <div className="footer-panel mx-auto max-w-7xl">
+          <div className="footer-brand">
+            <h2>{content.brand.name}</h2>
+            <p>{content.footer.brandText}</p>
+          </div>
+
+          <div className="footer-column">
+            <h3>{content.footer.navigationTitle}</h3>
+            <div className="footer-links">
+              {content.navItems.map((item) => (
+                <a href={item.href} key={item.label}>
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="footer-column">
+            <h3>{content.footer.contactsTitle}</h3>
+            <div className="footer-links">
+              <a href={`mailto:${content.footer.contacts.email}`}>
+                Email
+              </a>
+              {/* TODO: Replace with real WhatsApp number */}
+              <a href="https://wa.me/359XXXXXXXXX" rel="noreferrer" target="_blank">
+                WhatsApp
+              </a>
+              <a href="#" aria-label="Instagram placeholder">
+                Instagram
+              </a>
+            </div>
+            <div className="footer-contact-meta">
+              <span>{content.footer.contacts.email}</span>
+              <span>{content.footer.contacts.whatsapp}</span>
+              <span>{content.footer.contacts.instagram}</span>
+            </div>
+          </div>
+
+          <div className="footer-column">
+            <h3>{content.footer.languageTitle}</h3>
+            <div className="footer-language-list">
+              {languageOptions.map((option) => (
+                <button
+                  className={locale === option.locale ? "is-active" : ""}
+                  key={option.locale}
+                  onClick={() => setLocale(option.locale)}
+                  type="button"
+                >
+                  {content.footer.languageNames[option.locale]}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom mx-auto max-w-7xl">
+          <div>
+            <p>{content.footer.copyright}</p>
+            <p>{content.footer.rights}</p>
+          </div>
+          <a
+            className="developer-credit"
+            href="https://github.com/BobbyUzunov"
+            rel="noreferrer"
+            target="_blank"
+          >
+            {content.footer.developerCredit}
+          </a>
+        </div>
+      </footer>
+
       {/* TODO: Replace with real WhatsApp number */}
       <a
         aria-label="WhatsApp"

@@ -985,6 +985,131 @@ h2 {
   transform: translateY(-3px);
 }
 
+.site-footer {
+  background:
+    linear-gradient(180deg, rgba(248, 243, 236, 0), rgba(248, 243, 236, 0.82)),
+    var(--ivory);
+}
+
+.footer-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 169, 106, 0.64), transparent);
+}
+
+.footer-quote {
+  padding: 3.5rem 0 2.2rem;
+  color: var(--charcoal);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 9vw, 4.25rem);
+  line-height: 1.04;
+  text-align: center;
+}
+
+.footer-panel {
+  display: grid;
+  gap: 1.4rem;
+  border: 1px solid rgba(200, 169, 106, 0.24);
+  border-radius: 1.45rem;
+  background: rgba(255, 255, 255, 0.62);
+  padding: 1.25rem;
+  box-shadow: 0 22px 64px rgba(45, 42, 38, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+.footer-brand h2 {
+  color: var(--charcoal);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.55rem;
+  line-height: 1.05;
+}
+
+.footer-brand p,
+.footer-contact-meta,
+.footer-bottom {
+  color: rgba(45, 42, 38, 0.58);
+  line-height: 1.7;
+}
+
+.footer-brand p {
+  margin-top: 0.85rem;
+  max-width: 20rem;
+}
+
+.footer-column h3 {
+  color: var(--soft-brown);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.footer-links,
+.footer-language-list,
+.footer-contact-meta {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+
+.footer-links a,
+.footer-language-list button,
+.developer-credit {
+  color: rgba(45, 42, 38, 0.68);
+  font-weight: 750;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.footer-links a {
+  padding: 0.28rem 0;
+}
+
+.footer-links a:hover,
+.developer-credit:hover {
+  color: var(--soft-brown);
+  transform: translateX(2px);
+}
+
+.footer-language-list button {
+  width: fit-content;
+  border: 1px solid rgba(200, 169, 106, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.42);
+  cursor: pointer;
+  padding: 0.62rem 0.9rem;
+}
+
+.footer-language-list button.is-active {
+  border-color: rgba(200, 169, 106, 0.5);
+  background: rgba(200, 169, 106, 0.18);
+  color: var(--charcoal);
+}
+
+.footer-contact-meta {
+  gap: 0.2rem;
+  font-size: 0.84rem;
+}
+
+.footer-bottom {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.25rem 0 0;
+  font-size: 0.82rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+.developer-credit {
+  width: fit-content;
+  color: rgba(45, 42, 38, 0.42);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .animate-rise {
   animation: rise 820ms ease both;
 }
@@ -1169,6 +1294,17 @@ h2 {
   .form-grid-wide {
     grid-column: 1 / -1;
   }
+
+  .footer-panel {
+    grid-template-columns: 1.2fr repeat(3, 1fr);
+    padding: 1.6rem;
+  }
+
+  .footer-bottom {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    padding-top: 1.4rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -1295,6 +1431,16 @@ h2 {
   .whatsapp-button {
     right: 1.35rem;
     bottom: 1.35rem;
+  }
+
+  .footer-panel {
+    border-radius: 2rem;
+    padding: 2rem;
+  }
+
+  .footer-quote {
+    padding-top: 4.5rem;
+    padding-bottom: 2.8rem;
   }
 }
 

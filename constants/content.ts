@@ -99,6 +99,22 @@ export type SiteContent = {
       reset: string;
     };
   };
+  footer: {
+    quote: string;
+    brandText: string;
+    navigationTitle: string;
+    contactsTitle: string;
+    languageTitle: string;
+    languageNames: Record<Locale, string>;
+    contacts: {
+      email: string;
+      whatsapp: string;
+      instagram: string;
+    };
+    copyright: string;
+    rights: string;
+    developerCredit: string;
+  };
 };
 
 export const defaultLocale: Locale = "bg";
