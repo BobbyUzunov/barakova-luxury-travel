@@ -19,6 +19,16 @@ export type Destination = {
   gallery: string[];
 };
 
+export type BlogPost = {
+  title: string;
+  excerpt: string;
+  image: string;
+  date: string;
+  category: string;
+  readTime: string;
+  paragraphs: string[];
+};
+
 export type SignatureDestination = {
   name: string;
   reason: string;
@@ -56,12 +66,20 @@ export type SiteContent = {
   steps: string[];
   destinationsSection: SectionIntro;
   destinations: Destination[];
+  cruisesSection: SectionIntro;
+  cruises: Destination[];
   destinationModal: {
     eyebrow: string;
     highlightsTitle: string;
     galleryTitle: string;
     closeLabel: string;
     cta: string;
+  };
+  blogSection: SectionIntro;
+  blog: {
+    readMoreLabel: string;
+    closeLabel: string;
+    posts: BlogPost[];
   };
   trustSection: SectionIntro;
   trustItems: TitledDescription[];

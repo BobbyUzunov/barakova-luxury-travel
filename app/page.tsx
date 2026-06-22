@@ -5,6 +5,7 @@ import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { contentBg } from "../constants/content-bg";
 import { contentEn } from "../constants/content-en";
 import {
+  type BlogPost,
   defaultLocale,
   type Destination,
   languageOptions,
@@ -75,6 +76,9 @@ export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedDestination, setSelectedDestination] =
     useState<Destination | null>(null);
+  const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(
+    null,
+  );
   const content = useMemo(() => contentByLocale[locale], [locale]);
   const menuLabel = locale === "bg" ? "Меню" : "Menu";
   const closeMenuLabel = locale === "bg" ? "Затвори менюто" : "Close menu";
@@ -92,16 +96,18 @@ export default function Home() {
     window.localStorage.setItem(localeStorageKey, locale);
     document.documentElement.lang = locale;
     setSelectedDestination(null);
+    setSelectedBlogPost(null);
   }, [locale]);
 
   useEffect(() => {
-    if (!selectedDestination) {
+    if (!selectedDestination && !selectedBlogPost) {
       return;
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setSelectedDestination(null);
+        setSelectedBlogPost(null);
       }
     };
 
@@ -113,11 +119,12 @@ export default function Home() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [selectedDestination]);
+  }, [selectedDestination, selectedBlogPost]);
 
   const scrollToContact = () => {
     setIsMenuOpen(false);
     setSelectedDestination(null);
+    setSelectedBlogPost(null);
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -399,6 +406,37 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section-shell" id="cruises">
+        <div className="section-heading">
+          <p>{content.cruisesSection.eyebrow}</p>
+          <h2>{content.cruisesSection.title}</h2>
+          {content.cruisesSection.description && (
+            <span>{content.cruisesSection.description}</span>
+          )}
+        </div>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {content.cruises.map((cruise) => (
+            <button
+              aria-label={`${content.destinationModal.eyebrow}: ${cruise.name}`}
+              className="destination-card cruise-card"
+              key={cruise.name}
+              onClick={() => setSelectedDestination(cruise)}
+              type="button"
+            >
+              <div className="destination-media">
+                <DestinationImage alt={cruise.name} src={cruise.image} />
+                <div className="destination-overlay" />
+                <div className="destination-content">
+                  <h3>{cruise.name}</h3>
+                  <span />
+                  <p>{cruise.description}</p>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
       <section className="section-shell">
         <div className="section-heading">
           <p>{content.trustSection.eyebrow}</p>
@@ -497,6 +535,40 @@ export default function Home() {
                 <small>{content.signature.signature}</small>
               </div>
             </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="blog-section section-shell" id="blog">
+        <div className="section-heading">
+          <p>{content.blogSection.eyebrow}</p>
+          <h2>{content.blogSection.title}</h2>
+          {content.blogSection.description && (
+            <span>{content.blogSection.description}</span>
+          )}
+        </div>
+
+        <div className="blog-grid mt-12">
+          {content.blog.posts.map((post) => (
+            <button
+              aria-label={`${content.blog.readMoreLabel}: ${post.title}`}
+              className="blog-card"
+              key={post.title}
+              onClick={() => setSelectedBlogPost(post)}
+              type="button"
+            >
+              <div className="blog-card-image">
+                <DestinationImage alt={post.title} src={post.image} />
+              </div>
+              <div className="blog-card-copy">
+                <span>{post.category}</span>
+                <h3>{post.title}</h3>
+                <p>{post.excerpt}</p>
+                <small>
+                  {post.date} · {post.readTime}
+                </small>
+              </div>
+            </button>
           ))}
         </div>
       </section>
@@ -834,6 +906,55 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {selectedBlogPost && (
+        <div
+          aria-modal="true"
+          className="destination-modal-backdrop"
+          onClick={() => setSelectedBlogPost(null)}
+          role="dialog"
+        >
+          <article
+            className="blog-modal"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              aria-label={content.blog.closeLabel}
+              className="destination-modal-close"
+              onClick={() => setSelectedBlogPost(null)}
+              type="button"
+            >
+              ×
+            </button>
+
+            <div className="blog-modal-image">
+              <Image
+                alt={selectedBlogPost.title}
+                className="destination-modal-image"
+                fill
+                sizes="(min-width: 1024px) 56vw, 94vw"
+                src={selectedBlogPost.image}
+              />
+            </div>
+
+            <div className="blog-modal-body">
+              <div className="blog-modal-meta">
+                <span>{selectedBlogPost.category}</span>
+                <small>
+                  {selectedBlogPost.date} · {selectedBlogPost.readTime}
+                </small>
+              </div>
+              <h2>{selectedBlogPost.title}</h2>
+              <p className="blog-modal-excerpt">{selectedBlogPost.excerpt}</p>
+              <div className="blog-modal-copy">
+                {selectedBlogPost.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </article>
         </div>
       )}
     </main>

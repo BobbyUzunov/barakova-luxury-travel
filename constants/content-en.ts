@@ -9,7 +9,9 @@ export const contentEn = {
     { label: "Home", href: "#home" },
     { label: "Services", href: "#services" },
     { label: "Destinations", href: "#destinations" },
+    { label: "Cruises", href: "#cruises" },
     { label: "About", href: "#about" },
+    { label: "Journal", href: "#blog" },
     { label: "Contact", href: "#contact" },
   ],
   headerCta: "Send inquiry",
@@ -308,12 +310,191 @@ export const contentEn = {
       ],
     },
   ],
+  cruisesSection: {
+    eyebrow: "Cruises",
+    title: "Premium cruise itineraries",
+    description:
+      "Sea journeys with selected routes, beautiful stops, and a refined sense of comfort on board.",
+  },
+  cruises: [
+    {
+      name: "Mediterranean Cruise",
+      description:
+        "Italy, France, and Spain with an elegant rhythm by the sea.",
+      image:
+        "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "A Mediterranean cruise is ideal for clients who want to combine sea views, beautiful ports, culture, cuisine, and comfortable travel without changing hotels every few days.",
+      highlights: [
+        "Routes through Italy, France, Spain, and beautiful coastal cities",
+        "Comfort on board with different experiences at every stop",
+        "A polished choice for couples, families, and first-time cruise travelers",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Greek Islands",
+      description:
+        "Blue sea, island atmosphere, and romantic views.",
+      image:
+        "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "A Greek Islands cruise brings ease, sunshine, and beautiful stops. It is perfect for travelers who want to see more places while keeping the calm feeling of a holiday.",
+      highlights: [
+        "Santorini, Mykonos, Crete, and smaller island stops",
+        "Mediterranean cuisine, sunsets, and sea views",
+        "A beautiful option for romantic or relaxed summer travel",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Caribbean Cruise",
+      description:
+        "Beaches, warm ocean, and varied island experiences.",
+      image:
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "A Caribbean cruise is made for sun, beautiful beaches, and an effortless atmosphere. The route can include several islands, each with its own character and mood.",
+      highlights: [
+        "Bahamas, Dominican Republic, Mexico, and tropical island stops",
+        "Beaches, lagoons, calm days, and colorful local culture",
+        "A strong winter escape toward warm destinations",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Norwegian Fjords",
+      description:
+        "Majestic nature, silence, and dramatic views.",
+      image:
+        "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "A Norwegian fjords cruise is for clients who want natural beauty, clean air, and a slower, refined travel atmosphere shaped around extraordinary scenery.",
+      highlights: [
+        "Fjords, waterfalls, mountains, and small harbor towns",
+        "Ideal for nature, photography, and quiet travel",
+        "A different kind of luxury focused on views and calm",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Dubai and Arabian Gulf",
+      description:
+        "Modern luxury, skyline views, and warm sea routes.",
+      image:
+        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "This cruise works beautifully in the cooler months, combining urban luxury, sea days, modern architecture, and impressive regional stops.",
+      highlights: [
+        "Dubai, Abu Dhabi, and selected stops in the region",
+        "Luxury hotel stays before or after the cruise",
+        "A compact journey with a rich sense of experience",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1526495124232-a04e1849168c?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Japan and Asia",
+      description:
+        "Culture, modern cities, and carefully selected stops.",
+      image:
+        "https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Cruise routes in Asia can combine Japan, Singapore, China, and other seasonal stops. They are ideal for clients who want culturally rich travel with the comfort of a sea itinerary.",
+      highlights: [
+        "Japan, Singapore, China, and selected Asian ports",
+        "Culture, cuisine, city luxury, and sea travel in one route",
+        "A refined option for clients who want something distinctive and well organized",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+  ],
   destinationModal: {
     eyebrow: "Destination",
     highlightsTitle: "What to expect",
     galleryTitle: "Inspiration",
     closeLabel: "Close destination details",
     cta: "Request a consultation for this destination",
+  },
+  blogSection: {
+    eyebrow: "Journal",
+    title: "Personal travel stories and advice",
+    description:
+      "Stories, ideas, and practical notes from Bogdana Barakova's personal travel experience.",
+  },
+  blog: {
+    readMoreLabel: "Read the article",
+    closeLabel: "Close article",
+    posts: [
+      {
+        title: "How I choose a hotel that is truly worth it",
+        excerpt:
+          "Small details often make the difference between a nice vacation and an experience that stays with you.",
+        image:
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=88",
+        date: "New article",
+        category: "Personal experience",
+        readTime: "4 min read",
+        paragraphs: [
+          "When I choose a hotel, I do not look only at beautiful photos. Location, calm, quality of service, and whether the place matches the travel style all matter.",
+          "Sometimes the best choice is not the most popular hotel, but the one with the right atmosphere for the person traveling. That is why I compare not only price and category, but the complete experience.",
+          "At Barakova Luxury Travel, I select proposals so the client receives not just accommodation, but confidence that the trip has been planned with attention to detail.",
+        ],
+      },
+      {
+        title: "The Maldives beyond the beautiful photos",
+        excerpt:
+          "What matters before choosing an island, villa, and style of experience in the Maldives.",
+        image:
+          "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1200&q=88",
+        date: "Coming soon",
+        category: "Destinations",
+        readTime: "5 min read",
+        paragraphs: [
+          "The Maldives may look equally beautiful in photos, but every island feels different. Some are better for silence and romance, others for families, water sports, or a richer program.",
+          "Transfers, island size, beach quality, restaurants, villa type, and service level all matter. These details shape whether the holiday feels effortless and special.",
+          "My approach is to choose the island around the person, not just around the offer. That is how the Maldives become a personal experience instead of a standard booking.",
+        ],
+      },
+      {
+        title: "Why a personal itinerary changes the entire journey",
+        excerpt:
+          "A tailored route saves time, reduces noise, and makes travel calmer and more meaningful.",
+        image:
+          "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=88",
+        date: "Coming soon",
+        category: "Planning",
+        readTime: "3 min read",
+        paragraphs: [
+          "A well-planned itinerary does not mean every minute has to be filled. It gives structure, calm, and freedom to enjoy the place without unnecessary stress.",
+          "When the route fits your rhythm, interests, and budget, the journey feels much easier. It avoids unsuitable locations, inconvenient transfers, and last-minute random decisions.",
+          "That is why I believe in a personal approach: the beautiful destination is only the beginning, and the true experience comes from arranging the details well.",
+        ],
+      },
+    ],
   },
   trustSection: {
     eyebrow: "Trust",
