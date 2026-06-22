@@ -726,11 +726,11 @@ export default function Home() {
                   />
                 </label>
 
-                <label aria-hidden="true" className="honeypot-field" hidden>
-                  <span>{content.contact.fields.honeypot}</span>
+                <div aria-hidden="true" className="honeypot-field">
                   <input
                     autoComplete="off"
                     aria-hidden="true"
+                    id="website"
                     name="website"
                     onChange={(event) =>
                       updateFormValue("website", event.target.value)
@@ -739,7 +739,7 @@ export default function Home() {
                     type="text"
                     value={formValues.website}
                   />
-                </label>
+                </div>
 
                 {formErrors.form && (
                   <p className="form-submit-error">{formErrors.form}</p>
