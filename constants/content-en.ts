@@ -465,7 +465,6 @@ export const contentEn = {
       phone: "0883 770 909",
       whatsapp: "+359 883 770 909",
       viber: "+359 883 770 909",
-      instagram: "@barakovaluxurytravel",
     },
     copyright: "© 2026 Barakova Luxury Travel",
     rights: "All rights reserved.",

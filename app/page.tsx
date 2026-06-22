@@ -711,29 +711,23 @@ export default function Home() {
 
           <div className="footer-column">
             <h3>{content.footer.contactsTitle}</h3>
-            <div className="footer-links">
+            <div className="footer-contact-meta">
               <a href={`mailto:${contactEmail}`}>
-                Email
+                {content.footer.contacts.email}
               </a>
               <a href={contactPhoneHref}>
-                {locale === "bg" ? "Телефон" : "Phone"}
+                {content.footer.contacts.phone}
               </a>
+            </div>
+            <div className="footer-contact-actions">
               <a href={whatsappHref} rel="noreferrer" target="_blank">
+                <span aria-hidden="true">WA</span>
                 WhatsApp
               </a>
               <a href={viberHref}>
+                <span aria-hidden="true">V</span>
                 Viber
               </a>
-              <a href="#" aria-label="Instagram placeholder">
-                Instagram
-              </a>
-            </div>
-            <div className="footer-contact-meta">
-              <span>{content.footer.contacts.email}</span>
-              <span>{content.footer.contacts.phone}</span>
-              <span>{content.footer.contacts.whatsapp}</span>
-              <span>{content.footer.contacts.viber}</span>
-              <span>{content.footer.contacts.instagram}</span>
             </div>
           </div>
 

@@ -136,7 +136,6 @@ export type SiteContent = {
       phone: string;
       whatsapp: string;
       viber: string;
-      instagram: string;
     };
     copyright: string;
     rights: string;

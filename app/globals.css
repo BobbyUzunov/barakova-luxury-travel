@@ -1427,10 +1427,68 @@ h2 {
   padding: 0.28rem 0;
 }
 
+.footer-contact-meta a {
+  color: rgba(45, 42, 38, 0.62);
+  font-weight: 750;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.footer-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.62rem;
+  margin-top: 1rem;
+}
+
+.footer-contact-actions a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.52rem;
+  border: 1px solid rgba(200, 169, 106, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+  color: rgba(45, 42, 38, 0.72);
+  font-weight: 850;
+  padding: 0.48rem 0.88rem 0.48rem 0.5rem;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.footer-contact-actions span {
+  display: grid;
+  width: 1.85rem;
+  height: 1.85rem;
+  place-items: center;
+  border-radius: 999px;
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+}
+
+.footer-contact-actions a:first-child span {
+  background: linear-gradient(135deg, #2bd46f, #1aa654);
+}
+
+.footer-contact-actions a:last-child span {
+  background: linear-gradient(135deg, #8f5bff, #5b35b5);
+}
+
 .footer-links a:hover,
+.footer-contact-meta a:hover,
+.footer-contact-actions a:hover,
 .developer-credit:hover {
   color: var(--soft-brown);
   transform: translateX(2px);
+}
+
+.footer-contact-actions a:hover {
+  border-color: rgba(200, 169, 106, 0.46);
 }
 
 .footer-language-list button {
