@@ -384,11 +384,11 @@ export default function Home() {
                   src={destination.image}
                 />
                 <div className="destination-overlay" />
-                <h3>{destination.name}</h3>
-              </div>
-              <div className="destination-content">
-                <span />
-                <p>{destination.description}</p>
+                <div className="destination-content">
+                  <h3>{destination.name}</h3>
+                  <span />
+                  <p>{destination.description}</p>
+                </div>
               </div>
             </button>
           ))}
