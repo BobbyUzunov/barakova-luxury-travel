@@ -14,6 +14,9 @@ export type Destination = {
   name: string;
   description: string;
   image: string;
+  detail: string;
+  highlights: string[];
+  gallery: string[];
 };
 
 export type SignatureDestination = {
@@ -53,6 +56,13 @@ export type SiteContent = {
   steps: string[];
   destinationsSection: SectionIntro;
   destinations: Destination[];
+  destinationModal: {
+    eyebrow: string;
+    highlightsTitle: string;
+    galleryTitle: string;
+    closeLabel: string;
+    cta: string;
+  };
   trustSection: SectionIntro;
   trustItems: TitledDescription[];
   profileStats: string[];

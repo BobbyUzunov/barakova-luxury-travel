@@ -85,6 +85,18 @@ export const contentBg = {
       description: "Вили над океана, спокойствие и усещане за пълен лукс.",
       image:
         "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Малдивите са избор за пътуване, в което времето се забавя. Подходящи са за романтична почивка, меден месец или пълно откъсване в resort с висок стандарт, лично пространство и безупречно обслужване.",
+      highlights: [
+        "Вили над океана и директен достъп до лагуната",
+        "Идеални условия за романтична и спокойна почивка",
+        "Премиум resort преживяване с фокус върху детайла",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Сейшели",
@@ -92,6 +104,18 @@ export const contentBg = {
         "Една от най-красивите островни дестинации в света.",
       image:
         "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Сейшелите носят усещане за естествена, тиха елегантност. Дестинацията е подходяща за двойки и пътешественици, които търсят романтика, впечатляващи плажове и островна атмосфера без излишна показност.",
+      highlights: [
+        "Екзотични плажове, гранитни скали и кристална вода",
+        "Бутикови хотели с много лично пространство",
+        "Подходящи за романтични и специални поводи",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Бали",
@@ -99,6 +123,18 @@ export const contentBg = {
         "Бутикови вили, екзотика и незабравими гледки.",
       image:
         "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Бали е дестинация за хора, които искат повече от плаж. Тук luxury вилите, природата, културата и спокойният ритъм създават пътуване с характер, подходящо както за релакс, така и за преживявания.",
+      highlights: [
+        "Бутикови вили, infinity басейни и гледки към джунглата",
+        "Комбинация от култура, природа и wellness атмосфера",
+        "Гъвкави маршрути между плаж, храмове и вътрешността на острова",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Мавриций",
@@ -106,6 +142,18 @@ export const contentBg = {
         "Перфектна комбинация между релакс и премиум обслужване.",
       image:
         "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Мавриций е балансиран избор за луксозна почивка с красиви лагуни, зелена природа и resort обслужване. Подходящ е за двойки, семейства и клиенти, които искат комфорт без прекалено дълго планиране.",
+      highlights: [
+        "Лагуни, плажове и спокойна тропическа атмосфера",
+        "Премиум хотели с много удобства за различен тип пътуване",
+        "Добър баланс между релакс, природа и обслужване",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1540202404-a2f29016b523?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1520454974749-611b7248ffdb?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Занзибар",
@@ -113,6 +161,18 @@ export const contentBg = {
         "Тропически плажове и автентична островна атмосфера.",
       image:
         "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Занзибар съчетава красиви плажове, топъл океан и автентична култура. Това е дестинация за клиенти, които искат екзотика, но и усещане за местен живот, цветове и островен ритъм.",
+      highlights: [
+        "Бели плажове и топла тропическа вода",
+        "Автентична атмосфера и възможност за културни преживявания",
+        "Подходящ за комбиниране с сафари или по-дълъг маршрут",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Санторини",
@@ -120,6 +180,18 @@ export const contentBg = {
         "Романтика, залези и емблематични гледки към Егейско море.",
       image:
         "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Санторини е класика за романтично пътуване с красиви гледки, бутикови хотели и вечерна атмосфера. Подходящ е за кратко premium бягство, годишнина или част от по-голям гръцки маршрут.",
+      highlights: [
+        "Бели къщи, залези и гледки към калдерата",
+        "Бутикови хотели с private terraces и басейни",
+        "Идеален избор за романтични поводи",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Дубай",
@@ -127,6 +199,18 @@ export const contentBg = {
         "Съвременен лукс, впечатляваща архитектура и световна класа хотели.",
       image:
         "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Дубай е дестинация за клиенти, които харесват модерна енергия, висок стандарт и разнообразие. Подходящ е за luxury хотели, гурме преживявания, shopping, плаж и впечатляващи градски гледки.",
+      highlights: [
+        "Световна класа хотели, ресторанти и rooftop преживявания",
+        "Плаж, city break и premium lifestyle в едно пътуване",
+        "Подходящ за кратки луксозни бягства през зимния сезон",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1526495124232-a04e1849168c?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Амалфи и Капри",
@@ -134,8 +218,27 @@ export const contentBg = {
         "Италианска елегантност, крайбрежни пейзажи и изключителна кухня.",
       image:
         "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Амалфи и Капри са за хора, които търсят европейска елегантност, морски гледки и гастрономия. Пътуването може да бъде изградено като романтично бягство, boutique маршрут или част от по-дълга италианска ваканция.",
+      highlights: [
+        "Средиземноморски лукс, морски гледки и красиви градчета",
+        "Бутикови хотели, лодки и кулинарни преживявания",
+        "Подходящо за романтични и lifestyle пътувания",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
   ],
+  destinationModal: {
+    eyebrow: "Дестинация",
+    highlightsTitle: "Какво да очаквате",
+    galleryTitle: "Вдъхновение",
+    closeLabel: "Затвори прозореца",
+    cta: "Заяви консултация за тази дестинация",
+  },
   trustSection: {
     eyebrow: "Доверие",
     title: "Защо клиентите избират Barakova Luxury Travel",

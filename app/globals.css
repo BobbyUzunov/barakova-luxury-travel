@@ -57,7 +57,7 @@ h2 {
 .brand-lockup {
   display: inline-flex;
   flex-direction: column;
-  max-width: min(50vw, 12rem);
+  max-width: min(58vw, 16.5rem);
   min-width: 0;
   color: var(--charcoal);
   line-height: 1.05;
@@ -66,9 +66,9 @@ h2 {
 
 .brand-lockup span {
   font-family: Georgia, "Times New Roman", serif;
-  overflow: hidden;
   font-size: clamp(0.82rem, 3.9vw, 1rem);
-  text-overflow: ellipsis;
+  overflow: visible;
+  text-overflow: clip;
   white-space: nowrap;
 }
 
@@ -530,10 +530,14 @@ h2 {
 .destination-card {
   position: relative;
   overflow: hidden;
+  width: 100%;
   border: 1px solid rgba(200, 169, 106, 0.22);
   border-radius: 1.25rem;
   background: rgba(255, 255, 255, 0.82);
   color: var(--charcoal);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
   box-shadow: 0 22px 64px rgba(45, 42, 38, 0.11);
   transition:
     border-color 240ms ease,
@@ -541,10 +545,16 @@ h2 {
     transform 240ms ease;
 }
 
-.destination-card:hover {
+.destination-card:hover,
+.destination-card:focus-visible {
   border-color: rgba(200, 169, 106, 0.5);
   box-shadow: 0 34px 90px rgba(45, 42, 38, 0.16);
   transform: translateY(-7px);
+}
+
+.destination-card:focus-visible {
+  outline: 3px solid rgba(200, 169, 106, 0.34);
+  outline-offset: 5px;
 }
 
 .destination-media {
@@ -602,6 +612,197 @@ h2 {
   font-size: 0.92rem;
   font-weight: 650;
   line-height: 1.52;
+}
+
+.destination-modal-backdrop {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(45, 42, 38, 0.34);
+  backdrop-filter: blur(18px);
+}
+
+.destination-modal {
+  position: relative;
+  width: min(70rem, 100%);
+  max-height: min(90svh, 58rem);
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 1.35rem;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 243, 236, 0.94)),
+    var(--ivory);
+  box-shadow: 0 36px 120px rgba(45, 42, 38, 0.28);
+}
+
+.destination-modal-close {
+  position: absolute;
+  z-index: 4;
+  top: 0.85rem;
+  right: 0.85rem;
+  display: inline-flex;
+  width: 2.6rem;
+  height: 2.6rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  background: rgba(248, 243, 236, 0.84);
+  color: var(--charcoal);
+  cursor: pointer;
+  font-size: 1.55rem;
+  line-height: 1;
+  box-shadow: 0 12px 34px rgba(45, 42, 38, 0.12);
+  backdrop-filter: blur(14px);
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.destination-modal-close:hover,
+.destination-modal-close:focus-visible {
+  background: white;
+  transform: scale(1.04);
+}
+
+.destination-modal-hero {
+  position: relative;
+  min-height: 22rem;
+  overflow: hidden;
+  background: var(--warm-beige);
+}
+
+.destination-modal-image {
+  object-fit: cover;
+  object-position: center;
+}
+
+.destination-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(45, 42, 38, 0.05), rgba(45, 42, 38, 0.72)),
+    linear-gradient(90deg, rgba(45, 42, 38, 0.56), rgba(45, 42, 38, 0.08));
+}
+
+.destination-modal-title {
+  position: absolute;
+  z-index: 2;
+  right: 1.35rem;
+  bottom: 1.35rem;
+  left: 1.35rem;
+  max-width: 44rem;
+  color: white;
+}
+
+.destination-modal-title span {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.destination-modal-title h2 {
+  margin-top: 0.55rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.6rem, 10vw, 5rem);
+  line-height: 0.92;
+  text-shadow: 0 16px 32px rgba(0, 0, 0, 0.24);
+}
+
+.destination-modal-title p {
+  max-width: 34rem;
+  margin-top: 0.9rem;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: clamp(1rem, 2.4vw, 1.16rem);
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.destination-modal-body {
+  display: grid;
+  gap: 1.4rem;
+  padding: 1.2rem;
+}
+
+.destination-modal-copy {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.destination-modal-copy > p {
+  color: rgba(45, 42, 38, 0.72);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.destination-modal-highlights {
+  border: 1px solid rgba(200, 169, 106, 0.22);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.58);
+  padding: 1.05rem;
+}
+
+.destination-modal-highlights h3,
+.destination-modal-gallery h3 {
+  color: var(--soft-brown);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.destination-modal-highlights ul {
+  display: grid;
+  gap: 0.76rem;
+  margin-top: 0.9rem;
+}
+
+.destination-modal-highlights li {
+  position: relative;
+  padding-left: 1.15rem;
+  color: rgba(45, 42, 38, 0.72);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.destination-modal-highlights li::before {
+  position: absolute;
+  top: 0.68em;
+  left: 0;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: var(--champagne);
+  content: "";
+}
+
+.destination-modal-cta {
+  width: 100%;
+}
+
+.destination-modal-gallery {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.destination-modal-gallery > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.62rem;
+}
+
+.destination-gallery-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 0.95rem;
+  background: var(--warm-beige);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
 .about-panel {
@@ -1379,6 +1580,27 @@ h2 {
     aspect-ratio: 16 / 12;
   }
 
+  .destination-modal-backdrop {
+    padding: 1.5rem;
+  }
+
+  .destination-modal {
+    border-radius: 1.65rem;
+  }
+
+  .destination-modal-hero {
+    min-height: 26rem;
+  }
+
+  .destination-modal-body {
+    gap: 1.8rem;
+    padding: 1.6rem;
+  }
+
+  .destination-modal-copy > p {
+    font-size: 1.06rem;
+  }
+
   .profile-gallery {
     grid-template-columns: 1fr;
   }
@@ -1437,16 +1659,20 @@ h2 {
 
 @media (min-width: 1024px) {
   .site-header {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(14.5rem, auto) minmax(0, 1fr) auto;
     border-radius: 999px;
     padding: 0.75rem 0.8rem 0.75rem 1.35rem;
+  }
+
+  .brand-lockup {
+    max-width: 16.5rem;
   }
 
   .header-nav {
     grid-column: auto;
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: clamp(1rem, 1.8vw, 2rem);
     padding: 0;
   }
 
@@ -1461,6 +1687,25 @@ h2 {
 
   .header-nav a {
     font-size: 0.86rem;
+  }
+
+  .destination-modal-body {
+    grid-template-columns: minmax(0, 1.05fr) minmax(20rem, 0.95fr);
+    padding: 2rem;
+  }
+
+  .destination-modal-hero {
+    min-height: 30rem;
+  }
+
+  .destination-modal-title {
+    right: 2rem;
+    bottom: 2rem;
+    left: 2rem;
+  }
+
+  .destination-modal-cta {
+    width: fit-content;
   }
 
   .section-shell {

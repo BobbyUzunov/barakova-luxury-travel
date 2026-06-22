@@ -6,6 +6,7 @@ import { contentBg } from "../constants/content-bg";
 import { contentEn } from "../constants/content-en";
 import {
   defaultLocale,
+  type Destination,
   languageOptions,
   type Locale,
 } from "../constants/content";
@@ -68,6 +69,8 @@ export default function Home() {
   const [formErrors, setFormErrors] = useState<ContactFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [selectedDestination, setSelectedDestination] =
+    useState<Destination | null>(null);
   const content = useMemo(() => contentByLocale[locale], [locale]);
   const menuLabel = locale === "bg" ? "Меню" : "Menu";
   const closeMenuLabel = locale === "bg" ? "Затвори менюто" : "Close menu";
@@ -84,10 +87,33 @@ export default function Home() {
   useEffect(() => {
     window.localStorage.setItem(localeStorageKey, locale);
     document.documentElement.lang = locale;
+    setSelectedDestination(null);
   }, [locale]);
+
+  useEffect(() => {
+    if (!selectedDestination) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedDestination(null);
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedDestination]);
 
   const scrollToContact = () => {
     setIsMenuOpen(false);
+    setSelectedDestination(null);
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -342,7 +368,13 @@ export default function Home() {
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {content.destinations.map((destination) => (
-            <article className="destination-card" key={destination.name}>
+            <button
+              aria-label={`${content.destinationModal.eyebrow}: ${destination.name}`}
+              className="destination-card"
+              key={destination.name}
+              onClick={() => setSelectedDestination(destination)}
+              type="button"
+            >
               <div className="destination-media">
                 <DestinationImage
                   alt={destination.name}
@@ -355,7 +387,7 @@ export default function Home() {
                 <span />
                 <p>{destination.description}</p>
               </div>
-            </article>
+            </button>
           ))}
         </div>
       </section>
@@ -733,6 +765,83 @@ export default function Home() {
       >
         WA
       </a>
+
+      {selectedDestination && (
+        <div
+          aria-modal="true"
+          className="destination-modal-backdrop"
+          onClick={() => setSelectedDestination(null)}
+          role="dialog"
+        >
+          <div
+            className="destination-modal"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              aria-label={content.destinationModal.closeLabel}
+              className="destination-modal-close"
+              onClick={() => setSelectedDestination(null)}
+              type="button"
+            >
+              ×
+            </button>
+
+            <div className="destination-modal-hero">
+              <Image
+                alt={selectedDestination.name}
+                className="destination-modal-image"
+                fill
+                sizes="(min-width: 1024px) 58vw, 94vw"
+                src={selectedDestination.image}
+              />
+              <div className="destination-modal-overlay" />
+              <div className="destination-modal-title">
+                <span>{content.destinationModal.eyebrow}</span>
+                <h2>{selectedDestination.name}</h2>
+                <p>{selectedDestination.description}</p>
+              </div>
+            </div>
+
+            <div className="destination-modal-body">
+              <div className="destination-modal-copy">
+                <p>{selectedDestination.detail}</p>
+                <div className="destination-modal-highlights">
+                  <h3>{content.destinationModal.highlightsTitle}</h3>
+                  <ul>
+                    {selectedDestination.highlights.map((highlight) => (
+                      <li key={highlight}>{highlight}</li>
+                    ))}
+                  </ul>
+                </div>
+                <button
+                  className="btn-primary destination-modal-cta"
+                  onClick={scrollToContact}
+                  type="button"
+                >
+                  {content.destinationModal.cta}
+                </button>
+              </div>
+
+              <div className="destination-modal-gallery">
+                <h3>{content.destinationModal.galleryTitle}</h3>
+                <div>
+                  {selectedDestination.gallery.map((image, index) => (
+                    <div className="destination-gallery-item" key={image}>
+                      <Image
+                        alt={`${selectedDestination.name} ${index + 1}`}
+                        className="destination-modal-image"
+                        fill
+                        sizes="(min-width: 1024px) 16vw, (min-width: 640px) 28vw, 44vw"
+                        src={image}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

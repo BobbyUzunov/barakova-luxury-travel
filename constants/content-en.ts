@@ -85,6 +85,18 @@ export const contentEn = {
         "Overwater villas, serenity, and a complete feeling of luxury.",
       image:
         "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "The Maldives are made for slowing down. This is a refined choice for romance, honeymoons, and private resort escapes where space, service, and the feeling of calm matter most.",
+      highlights: [
+        "Overwater villas with direct lagoon access",
+        "A serene setting for romantic and restorative travel",
+        "Premium resort service shaped around privacy and comfort",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Seychelles",
@@ -92,6 +104,18 @@ export const contentEn = {
         "One of the most beautiful island destinations in the world.",
       image:
         "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Seychelles feel naturally elegant and quietly romantic. They are perfect for clients looking for extraordinary beaches, privacy, and a softer island experience away from mass tourism.",
+      highlights: [
+        "Iconic beaches, granite rocks, and crystal-clear water",
+        "Boutique hotels with a strong sense of privacy",
+        "A beautiful choice for romance and special occasions",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Bali",
@@ -99,6 +123,18 @@ export const contentEn = {
         "Boutique villas, exotic atmosphere, and unforgettable views.",
       image:
         "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Bali is for travelers who want more than a beach escape. Private villas, nature, culture, and a slower rhythm create a journey with character and a beautiful balance between relaxation and discovery.",
+      highlights: [
+        "Boutique villas, infinity pools, and jungle views",
+        "A blend of culture, nature, and wellness atmosphere",
+        "Flexible routes between beaches, temples, and inland escapes",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Mauritius",
@@ -106,6 +142,18 @@ export const contentEn = {
         "A perfect combination of relaxation and premium service.",
       image:
         "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Mauritius offers a polished balance of tropical lagoons, green landscapes, and resort comfort. It works beautifully for couples, families, and clients who want a high-standard holiday that feels effortless.",
+      highlights: [
+        "Lagoons, beaches, and a calm tropical atmosphere",
+        "Premium hotels with thoughtful comfort for different travel styles",
+        "A refined balance of relaxation, nature, and service",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1540202404-a2f29016b523?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1520454974749-611b7248ffdb?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Zanzibar",
@@ -113,6 +161,18 @@ export const contentEn = {
         "Tropical beaches and an authentic island atmosphere.",
       image:
         "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Zanzibar combines beautiful beaches, warm ocean water, and an authentic cultural rhythm. It is a destination for travelers who want tropical beauty with color, local character, and a sense of place.",
+      highlights: [
+        "White beaches and warm tropical water",
+        "Authentic atmosphere and cultural experiences",
+        "A strong choice for combining beach time with a wider itinerary",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Santorini",
@@ -120,6 +180,18 @@ export const contentEn = {
         "Romance, sunsets, and iconic views of the Aegean Sea.",
       image:
         "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Santorini is a timeless choice for romance, sunsets, boutique hotels, and Aegean views. It works well as a premium short escape, an anniversary trip, or part of a longer Greek itinerary.",
+      highlights: [
+        "White architecture, sunsets, and caldera views",
+        "Boutique hotels with private terraces and pools",
+        "A natural fit for romantic occasions",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Dubai",
@@ -127,6 +199,18 @@ export const contentEn = {
         "Modern luxury, impressive architecture, and world-class hotels.",
       image:
         "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Dubai is ideal for clients who enjoy modern energy, high standards, and variety. It brings together luxury hotels, dining, shopping, beaches, and dramatic skyline views in one polished destination.",
+      highlights: [
+        "World-class hotels, restaurants, and rooftop experiences",
+        "Beach, city break, and premium lifestyle in one trip",
+        "A strong winter-season option for a short luxury escape",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1526495124232-a04e1849168c?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
     {
       name: "Amalfi and Capri",
@@ -134,8 +218,27 @@ export const contentEn = {
         "Italian elegance, coastal landscapes, and exceptional cuisine.",
       image:
         "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Amalfi and Capri are made for travelers who love European elegance, sea views, and gastronomy. The journey can become a romantic escape, a boutique coastal itinerary, or part of a wider Italian holiday.",
+      highlights: [
+        "Mediterranean luxury, sea views, and beautiful coastal towns",
+        "Boutique hotels, boat days, and culinary experiences",
+        "A refined choice for romantic and lifestyle travel",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=88",
+      ],
     },
   ],
+  destinationModal: {
+    eyebrow: "Destination",
+    highlightsTitle: "What to expect",
+    galleryTitle: "Inspiration",
+    closeLabel: "Close destination details",
+    cta: "Request a consultation for this destination",
+  },
   trustSection: {
     eyebrow: "Trust",
     title: "Why clients choose Barakova Luxury Travel",
