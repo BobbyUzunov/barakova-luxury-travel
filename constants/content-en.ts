@@ -314,13 +314,13 @@ export const contentEn = {
     eyebrow: "Cruises",
     title: "Premium cruise itineraries",
     description:
-      "Sea journeys with selected routes, beautiful stops, and a refined sense of comfort on board.",
+      "Selected sea itineraries shaped for effortless travel, refined rhythm, and a beautifully arranged experience.",
   },
   cruises: [
     {
       name: "Mediterranean Cruise",
       description:
-        "Italy, France, and Spain with an elegant rhythm by the sea.",
+        "Italy, France, and Spain in an elegant rhythm by the sea.",
       image:
         "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1200&q=88",
       detail:
@@ -339,7 +339,7 @@ export const contentEn = {
     {
       name: "Greek Islands",
       description:
-        "Blue sea, island atmosphere, and romantic views.",
+        "Island ease, whitewashed views, sunsets, and calm days at sea.",
       image:
         "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1200&q=88",
       detail:
@@ -358,7 +358,7 @@ export const contentEn = {
     {
       name: "Caribbean Cruise",
       description:
-        "Beaches, warm ocean, and varied island experiences.",
+        "Warm ocean, soft beaches, and colorful island stops.",
       image:
         "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88",
       detail:
@@ -377,7 +377,7 @@ export const contentEn = {
     {
       name: "Norwegian Fjords",
       description:
-        "Majestic nature, silence, and dramatic views.",
+        "Silence, dramatic fjords, and scenery that stays with you.",
       image:
         "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=88",
       detail:
@@ -396,7 +396,7 @@ export const contentEn = {
     {
       name: "Dubai and Arabian Gulf",
       description:
-        "Modern luxury, skyline views, and warm sea routes.",
+        "Modern luxury, warm weather, and striking city horizons.",
       image:
         "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=88",
       detail:
@@ -415,7 +415,7 @@ export const contentEn = {
     {
       name: "Japan and Asia",
       description:
-        "Culture, modern cities, and carefully selected stops.",
+        "Culture, precision, and selected stops with a distinct rhythm.",
       image:
         "https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1200&q=88",
       detail:
@@ -443,7 +443,7 @@ export const contentEn = {
     eyebrow: "Journal",
     title: "Personal travel stories and advice",
     description:
-      "Stories, ideas, and practical notes from Bogdana Barakova's personal travel experience.",
+      "Personal notes, inspiration, and carefully selected advice for calmer, more meaningful travel.",
   },
   blog: {
     readMoreLabel: "Read the article",
@@ -452,7 +452,7 @@ export const contentEn = {
       {
         title: "How I choose a hotel that is truly worth it",
         excerpt:
-          "Small details often make the difference between a nice vacation and an experience that stays with you.",
+          "On atmosphere, location, and the quiet details that turn a stay into a real experience.",
         image:
           "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=88",
         date: "New article",
@@ -467,7 +467,7 @@ export const contentEn = {
       {
         title: "The Maldives beyond the beautiful photos",
         excerpt:
-          "What matters before choosing an island, villa, and style of experience in the Maldives.",
+          "How to choose the right island, the right villa style, and the feeling that best fits your escape.",
         image:
           "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1200&q=88",
         date: "Coming soon",
@@ -482,7 +482,7 @@ export const contentEn = {
       {
         title: "Why a personal itinerary changes the entire journey",
         excerpt:
-          "A tailored route saves time, reduces noise, and makes travel calmer and more meaningful.",
+          "A well-shaped route brings calm, ease, and more space for the moments that truly matter.",
         image:
           "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=88",
         date: "Coming soon",
@@ -609,7 +609,6 @@ export const contentEn = {
       travelers: "Number of travelers",
       budget: "Approximate budget",
       message: "Message",
-      honeypot: "Website",
     },
     placeholders: {
       message: "Briefly tell us what you are looking for...",

@@ -596,6 +596,15 @@ h2 {
   aspect-ratio: 16 / 13;
 }
 
+.cruise-card .destination-content p {
+  max-width: 28rem;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.94rem;
+  font-weight: 520;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
 .blog-section {
   position: relative;
 }
@@ -661,32 +670,34 @@ h2 {
 .blog-card-copy > span,
 .blog-modal-meta span {
   width: fit-content;
-  border-bottom: 1px solid rgba(200, 169, 106, 0.72);
-  color: var(--soft-brown);
-  font-size: 0.75rem;
-  font-weight: 850;
-  letter-spacing: 0.14em;
+  border-bottom: 1px solid rgba(200, 169, 106, 0.58);
+  color: rgba(122, 102, 82, 0.86);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .blog-card-copy h3 {
   color: var(--charcoal);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.65rem, 8vw, 2.1rem);
-  line-height: 1.04;
+  font-size: clamp(1.8rem, 8vw, 2.28rem);
+  line-height: 1.02;
 }
 
 .blog-card-copy p {
-  color: rgba(45, 42, 38, 0.68);
-  font-size: 0.97rem;
-  font-weight: 600;
-  line-height: 1.65;
+  max-width: 34rem;
+  color: rgba(45, 42, 38, 0.62);
+  font-size: 0.96rem;
+  font-weight: 450;
+  line-height: 1.78;
 }
 
 .blog-card-copy small {
-  color: rgba(122, 102, 82, 0.72);
-  font-size: 0.84rem;
-  font-weight: 800;
+  color: rgba(122, 102, 82, 0.68);
+  font-size: 0.78rem;
+  font-weight: 760;
+  letter-spacing: 0.02em;
 }
 
 .destination-content h3 {

@@ -128,6 +128,13 @@ export default function Home() {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const scrollToDestinations = () => {
+    setIsMenuOpen(false);
+    document
+      .getElementById("destinations")
+      ?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const validateForm = () => {
     const nextErrors: ContactFormErrors = {};
 
@@ -325,7 +332,11 @@ export default function Home() {
               >
                 {content.hero.primaryCta}
               </button>
-              <button className="btn-secondary" type="button">
+              <button
+                className="btn-secondary"
+                onClick={scrollToDestinations}
+                type="button"
+              >
                 {content.hero.secondaryCta}
               </button>
             </div>

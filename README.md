@@ -36,6 +36,29 @@ npm run build
 
 Проектът е подготвен за Vercel.
 
+Production домейн:
+
+```bash
+https://barakovaluxurytravel.com
+```
+
+## Environment Variables
+
+За контакт формата във Vercel:
+
+```bash
+RESEND_API_KEY=
+CONTACT_RECIPIENT_EMAIL=bbmobile6666@gmail.com
+RESEND_FROM_EMAIL=Barakova Luxury Travel <onboarding@resend.dev>
+NEXT_PUBLIC_GA_ID=
+```
+
+След верифициране на домейна в Resend, `RESEND_FROM_EMAIL` може да бъде сменен към адрес от домейна, например:
+
+```bash
+RESEND_FROM_EMAIL=Barakova Luxury Travel <noreply@barakovaluxurytravel.com>
+```
+
 ## GitHub repository
 
 Препоръчително име на repository:

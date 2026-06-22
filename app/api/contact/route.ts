@@ -14,11 +14,17 @@ type ContactRequestBody = {
 };
 
 const resendApiUrl = "https://api.resend.com/emails";
-const recipientEmail = "bbmobile6666@gmail.com";
-const senderEmail = "Barakova Luxury Travel <onboarding@resend.dev>";
+const recipientEmail =
+  process.env.CONTACT_RECIPIENT_EMAIL || "bbmobile6666@gmail.com";
+const senderEmail =
+  process.env.RESEND_FROM_EMAIL ||
+  "Barakova Luxury Travel <onboarding@resend.dev>";
 const rateLimitWindowMs = 60_000;
 const maxRequestsPerWindow = 5;
 const requestLog = new Map<string, { count: number; resetAt: number }>();
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const maxFieldLength = 500;
+const maxMessageLength = 4000;
 
 const fieldLabels: Record<keyof Omit<ContactRequestBody, "website">, string> = {
   fullName: "Име и фамилия",
@@ -62,6 +68,29 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#039;");
 }
 
+function normalizeText(value: unknown, maxLength = maxFieldLength) {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+
+  return value.trim().slice(0, maxLength);
+}
+
+function normalizeBody(body: ContactRequestBody): ContactRequestBody {
+  return {
+    fullName: normalizeText(body.fullName),
+    email: normalizeText(body.email),
+    phone: normalizeText(body.phone),
+    destination: normalizeText(body.destination),
+    travelPeriod: normalizeText(body.travelPeriod),
+    travelers: normalizeText(body.travelers),
+    budget: normalizeText(body.budget),
+    message: normalizeText(body.message, maxMessageLength),
+    website: normalizeText(body.website),
+    locale: normalizeText(body.locale, 8),
+  };
+}
+
 function buildEmailHtml(body: ContactRequestBody) {
   const rows = Object.entries(fieldLabels)
     .map(([field, label]) => {
@@ -101,16 +130,32 @@ export async function POST(request: Request) {
     );
   }
 
-  const body = (await request.json()) as ContactRequestBody;
+  let body: ContactRequestBody;
+
+  try {
+    body = normalizeBody((await request.json()) as ContactRequestBody);
+  } catch {
+    return NextResponse.json(
+      { message: "Invalid request body." },
+      { status: 400 },
+    );
+  }
 
   // Spam protection placeholder: replace with Turnstile/reCAPTCHA or Vercel BotID.
   if (body.website) {
     return NextResponse.json({ ok: true });
   }
 
-  if (!body.fullName?.trim() || !body.email?.trim() || !body.phone?.trim()) {
+  if (!body.fullName || !body.email || !body.phone) {
     return NextResponse.json(
       { message: "Missing required fields." },
+      { status: 400 },
+    );
+  }
+
+  if (!emailPattern.test(body.email)) {
+    return NextResponse.json(
+      { message: "Invalid email address." },
       { status: 400 },
     );
   }

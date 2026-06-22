@@ -122,7 +122,6 @@ export type SiteContent = {
       travelers: string;
       budget: string;
       message: string;
-      honeypot: string;
     };
     placeholders: {
       message: string;
