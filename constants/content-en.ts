@@ -251,32 +251,32 @@ export const contentEn = {
       ],
     },
     {
-      name: "Miami",
+      name: "Singapore",
       description:
-        "Oceanfront hotels, design, art districts, and premium city energy.",
+        "Futuristic architecture, lush gardens, fine dining, and flawless order.",
       image:
-        "https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1200&q=88",
       detail:
-        "Miami blends beach life, city style, dining, and modern lifestyle. It is made for clients who want energy, comfort, oceanfront hotels, and a city break with a luxury feel.",
+        "Singapore is made for clients seeking urban luxury, cleanliness, impressive architecture, and world-class dining. It works beautifully as a premium city escape or as an elegant stop on a wider Asia itinerary.",
       highlights: [
-        "Beach, design hotels, and a modern urban atmosphere",
-        "Dining, shopping, art districts, and rooftop experiences",
-        "A stylish destination with a dynamic rhythm",
+        "Luxury hotels, skyline views, and a refined city atmosphere",
+        "Fine dining, boutiques, gardens, and cultural districts",
+        "Ideal for a stylish city stay or a stopover toward Asia",
       ],
       gallery: [
-        "https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1400&q=88",
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=88",
-        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1508964942454-1a56651d54ac?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1565967511849-76a60a516170?auto=format&fit=crop&w=1200&q=88",
       ],
     },
     {
-      name: "United States",
+      name: "USA",
       description:
         "Iconic cities, road trips, nature, and premium experiences.",
       image:
         "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1200&q=88",
       detail:
-        "The United States can become many different luxury journeys: New York, California, national parks, road trips, or a blend of city, nature, and lifestyle. It is perfect for a fully personalized itinerary.",
+        "The USA can become many different luxury journeys: New York, California, national parks, road trips, or a blend of city, nature, and lifestyle. It is perfect for a fully personalized itinerary.",
       highlights: [
         "Major cities, hotels, culture, and landmark experiences",
         "Flexible routing shaped around personal travel interests",

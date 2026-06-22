@@ -650,10 +650,11 @@ export default function Home() {
                   />
                 </label>
 
-                <label className="honeypot-field" aria-hidden="true">
+                <label aria-hidden="true" className="honeypot-field" hidden>
                   <span>{content.contact.fields.honeypot}</span>
                   <input
                     autoComplete="off"
+                    aria-hidden="true"
                     name="website"
                     onChange={(event) =>
                       updateFormValue("website", event.target.value)
