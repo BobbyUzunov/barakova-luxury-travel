@@ -225,6 +225,9 @@ export default function Home() {
                     }}
                     type="button"
                   >
+                    <span aria-hidden="true" className="language-flag">
+                      {option.flag}
+                    </span>
                     {option.label}
                   </button>
                 </span>

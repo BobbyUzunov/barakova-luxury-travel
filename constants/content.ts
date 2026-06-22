@@ -144,9 +144,9 @@ export type SiteContent = {
 
 export const defaultLocale: Locale = "bg";
 
-export const languageOptions: { label: string; locale: Locale }[] = [
-  { label: "BG", locale: "bg" },
-  { label: "EN", locale: "en" },
+export const languageOptions: { flag: string; label: string; locale: Locale }[] = [
+  { flag: "🇧🇬", label: "BG", locale: "bg" },
+  { flag: "🇬🇧", label: "EN", locale: "en" },
 ];
 
 export const futureLocalePaths: Record<Locale, string> = {
