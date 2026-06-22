@@ -14,7 +14,7 @@ type ContactRequestBody = {
 };
 
 const resendApiUrl = "https://api.resend.com/emails";
-const recipientEmail = "bogdana@barakovaluxurytravel.com";
+const recipientEmail = "bbmobile6666@gmail.com";
 const senderEmail = "Barakova Luxury Travel <onboarding@resend.dev>";
 const rateLimitWindowMs = 60_000;
 const maxRequestsPerWindow = 5;

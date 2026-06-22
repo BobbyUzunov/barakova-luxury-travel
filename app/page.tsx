@@ -17,6 +17,10 @@ const contentByLocale = {
 } as const;
 
 const localeStorageKey = "barakova-luxury-travel-locale";
+const contactEmail = "bbmobile6666@gmail.com";
+const contactPhoneHref = "tel:+359883770909";
+const whatsappHref = "https://wa.me/359883770909";
+const viberHref = "viber://chat?number=%2B359883770909";
 // TODO: Replace this fallback after all destination photos are uploaded.
 const destinationImageFallback = "/hero-bogdana-beach.jpeg";
 const initialFormValues = {
@@ -708,12 +712,17 @@ export default function Home() {
           <div className="footer-column">
             <h3>{content.footer.contactsTitle}</h3>
             <div className="footer-links">
-              <a href={`mailto:${content.footer.contacts.email}`}>
+              <a href={`mailto:${contactEmail}`}>
                 Email
               </a>
-              {/* TODO: Replace with real WhatsApp number */}
-              <a href="https://wa.me/359XXXXXXXXX" rel="noreferrer" target="_blank">
+              <a href={contactPhoneHref}>
+                {locale === "bg" ? "Телефон" : "Phone"}
+              </a>
+              <a href={whatsappHref} rel="noreferrer" target="_blank">
                 WhatsApp
+              </a>
+              <a href={viberHref}>
+                Viber
               </a>
               <a href="#" aria-label="Instagram placeholder">
                 Instagram
@@ -721,7 +730,9 @@ export default function Home() {
             </div>
             <div className="footer-contact-meta">
               <span>{content.footer.contacts.email}</span>
+              <span>{content.footer.contacts.phone}</span>
               <span>{content.footer.contacts.whatsapp}</span>
+              <span>{content.footer.contacts.viber}</span>
               <span>{content.footer.contacts.instagram}</span>
             </div>
           </div>
@@ -759,16 +770,27 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* TODO: Replace with real WhatsApp number */}
-      <a
-        aria-label="WhatsApp"
-        className="whatsapp-button"
-        href="https://wa.me/359XXXXXXXXX"
-        rel="noreferrer"
-        target="_blank"
+      <div
+        className="floating-contact-buttons"
+        aria-label={locale === "bg" ? "Бърз контакт" : "Quick contact"}
       >
-        WA
-      </a>
+        <a
+          aria-label="WhatsApp"
+          className="floating-contact-button whatsapp-button"
+          href={whatsappHref}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <span>WA</span>
+        </a>
+        <a
+          aria-label="Viber"
+          className="floating-contact-button viber-button"
+          href={viberHref}
+        >
+          <span>V</span>
+        </a>
+      </div>
 
       {selectedDestination && (
         <div

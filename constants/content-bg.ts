@@ -461,8 +461,10 @@ export const contentBg = {
       en: "English",
     },
     contacts: {
-      email: "bogdana@barakovaluxurytravel.com",
-      whatsapp: "+359XXXXXXXXX",
+      email: "bbmobile6666@gmail.com",
+      phone: "0883 770 909",
+      whatsapp: "+359 883 770 909",
+      viber: "+359 883 770 909",
       instagram: "@barakovaluxurytravel",
     },
     copyright: "© 2026 Barakova Luxury Travel",

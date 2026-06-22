@@ -1296,18 +1296,22 @@ h2 {
   line-height: 1.7;
 }
 
-.whatsapp-button {
+.floating-contact-buttons {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
   z-index: 60;
+  display: grid;
+  gap: 0.62rem;
+}
+
+.floating-contact-button {
   display: grid;
   width: 3.35rem;
   height: 3.35rem;
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 999px;
-  background: linear-gradient(135deg, #2bd46f, #1aa654);
   color: white;
   font-size: 0.78rem;
   font-weight: 900;
@@ -1319,7 +1323,25 @@ h2 {
     box-shadow 200ms ease;
 }
 
-.whatsapp-button:hover {
+.floating-contact-button span {
+  display: grid;
+  width: 2.08rem;
+  height: 2.08rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.whatsapp-button {
+  background: linear-gradient(135deg, #2bd46f, #1aa654);
+}
+
+.viber-button {
+  background: linear-gradient(135deg, #8f5bff, #5b35b5);
+}
+
+.floating-contact-button:hover {
   box-shadow: 0 22px 58px rgba(45, 42, 38, 0.24);
   transform: translateY(-3px);
 }
@@ -1825,7 +1847,7 @@ h2 {
     aspect-ratio: auto;
   }
 
-  .whatsapp-button {
+  .floating-contact-buttons {
     right: 1.35rem;
     bottom: 1.35rem;
   }

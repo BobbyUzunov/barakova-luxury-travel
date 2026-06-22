@@ -133,7 +133,9 @@ export type SiteContent = {
     languageNames: Record<Locale, string>;
     contacts: {
       email: string;
+      phone: string;
       whatsapp: string;
+      viber: string;
       instagram: string;
     };
     copyright: string;
