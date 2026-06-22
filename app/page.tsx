@@ -719,32 +719,6 @@ export default function Home() {
                 {content.footer.contacts.phone}
               </a>
             </div>
-            <div className="footer-contact-actions">
-              <a href={whatsappHref} rel="noreferrer" target="_blank">
-                <span aria-hidden="true">WA</span>
-                WhatsApp
-              </a>
-              <a href={viberHref}>
-                <span aria-hidden="true">V</span>
-                Viber
-              </a>
-            </div>
-          </div>
-
-          <div className="footer-column">
-            <h3>{content.footer.languageTitle}</h3>
-            <div className="footer-language-list">
-              {languageOptions.map((option) => (
-                <button
-                  className={locale === option.locale ? "is-active" : ""}
-                  key={option.locale}
-                  onClick={() => setLocale(option.locale)}
-                  type="button"
-                >
-                  {content.footer.languageNames[option.locale]}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -775,14 +749,14 @@ export default function Home() {
           rel="noreferrer"
           target="_blank"
         >
-          <span>WA</span>
+          <img alt="" src="/icons/whatsapp.svg" />
         </a>
         <a
           aria-label="Viber"
           className="floating-contact-button viber-button"
           href={viberHref}
         >
-          <span>V</span>
+          <img alt="" src="/icons/viber.svg" />
         </a>
       </div>
 
