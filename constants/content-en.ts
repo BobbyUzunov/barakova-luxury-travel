@@ -118,22 +118,22 @@ export const contentEn = {
       ],
     },
     {
-      name: "Bali",
+      name: "Japan",
       description:
-        "Boutique villas, exotic atmosphere, and unforgettable views.",
+        "Elegant culture, modern cities, temples, and exceptional cuisine.",
       image:
-        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1200&q=88",
       detail:
-        "Bali is for travelers who want more than a beach escape. Private villas, nature, culture, and a slower rhythm create a journey with character and a beautiful balance between relaxation and discovery.",
+        "Japan is for travelers seeking a refined balance of tradition, modern luxury, and remarkable precision. It is ideal for cultural itineraries, gourmet journeys, or a stylish city-focused escape.",
       highlights: [
-        "Boutique villas, infinity pools, and jungle views",
-        "A blend of culture, nature, and wellness atmosphere",
-        "Flexible routes between beaches, temples, and inland escapes",
+        "Temples, gardens, and a calm sense of beauty",
+        "Premium hotels, ryokan stays, and elevated service",
+        "Kyoto, Tokyo, and routes shaped around culture, cuisine, and style",
       ],
       gallery: [
-        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1400&q=88",
-        "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=88",
-        "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=88",
       ],
     },
     {
@@ -175,22 +175,22 @@ export const contentEn = {
       ],
     },
     {
-      name: "Santorini",
+      name: "Sicily",
       description:
-        "Romance, sunsets, and iconic views of the Aegean Sea.",
+        "Mediterranean charm, beautiful coasts, history, and Italian cuisine.",
       image:
-        "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=88",
       detail:
-        "Santorini is a timeless choice for romance, sunsets, boutique hotels, and Aegean views. It works well as a premium short escape, an anniversary trip, or part of a longer Greek itinerary.",
+        "Sicily is rich, sunlit, and full of character. It brings together coastal landscapes, historic towns, wine experiences, and the Italian rhythm that makes a holiday feel truly memorable.",
       highlights: [
-        "White architecture, sunsets, and caldera views",
-        "Boutique hotels with private terraces and pools",
-        "A natural fit for romantic occasions",
+        "Boutique hotels, coastal towns, and sea views",
+        "Cuisine, wine, history, and an authentic atmosphere",
+        "A beautiful fit for romantic or culture-led itineraries",
       ],
       gallery: [
-        "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1400&q=88",
-        "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&w=1200&q=88",
-        "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=88",
       ],
     },
     {
@@ -213,22 +213,98 @@ export const contentEn = {
       ],
     },
     {
-      name: "Amalfi and Capri",
+      name: "China",
       description:
-        "Italian elegance, coastal landscapes, and exceptional cuisine.",
+        "Imperial history, modern megacities, and unforgettable views.",
       image:
-        "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1200&q=88",
       detail:
-        "Amalfi and Capri are made for travelers who love European elegance, sea views, and gastronomy. The journey can become a romantic escape, a boutique coastal itinerary, or part of a wider Italian holiday.",
+        "China offers scale, culture, and contrast. From the Great Wall and ancient temples to modern hotels and cities with global energy, the itinerary can be shaped around the client's personal travel style.",
       highlights: [
-        "Mediterranean luxury, sea views, and beautiful coastal towns",
-        "Boutique hotels, boat days, and culinary experiences",
-        "A refined choice for romantic and lifestyle travel",
+        "History, architecture, and iconic cultural landmarks",
+        "Luxury city hotels and dramatic views",
+        "Ideal for rich cultural routes and premium city experiences",
       ],
       gallery: [
-        "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1400&q=88",
-        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=88",
-        "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1513415564515-763d91423bdd?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Dominican Republic",
+      description:
+        "Caribbean beaches, palms, warm ocean, and resort relaxation.",
+      image:
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "The Dominican Republic is a bright, easy, and comfortable Caribbean choice. It is ideal for clients who want a beautiful beach, a well-selected resort, calm days, and a complete feeling of escape.",
+      highlights: [
+        "White-sand beaches and warm Caribbean water",
+        "Resort hotels with comfort for couples and families",
+        "A strong choice for relaxation, romance, and effortless holidays",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Miami",
+      description:
+        "Oceanfront hotels, design, art districts, and premium city energy.",
+      image:
+        "https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Miami blends beach life, city style, dining, and modern lifestyle. It is made for clients who want energy, comfort, oceanfront hotels, and a city break with a luxury feel.",
+      highlights: [
+        "Beach, design hotels, and a modern urban atmosphere",
+        "Dining, shopping, art districts, and rooftop experiences",
+        "A stylish destination with a dynamic rhythm",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "United States",
+      description:
+        "Iconic cities, road trips, nature, and premium experiences.",
+      image:
+        "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "The United States can become many different luxury journeys: New York, California, national parks, road trips, or a blend of city, nature, and lifestyle. It is perfect for a fully personalized itinerary.",
+      highlights: [
+        "Major cities, hotels, culture, and landmark experiences",
+        "Flexible routing shaped around personal travel interests",
+        "A blend of city, nature, and lifestyle travel",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Mexico",
+      description:
+        "Caribbean sea, boutique resorts, culture, and vibrant gastronomy.",
+      image:
+        "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Mexico is rich in beach, culture, and cuisine. It can be planned as a resort holiday, a romantic escape, or a route with ruins, cenotes, boutique hotels, and authentic experiences.",
+      highlights: [
+        "Beaches, boutique resorts, and Caribbean views",
+        "Culture, ancient ruins, cenotes, and gastronomy",
+        "Suitable for romantic, family, or more adventurous trips",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88",
       ],
     },
   ],
@@ -303,11 +379,11 @@ export const contentEn = {
           "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1200&q=88",
       },
       {
-        name: "Bali",
+        name: "Japan",
         reason:
-          "Bali combines exotic atmosphere, culture, and incredible nature. It is a destination that offers both relaxation and adventure.",
+          "Japan impresses with a rare balance of tradition, aesthetics, modernity, and thoughtful attention to every detail.",
         image:
-          "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=88",
+          "https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1200&q=88",
       },
       {
         name: "Italy",

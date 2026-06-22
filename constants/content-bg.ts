@@ -118,22 +118,22 @@ export const contentBg = {
       ],
     },
     {
-      name: "Бали",
+      name: "Япония",
       description:
-        "Бутикови вили, екзотика и незабравими гледки.",
+        "Елегантна култура, модерни градове, храмове и изключителна кухня.",
       image:
-        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1200&q=88",
       detail:
-        "Бали е дестинация за хора, които искат повече от плаж. Тук luxury вилите, природата, културата и спокойният ритъм създават пътуване с характер, подходящо както за релакс, така и за преживявания.",
+        "Япония е дестинация за пътешественици, които търсят баланс между традиция, съвременен лукс и изключителна прецизност. Подходяща е за културен маршрут, гурме преживяване или стилно city пътуване.",
       highlights: [
-        "Бутикови вили, infinity басейни и гледки към джунглата",
-        "Комбинация от култура, природа и wellness атмосфера",
-        "Гъвкави маршрути между плаж, храмове и вътрешността на острова",
+        "Храмове, градини и спокойна естетика",
+        "Премиум хотели, ryokan преживявания и високо обслужване",
+        "Киото, Токио и маршрути с култура, кухня и стил",
       ],
       gallery: [
-        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1400&q=88",
-        "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=88",
-        "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=88",
       ],
     },
     {
@@ -175,22 +175,22 @@ export const contentBg = {
       ],
     },
     {
-      name: "Санторини",
+      name: "Сицилия",
       description:
-        "Романтика, залези и емблематични гледки към Егейско море.",
+        "Средиземноморски чар, красиви брегове, история и италианска кухня.",
       image:
-        "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=88",
       detail:
-        "Санторини е класика за романтично пътуване с красиви гледки, бутикови хотели и вечерна атмосфера. Подходящ е за кратко premium бягство, годишнина или част от по-голям гръцки маршрут.",
+        "Сицилия е богата, слънчева и много характерна дестинация. Тя съчетава морски пейзажи, исторически градове, винени преживявания и онзи италиански ритъм, който прави почивката запомняща се.",
       highlights: [
-        "Бели къщи, залези и гледки към калдерата",
-        "Бутикови хотели с private terraces и басейни",
-        "Идеален избор за романтични поводи",
+        "Бутикови хотели, крайбрежни градове и морски гледки",
+        "Кухня, вино, история и автентична атмосфера",
+        "Подходяща за романтичен или културен маршрут",
       ],
       gallery: [
-        "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1400&q=88",
-        "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?auto=format&fit=crop&w=1200&q=88",
-        "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=88",
       ],
     },
     {
@@ -213,22 +213,98 @@ export const contentBg = {
       ],
     },
     {
-      name: "Амалфи и Капри",
+      name: "Китай",
       description:
-        "Италианска елегантност, крайбрежни пейзажи и изключителна кухня.",
+        "Императорска история, модерни мегаполиси и впечатляващи гледки.",
       image:
-        "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1200&q=88",
       detail:
-        "Амалфи и Капри са за хора, които търсят европейска елегантност, морски гледки и гастрономия. Пътуването може да бъде изградено като романтично бягство, boutique маршрут или част от по-дълга италианска ваканция.",
+        "Китай предлага пътуване с мащаб, култура и контрасти. От Великата китайска стена и древни храмове до модерни хотели и градове със световна енергия, маршрутът може да бъде подбран според личния стил на клиента.",
       highlights: [
-        "Средиземноморски лукс, морски гледки и красиви градчета",
-        "Бутикови хотели, лодки и кулинарни преживявания",
-        "Подходящо за романтични и lifestyle пътувания",
+        "История, архитектура и емблематични културни забележителности",
+        "Луксозни градски хотели и впечатляващи гледки",
+        "Подходящ за богати културни маршрути и premium city преживявания",
       ],
       gallery: [
-        "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=1400&q=88",
-        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=88",
-        "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1513415564515-763d91423bdd?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Доминикана",
+      description:
+        "Карибски плажове, палми, топъл океан и resort почивка.",
+      image:
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Доминикана е избор за лека, слънчева и комфортна карибска почивка. Подходяща е за клиенти, които искат красив плаж, добър resort, спокойствие и усещане за пълно откъсване.",
+      highlights: [
+        "Плажове с бял пясък и топла карибска вода",
+        "Resort хотели с удобства за двойки и семейства",
+        "Подходяща за релакс, романтика и безгрижна почивка",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Маями",
+      description:
+        "Океан, дизайн хотели, арт квартали и премиум градска енергия.",
+      image:
+        "https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Маями съчетава плаж, градски стил, кулинария и модерен lifestyle. Това е дестинация за клиенти, които искат енергия, комфорт, oceanfront хотели и възможност за city break с луксозно усещане.",
+      highlights: [
+        "Плаж, дизайн хотели и модерна градска атмосфера",
+        "Гурме, shopping, art districts и rooftop преживявания",
+        "Подходящ за стилно пътуване с динамичен ритъм",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Америка",
+      description:
+        "Големи градове, iconic гледки, road trips и премиум преживявания.",
+      image:
+        "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Америка позволява много различни luxury маршрути: Ню Йорк, Калифорния, национални паркове, road trip преживявания или комбинация от град, природа и lifestyle. Подходяща е за пътуване, което се изгражда изцяло по интереси.",
+      highlights: [
+        "Големи градове, хотели, култура и забележителности",
+        "Възможност за индивидуален маршрут според стила на пътуване",
+        "Комбинация от city, nature и lifestyle преживявания",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=88",
+      ],
+    },
+    {
+      name: "Мексико",
+      description:
+        "Карибско море, boutique resorts, култура и ярка гастрономия.",
+      image:
+        "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=1200&q=88",
+      detail:
+        "Мексико е богата дестинация за плаж, култура и вкусна кухня. Може да бъде планирано като resort почивка, романтично пътуване или маршрут с руини, cenotes, boutique хотели и автентични преживявания.",
+      highlights: [
+        "Плажове, boutique resorts и красиви карибски гледки",
+        "Култура, древни руини, cenotes и гастрономия",
+        "Подходящо за романтично, семейно или приключенско пътуване",
+      ],
+      gallery: [
+        "https://images.unsplash.com/photo-1512813195386-6cf811ad3542?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88",
       ],
     },
   ],
@@ -303,11 +379,11 @@ export const contentBg = {
           "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1200&q=88",
       },
       {
-        name: "Бали",
+        name: "Япония",
         reason:
-          "Бали съчетава екзотика, култура и невероятна природа. Това е дестинация, която предлага както релакс, така и приключения.",
+          "Япония впечатлява с изключителен баланс между традиция, естетика, модерност и внимание към всеки детайл.",
         image:
-          "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=88",
+          "https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1200&q=88",
       },
       {
         name: "Италия",
