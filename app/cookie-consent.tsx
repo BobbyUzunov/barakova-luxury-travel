@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+import type { Locale } from "../constants/content";
 import { localePath } from "../constants/i18n";
 import {
   cookieConsentCopy,
@@ -10,28 +11,52 @@ import {
   getStoredLocale,
   type CookieConsentValue,
 } from "../constants/privacy";
-import type { Locale } from "../constants/content";
+
+function subscribeToConsentStore(onStoreChange: () => void) {
+  const handleChange = () => onStoreChange();
+
+  window.addEventListener("barakova-cookie-consent", handleChange);
+  window.addEventListener("storage", handleChange);
+
+  return () => {
+    window.removeEventListener("barakova-cookie-consent", handleChange);
+    window.removeEventListener("storage", handleChange);
+  };
+}
+
+function getConsentStoreSnapshot() {
+  return JSON.stringify({
+    consent: getStoredCookieConsent(),
+    locale: getStoredLocale(),
+  });
+}
+
+function getConsentStoreServerSnapshot() {
+  return JSON.stringify({
+    consent: null,
+    locale: "bg" as Locale,
+  });
+}
 
 export function CookieConsent() {
-  const [locale, setLocale] = useState<Locale>("bg");
-  const [consent, setConsent] = useState<CookieConsentValue | null>(null);
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    setLocale(getStoredLocale());
-    setConsent(getStoredCookieConsent());
-    setIsReady(true);
-  }, []);
+  const storeValue = useSyncExternalStore(
+    subscribeToConsentStore,
+    getConsentStoreSnapshot,
+    getConsentStoreServerSnapshot,
+  );
+  const { consent, locale } = JSON.parse(storeValue) as {
+    consent: CookieConsentValue | null;
+    locale: Locale;
+  };
 
   const saveConsent = (value: CookieConsentValue) => {
     window.localStorage.setItem(cookieConsentStorageKey, value);
-    setConsent(value);
     window.dispatchEvent(
       new CustomEvent("barakova-cookie-consent", { detail: value }),
     );
   };
 
-  if (!isReady || consent) {
+  if (consent) {
     return null;
   }
 

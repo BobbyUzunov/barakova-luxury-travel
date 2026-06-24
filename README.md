@@ -29,8 +29,35 @@ npm run dev
 ## Production Build
 
 ```bash
+npm run lint
+npm run test
 npm run build
 ```
+
+## Качване на снимки за дестинации
+
+Качете WebP файлове в `public/images/destinations/` с име по slug, например:
+
+```bash
+public/images/destinations/maldives.webp
+public/images/destinations/mediterranean.webp
+```
+
+Сайтът автоматично ще ги ползва вместо Unsplash, ако файлът съществува.
+
+## Vercel checklist (production)
+
+1. Свържете GitHub repo-то с Vercel и deploy от `main`
+2. Добавете environment variables (Production + Preview):
+   - `RESEND_API_KEY`
+   - `CONTACT_RECIPIENT_EMAIL`
+   - `RESEND_FROM_EMAIL`
+   - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY`
+   - `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`
+   - `NEXT_PUBLIC_GA_ID` (по избор)
+3. В Resend верифицирайте домейна `barakovaluxurytravel.com`
+4. В Cloudflare Turnstile добавете `barakovaluxurytravel.com` и `localhost`
+5. След deploy проверете `/bg`, `/en`, контакт формата и cookie banner-а
 
 ## Deploy
 

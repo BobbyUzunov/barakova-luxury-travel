@@ -224,8 +224,10 @@ export function HomePage({ locale }: HomePageProps) {
             >
               <div className="destination-media">
                 <DestinationImage
+                  key={`destination-${getDestinationSlug(index)}`}
                   alt={destination.name}
-                  src={destination.image}
+                  remoteSrc={destination.image}
+                  slug={getDestinationSlug(index)}
                 />
                 <div className="destination-overlay" />
                 <div className="destination-content">
@@ -256,7 +258,12 @@ export function HomePage({ locale }: HomePageProps) {
               onClick={(event) => openContentModal(event, cruise)}
             >
               <div className="destination-media">
-                <DestinationImage alt={cruise.name} src={cruise.image} />
+                <DestinationImage
+                  key={`cruise-${getCruiseSlug(index)}`}
+                  alt={cruise.name}
+                  remoteSrc={cruise.image}
+                  slug={getCruiseSlug(index)}
+                />
                 <div className="destination-overlay" />
                 <div className="destination-content">
                   <h3>{cruise.name}</h3>
@@ -354,8 +361,9 @@ export function HomePage({ locale }: HomePageProps) {
             <article className="signature-card" key={destination.name}>
               <div className="signature-image">
                 <DestinationImage
+                  key={`signature-${destination.name}`}
                   alt={destination.name}
-                  src={destination.image}
+                  remoteSrc={destination.image}
                 />
               </div>
               <div className="signature-copy">
@@ -387,7 +395,12 @@ export function HomePage({ locale }: HomePageProps) {
               onClick={(event) => openBlogModal(event, post)}
             >
               <div className="blog-card-image">
-                <DestinationImage alt={post.title} src={post.image} />
+                <DestinationImage
+                  key={`blog-${getBlogSlug(index)}`}
+                  alt={post.title}
+                  remoteSrc={post.image}
+                  slug={getBlogSlug(index)}
+                />
               </div>
               <div className="blog-card-copy">
                 <span>{post.category}</span>

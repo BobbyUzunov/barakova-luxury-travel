@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import {
   getStoredCookieConsent,
   type CookieConsentValue,
@@ -9,22 +9,32 @@ import {
 
 const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
 
+function subscribeToConsentChanges(onStoreChange: () => void) {
+  const handleConsentChange = () => onStoreChange();
+
+  window.addEventListener("barakova-cookie-consent", handleConsentChange);
+  window.addEventListener("storage", handleConsentChange);
+
+  return () => {
+    window.removeEventListener("barakova-cookie-consent", handleConsentChange);
+    window.removeEventListener("storage", handleConsentChange);
+  };
+}
+
+function getConsentSnapshot() {
+  return getStoredCookieConsent();
+}
+
+function getConsentServerSnapshot() {
+  return null;
+}
+
 export function Analytics() {
-  const [consent, setConsent] = useState<CookieConsentValue | null>(null);
-
-  useEffect(() => {
-    setConsent(getStoredCookieConsent());
-
-    const handleConsentChange = (event: Event) => {
-      const customEvent = event as CustomEvent<CookieConsentValue>;
-      setConsent(customEvent.detail);
-    };
-
-    window.addEventListener("barakova-cookie-consent", handleConsentChange);
-    return () => {
-      window.removeEventListener("barakova-cookie-consent", handleConsentChange);
-    };
-  }, []);
+  const consent = useSyncExternalStore(
+    subscribeToConsentChanges,
+    getConsentSnapshot,
+    getConsentServerSnapshot,
+  );
 
   if (!googleAnalyticsId || consent !== "accepted") {
     return null;

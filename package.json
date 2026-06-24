@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "optimize-images": "node scripts/optimize-images.mjs"
+    "optimize-images": "node scripts/optimize-images.mjs",
+    "lint": "eslint .",
+    "test": "node --import tsx --test lib/**/*.test.ts"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.5.3",
@@ -20,8 +22,11 @@
     "@tailwindcss/postcss": "^4.3.1",
     "@types/node": "26.0.0",
     "@types/react": "19.2.17",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.9",
     "sharp": "^0.35.2",
     "tailwindcss": "^4.3.1",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   }
 }

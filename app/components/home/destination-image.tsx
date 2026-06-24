@@ -1,21 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { destinationImageFallback } from "../../../constants/images";
+import { useState } from "react";
+import {
+  getDestinationImageFallback,
+  resolveDestinationImage,
+} from "../../../constants/destination-images";
 
 export function DestinationImage({
   alt,
-  src,
+  remoteSrc,
+  slug,
 }: {
   alt: string;
-  src: string;
+  remoteSrc: string;
+  slug?: string;
 }) {
-  const [imageSrc, setImageSrc] = useState(src);
-
-  useEffect(() => {
-    setImageSrc(src);
-  }, [src]);
+  const preferredSrc = resolveDestinationImage(slug, remoteSrc);
+  const [imageSrc, setImageSrc] = useState(preferredSrc);
+  const [hasTriedRemote, setHasTriedRemote] = useState(!slug);
 
   return (
     <Image
@@ -25,7 +28,15 @@ export function DestinationImage({
       quality={60}
       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
       className="destination-image"
-      onError={() => setImageSrc(destinationImageFallback)}
+      onError={() => {
+        if (slug && !hasTriedRemote) {
+          setHasTriedRemote(true);
+          setImageSrc(remoteSrc);
+          return;
+        }
+
+        setImageSrc(getDestinationImageFallback());
+      }}
     />
   );
 }
