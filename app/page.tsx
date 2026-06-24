@@ -20,8 +20,6 @@ const contentByLocale = {
 const localeStorageKey = "barakova-luxury-travel-locale";
 const contactEmail = "bbmobile6666@gmail.com";
 const contactPhoneHref = "tel:+359883770909";
-const whatsappHref = "https://wa.me/359883770909";
-const viberHref = "viber://chat?number=%2B359883770909";
 // TODO: Replace this fallback after all destination photos are uploaded.
 const destinationImageFallback = "/hero-bogdana-beach.jpeg";
 const initialFormValues = {
@@ -820,28 +818,6 @@ export default function Home() {
           </a>
         </div>
       </footer>
-
-      <div
-        className="floating-contact-buttons"
-        aria-label={locale === "bg" ? "Бърз контакт" : "Quick contact"}
-      >
-        <a
-          aria-label="WhatsApp"
-          className="floating-contact-button whatsapp-button"
-          href={whatsappHref}
-          rel="noreferrer"
-          target="_blank"
-        >
-          <img alt="" src="/icons/whatsapp.svg" />
-        </a>
-        <a
-          aria-label="Viber"
-          className="floating-contact-button viber-button"
-          href={viberHref}
-        >
-          <img alt="" src="/icons/viber.svg" />
-        </a>
-      </div>
 
       {selectedDestination && (
         <div
