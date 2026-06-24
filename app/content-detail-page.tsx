@@ -1,32 +1,42 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Destination } from "../constants/content";
+import type { Destination, Locale } from "../constants/content";
 
 type ContentDetailPageProps = {
   item: Destination;
+  locale: Locale;
+  homeHref: string;
   eyebrow: string;
   backLabel: string;
   backHref: string;
   highlightsTitle: string;
   galleryTitle: string;
+  galleryPhotoLabel: string;
   ctaLabel: string;
+  contactHref: string;
 };
 
 export function ContentDetailPage({
   item,
+  locale,
+  homeHref,
   eyebrow,
   backLabel,
   backHref,
   highlightsTitle,
   galleryTitle,
+  galleryPhotoLabel,
   ctaLabel,
+  contactHref,
 }: ContentDetailPageProps) {
   return (
     <main className="min-h-screen bg-[var(--ivory)] text-[var(--charcoal)]">
       <header className="detail-header">
-        <Link className="detail-brand" href="/">
+        <Link className="detail-brand" href={homeHref}>
           <span>Barakova Luxury Travel</span>
-          <small>by Богдана Баракова</small>
+          <small>
+            {locale === "bg" ? "by Богдана Баракова" : "by Bogdana Barakova"}
+          </small>
         </Link>
         <Link className="detail-back-link" href={backHref}>
           {backLabel}
@@ -62,7 +72,7 @@ export function ContentDetailPage({
                 ))}
               </ul>
             </div>
-            <Link className="btn-primary detail-cta" href="/#contact">
+            <Link className="btn-primary detail-cta" href={contactHref}>
               {ctaLabel}
             </Link>
           </section>
@@ -73,7 +83,7 @@ export function ContentDetailPage({
               {item.gallery.map((image, index) => (
                 <figure key={image}>
                   <Image
-                    alt={`${item.name} - снимка ${index + 1}`}
+                    alt={`${item.name} - ${galleryPhotoLabel} ${index + 1}`}
                     className="detail-gallery-image"
                     fill
                     sizes="(min-width: 900px) 24vw, 90vw"

@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
+import {
+  contactEmail,
+  contactPhone,
+  siteName,
+  siteUrl,
+} from "../constants/site";
+import { getAlternateLanguages } from "../constants/i18n";
+import { heroImage } from "../constants/images";
 import { Analytics } from "./analytics";
+import { CookieConsent } from "./cookie-consent";
 import "./globals.css";
-
-const siteUrl = "https://barakovaluxurytravel.com";
 const siteTitle = "Barakova Luxury Travel | Луксозни пътувания";
 const siteDescription =
   "Персонални туристически консултации, луксозни почивки, бутикови хотели, круизи и внимателно подбрани дестинации по целия свят.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  applicationName: "Barakova Luxury Travel",
+  applicationName: siteName,
   title: siteTitle,
   description: siteDescription,
   keywords: [
@@ -31,22 +38,19 @@ export const metadata: Metadata = {
     shortcut: "/icon.svg",
   },
   alternates: {
-    canonical: "/",
-    languages: {
-      bg: "/",
-      "x-default": "/",
-    },
+    canonical: "/bg",
+    languages: getAlternateLanguages(),
   },
   openGraph: {
     title: siteTitle,
     description: siteDescription,
-    url: "/",
-    siteName: "Barakova Luxury Travel",
+    url: "/bg",
+    siteName,
     locale: "bg_BG",
     type: "website",
     images: [
       {
-        url: "/hero-bogdana-beach.jpeg",
+        url: heroImage,
         width: 1200,
         height: 630,
         alt: "Barakova Luxury Travel",
@@ -57,7 +61,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/hero-bogdana-beach.jpeg"],
+    images: [heroImage],
   },
   robots: {
     index: true,
@@ -90,7 +94,7 @@ export default function RootLayout({
                 {
                   "@type": "WebSite",
                   "@id": `${siteUrl}/#website`,
-                  name: "Barakova Luxury Travel",
+                  name: siteName,
                   url: siteUrl,
                   inLanguage: "bg",
                   publisher: {
@@ -100,20 +104,20 @@ export default function RootLayout({
                 {
                   "@type": "TravelAgency",
                   "@id": `${siteUrl}/#business`,
-                  name: "Barakova Luxury Travel",
+                  name: siteName,
                   url: siteUrl,
                   founder: {
                     "@id": `${siteUrl}/#bogdana`,
                   },
-                  email: "bbmobile6666@gmail.com",
-                  telephone: "+359883770909",
+                  email: contactEmail,
+                  telephone: contactPhone,
                   areaServed: ["BG", "Worldwide"],
                   description: siteDescription,
                   contactPoint: {
                     "@type": "ContactPoint",
                     contactType: "customer service",
-                    email: "bbmobile6666@gmail.com",
-                    telephone: "+359883770909",
+                    email: contactEmail,
+                    telephone: contactPhone,
                     availableLanguage: ["Bulgarian", "English"],
                   },
                 },
@@ -133,6 +137,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <CookieConsent />
         <Analytics />
       </body>
     </html>

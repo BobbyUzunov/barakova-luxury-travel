@@ -1,4 +1,10 @@
 import { NextResponse } from "next/server";
+import { contactEmail as defaultRecipientEmail } from "../../../constants/site";
+import { isContactRateLimited } from "../../../lib/rate-limit";
+import {
+  isTurnstileEnabled,
+  verifyTurnstileToken,
+} from "../../../lib/verify-turnstile";
 
 type ContactRequestBody = {
   fullName?: string;
@@ -11,22 +17,19 @@ type ContactRequestBody = {
   message?: string;
   website?: string;
   locale?: string;
+  turnstileToken?: string;
 };
 
 const resendApiUrl = "https://api.resend.com/emails";
-const recipientEmail =
-  process.env.CONTACT_RECIPIENT_EMAIL || "bbmobile6666@gmail.com";
+const recipientEmail = process.env.CONTACT_RECIPIENT_EMAIL || defaultRecipientEmail;
 const senderEmail =
   process.env.RESEND_FROM_EMAIL ||
   "Barakova Luxury Travel <onboarding@resend.dev>";
-const rateLimitWindowMs = 60_000;
-const maxRequestsPerWindow = 5;
-const requestLog = new Map<string, { count: number; resetAt: number }>();
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const maxFieldLength = 500;
 const maxMessageLength = 4000;
 
-const fieldLabels: Record<keyof Omit<ContactRequestBody, "website">, string> = {
+const fieldLabels: Record<keyof Omit<ContactRequestBody, "website" | "turnstileToken">, string> = {
   fullName: "Име и фамилия",
   email: "Email",
   phone: "Телефон",
@@ -44,19 +47,6 @@ function getClientIp(request: Request) {
     request.headers.get("x-real-ip") ||
     "unknown"
   );
-}
-
-function isRateLimited(ip: string) {
-  const now = Date.now();
-  const current = requestLog.get(ip);
-
-  if (!current || current.resetAt <= now) {
-    requestLog.set(ip, { count: 1, resetAt: now + rateLimitWindowMs });
-    return false;
-  }
-
-  current.count += 1;
-  return current.count > maxRequestsPerWindow;
 }
 
 function escapeHtml(value: string) {
@@ -88,6 +78,7 @@ function normalizeBody(body: ContactRequestBody): ContactRequestBody {
     message: normalizeText(body.message, maxMessageLength),
     website: normalizeText(body.website),
     locale: normalizeText(body.locale, 8),
+    turnstileToken: normalizeText(body.turnstileToken, 2048),
   };
 }
 
@@ -123,7 +114,7 @@ function buildEmailHtml(body: ContactRequestBody) {
 export async function POST(request: Request) {
   const ip = getClientIp(request);
 
-  if (isRateLimited(ip)) {
+  if (await isContactRateLimited(ip)) {
     return NextResponse.json(
       { message: "Too many requests. Please try again later." },
       { status: 429 },
@@ -141,9 +132,19 @@ export async function POST(request: Request) {
     );
   }
 
-  // Spam protection placeholder: replace with Turnstile/reCAPTCHA or Vercel BotID.
   if (body.website) {
     return NextResponse.json({ ok: true });
+  }
+
+  if (isTurnstileEnabled()) {
+    const isHuman = await verifyTurnstileToken(body.turnstileToken, ip);
+
+    if (!isHuman) {
+      return NextResponse.json(
+        { message: "Captcha verification failed." },
+        { status: 400 },
+      );
+    }
   }
 
   if (!body.fullName || !body.email || !body.phone) {

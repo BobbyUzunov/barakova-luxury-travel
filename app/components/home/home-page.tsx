@@ -1,0 +1,428 @@
+"use client";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { type MouseEvent, useMemo, useState } from "react";
+import { contentBg } from "../../../constants/content-bg";
+import { contentEn } from "../../../constants/content-en";
+import {
+  type BlogPost,
+  type Destination,
+  type Locale,
+  type SiteContent,
+} from "../../../constants/content";
+import {
+  heroImage,
+  profileMainImage,
+  profileSecondaryImage,
+} from "../../../constants/images";
+import { localePath } from "../../../constants/i18n";
+import {
+  getBlogSlug,
+  getCruiseSlug,
+  getDestinationSlug,
+} from "../../../constants/seo-content";
+import { BlogModal } from "./blog-modal";
+import { ContactSection } from "./contact-section";
+import { ContentModal } from "./content-modal";
+import { DestinationImage } from "./destination-image";
+import { SiteFooter } from "./site-footer";
+import { SiteHeader } from "./site-header";
+
+const contentByLocale = {
+  bg: contentBg,
+  en: contentEn,
+} as const;
+
+type HomePageProps = {
+  locale: Locale;
+};
+
+export function HomePage({ locale }: HomePageProps) {
+  const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedDestination, setSelectedDestination] =
+    useState<Destination | null>(null);
+  const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(
+    null,
+  );
+
+  const content = useMemo<SiteContent>(
+    () => contentByLocale[locale],
+    [locale],
+  );
+  const menuLabel = locale === "bg" ? "Меню" : "Menu";
+  const closeMenuLabel = locale === "bg" ? "Затвори менюто" : "Close menu";
+  const contentModalLabelId = "content-modal-title";
+  const blogModalLabelId = "blog-modal-title";
+
+  const scrollToContact = () => {
+    setIsMenuOpen(false);
+    setSelectedDestination(null);
+    setSelectedBlogPost(null);
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToDestinations = () => {
+    setIsMenuOpen(false);
+    document
+      .getElementById("destinations")
+      ?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleLocaleChange = (nextLocale: Locale) => {
+    setIsMenuOpen(false);
+    router.push(localePath(nextLocale));
+  };
+
+  const shouldFollowLink = (event: MouseEvent<HTMLAnchorElement>) =>
+    event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+
+  const openContentModal = (
+    event: MouseEvent<HTMLAnchorElement>,
+    item: Destination,
+  ) => {
+    if (shouldFollowLink(event)) {
+      return;
+    }
+
+    event.preventDefault();
+    setSelectedDestination(item);
+  };
+
+  const openBlogModal = (
+    event: MouseEvent<HTMLAnchorElement>,
+    post: BlogPost,
+  ) => {
+    if (shouldFollowLink(event)) {
+      return;
+    }
+
+    event.preventDefault();
+    setSelectedBlogPost(post);
+  };
+
+  return (
+    <main className="min-h-screen overflow-hidden bg-[var(--ivory)] text-[var(--charcoal)]">
+      <SiteHeader
+        closeMenuLabel={closeMenuLabel}
+        content={content}
+        isMenuOpen={isMenuOpen}
+        locale={locale}
+        menuLabel={menuLabel}
+        onLocaleChange={handleLocaleChange}
+        onMenuToggle={() => setIsMenuOpen((current) => !current)}
+        onNavigate={() => setIsMenuOpen(false)}
+        scrollToContact={scrollToContact}
+      />
+
+      <section
+        id="home"
+        className="hero-section relative min-h-[94svh] px-5 pb-14 pt-40 text-[var(--charcoal)] sm:min-h-[92svh] sm:px-8 sm:pt-36 lg:min-h-[96svh] lg:px-12"
+      >
+        <Image
+          src={heroImage}
+          alt={content.imageAlts.hero}
+          fill
+          priority
+          quality={90}
+          sizes="100vw"
+          className="hero-image"
+        />
+        <div className="hero-soft-overlay absolute inset-0" />
+        <div className="hero-gradient-overlay absolute inset-0" />
+        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[var(--ivory)] to-transparent" />
+
+        <div className="hero-inner relative z-10 mx-auto flex min-h-[68svh] max-w-7xl items-center justify-center text-center sm:min-h-[66svh] lg:min-h-[72svh] lg:justify-start lg:text-left">
+          <div className="hero-copy max-w-3xl animate-rise rounded-[1.6rem] bg-white/24 p-4 backdrop-blur-[2px] sm:rounded-[2rem] sm:p-5 lg:bg-transparent lg:p-0 lg:backdrop-blur-0">
+            <p className="hero-label mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[var(--soft-brown)] sm:mb-5 sm:text-sm sm:tracking-[0.32em]">
+              {content.hero.label}
+            </p>
+            <h1 className="hero-title font-serif text-[2.45rem] leading-[1.03] text-balance sm:text-6xl lg:text-7xl">
+              {content.hero.title}
+            </h1>
+            <p className="hero-subtitle mt-5 max-w-2xl text-base leading-7 text-[rgba(45,42,38,0.76)] sm:mt-6 sm:text-xl sm:leading-8">
+              {content.hero.subtitle}
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:justify-center lg:justify-start">
+              <button
+                className="btn-primary"
+                onClick={scrollToContact}
+                type="button"
+              >
+                {content.hero.primaryCta}
+              </button>
+              <button
+                className="btn-secondary"
+                onClick={scrollToDestinations}
+                type="button"
+              >
+                {content.hero.secondaryCta}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-shell pt-12" id="services">
+        <div className="section-heading">
+          <p>{content.servicesSection.eyebrow}</p>
+          <h2>{content.servicesSection.title}</h2>
+        </div>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {content.services.map((service, index) => (
+            <article
+              className="lux-card animate-soft-in"
+              style={{ animationDelay: `${index * 70}ms` }}
+              key={service.title}
+            >
+              <span className="card-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-shell">
+        <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+          <div className="section-heading text-left">
+            <p>{content.processSection.eyebrow}</p>
+            <h2>{content.processSection.title}</h2>
+            {content.processSection.description && (
+              <span>{content.processSection.description}</span>
+            )}
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2">
+            {content.steps.map((step, index) => (
+              <article className="step-card" key={step}>
+                <div>{index + 1}</div>
+                <h3>{step}</h3>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-shell" id="destinations">
+        <div className="section-heading">
+          <p>{content.destinationsSection.eyebrow}</p>
+          <h2>{content.destinationsSection.title}</h2>
+        </div>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {content.destinations.map((destination, index) => (
+            <a
+              className="destination-card"
+              href={localePath(
+                locale,
+                `/destinations/${getDestinationSlug(index)}`,
+              )}
+              key={destination.name}
+              onClick={(event) => openContentModal(event, destination)}
+            >
+              <div className="destination-media">
+                <DestinationImage
+                  alt={destination.name}
+                  src={destination.image}
+                />
+                <div className="destination-overlay" />
+                <div className="destination-content">
+                  <h3>{destination.name}</h3>
+                  <span />
+                  <p>{destination.description}</p>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-shell" id="cruises">
+        <div className="section-heading">
+          <p>{content.cruisesSection.eyebrow}</p>
+          <h2>{content.cruisesSection.title}</h2>
+          {content.cruisesSection.description && (
+            <span>{content.cruisesSection.description}</span>
+          )}
+        </div>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {content.cruises.map((cruise, index) => (
+            <a
+              className="destination-card cruise-card"
+              href={localePath(locale, `/cruises/${getCruiseSlug(index)}`)}
+              key={cruise.name}
+              onClick={(event) => openContentModal(event, cruise)}
+            >
+              <div className="destination-media">
+                <DestinationImage alt={cruise.name} src={cruise.image} />
+                <div className="destination-overlay" />
+                <div className="destination-content">
+                  <h3>{cruise.name}</h3>
+                  <span />
+                  <p>{cruise.description}</p>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-shell">
+        <div className="section-heading">
+          <p>{content.trustSection.eyebrow}</p>
+          <h2>{content.trustSection.title}</h2>
+        </div>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {content.trustItems.map((item, index) => (
+            <article className="trust-card" key={item.title}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-shell" id="about">
+        <div className="about-panel profile-panel grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+          <div className="profile-gallery">
+            <div className="profile-photo profile-photo-main">
+              <Image
+                src={profileMainImage}
+                alt={content.imageAlts.profileMain}
+                fill
+                sizes="(min-width: 1024px) 42vw, (min-width: 640px) 82vw, 92vw"
+                className="profile-image"
+              />
+            </div>
+            <div className="profile-photo profile-photo-secondary">
+              <Image
+                src={profileSecondaryImage}
+                alt={content.imageAlts.profileSecondary}
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 640px) 82vw, 0vw"
+                className="profile-image"
+              />
+            </div>
+          </div>
+          <div className="profile-content">
+            <p className="eyebrow">{content.about.eyebrow}</p>
+            <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
+              {content.about.title}
+            </h2>
+            <p className="about-intro mt-5">{content.about.intro}</p>
+            <div className="about-copy mt-5 space-y-4 text-base leading-7 text-[rgba(45,42,38,0.72)] sm:text-lg sm:leading-8">
+              {content.about.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+            <div className="mission-card mt-7">
+              <p>{content.about.mission}</p>
+            </div>
+            <div className="profile-stats mt-7">
+              {content.profileStats.map((stat) => (
+                <div className="profile-stat" key={stat}>
+                  <span />
+                  <p>{stat}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {content.about.tags.map((tag) => (
+                <span className="about-pill" key={tag}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="signature-section section-shell">
+        <div className="section-divider" />
+        <blockquote className="story-quote">{content.signature.storyQuote}</blockquote>
+        <div className="section-heading">
+          <p>{content.signature.eyebrow}</p>
+          <h2>{content.signature.title}</h2>
+          <span>{content.signature.subtitle}</span>
+        </div>
+
+        <div className="signature-grid mt-12">
+          {content.signature.destinations.map((destination) => (
+            <article className="signature-card" key={destination.name}>
+              <div className="signature-image">
+                <DestinationImage
+                  alt={destination.name}
+                  src={destination.image}
+                />
+              </div>
+              <div className="signature-copy">
+                <span>{content.signature.recommendationLabel}</span>
+                <h3>{destination.name}</h3>
+                <p>{destination.reason}</p>
+                <small>{content.signature.signature}</small>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="blog-section section-shell" id="blog">
+        <div className="section-heading">
+          <p>{content.blogSection.eyebrow}</p>
+          <h2>{content.blogSection.title}</h2>
+          {content.blogSection.description && (
+            <span>{content.blogSection.description}</span>
+          )}
+        </div>
+
+        <div className="blog-grid mt-12">
+          {content.blog.posts.map((post, index) => (
+            <a
+              className="blog-card"
+              href={localePath(locale, `/blog/${getBlogSlug(index)}`)}
+              key={post.title}
+              onClick={(event) => openBlogModal(event, post)}
+            >
+              <div className="blog-card-image">
+                <DestinationImage alt={post.title} src={post.image} />
+              </div>
+              <div className="blog-card-copy">
+                <span>{post.category}</span>
+                <h3>{post.title}</h3>
+                <p>{post.excerpt}</p>
+                <small>
+                  {post.date} · {post.readTime}
+                </small>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <ContactSection content={content} locale={locale} />
+      <SiteFooter content={content} locale={locale} />
+
+      {selectedDestination && (
+        <ContentModal
+          content={content}
+          item={selectedDestination}
+          labelId={contentModalLabelId}
+          onClose={() => setSelectedDestination(null)}
+          onContact={scrollToContact}
+        />
+      )}
+
+      {selectedBlogPost && (
+        <BlogModal
+          content={content}
+          labelId={blogModalLabelId}
+          onClose={() => setSelectedBlogPost(null)}
+          post={selectedBlogPost}
+        />
+      )}
+    </main>
+  );
+}

@@ -53,6 +53,24 @@ RESEND_FROM_EMAIL=Barakova Luxury Travel <onboarding@resend.dev>
 NEXT_PUBLIC_GA_ID=
 ```
 
+За защита срещу спам (Cloudflare Turnstile — безплатен):
+
+```bash
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
+```
+
+Създайте widget на [Cloudflare Turnstile](https://dash.cloudflare.com/?to=/:account/turnstile) с домейна `barakovaluxurytravel.com` (и `localhost` за локално тестване).
+
+За production rate limiting (препоръчително на Vercel):
+
+```bash
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+```
+
+Без Upstash лимитът работи in-memory (по-слаб при serverless).
+
 След верифициране на домейна в Resend, `RESEND_FROM_EMAIL` може да бъде сменен към адрес от домейна, например:
 
 ```bash

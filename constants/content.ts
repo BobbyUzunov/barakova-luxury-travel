@@ -133,6 +133,7 @@ export type SiteContent = {
       fullName: string;
       email: string;
       phone: string;
+      captcha: string;
       submitError: string;
     };
     success: {
@@ -166,8 +167,3 @@ export const languageOptions: { flag: string; label: string; locale: Locale }[] 
   { flag: "🇧🇬", label: "BG", locale: "bg" },
   { flag: "🇬🇧", label: "EN", locale: "en" },
 ];
-
-export const futureLocalePaths: Record<Locale, string> = {
-  bg: "/bg",
-  en: "/en",
-};

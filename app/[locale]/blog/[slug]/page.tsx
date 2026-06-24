@@ -2,42 +2,65 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { seoBlogPosts } from "../../../constants/seo-content";
-
-const siteUrl = "https://barakovaluxurytravel.com";
+import { detailUi } from "../../../../constants/detail-ui";
+import type { Locale } from "../../../../constants/content";
+import {
+  getAlternateLanguages,
+  isLocale,
+  localePath,
+  localizedHash,
+} from "../../../../constants/i18n";
+import { findSeoBlogPost, getSeoBlogPosts } from "../../../../constants/seo-content";
+import { siteUrl } from "../../../../constants/site";
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 };
 
 export function generateStaticParams() {
-  return seoBlogPosts.map(({ slug }) => ({ slug }));
+  return getSeoBlogPosts("bg").flatMap((post) => [
+    { locale: "bg", slug: post.slug },
+    { locale: "en", slug: post.slug },
+  ]);
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const post = seoBlogPosts.find((item) => item.slug === slug);
+  const { locale: localeParam, slug } = await params;
+
+  if (!isLocale(localeParam)) {
+    return {};
+  }
+
+  const locale = localeParam as Locale;
+  const post = findSeoBlogPost(locale, slug);
 
   if (!post) {
     return {};
   }
 
-  const title = `${post.title} | Богдана Баракова`;
-  const canonical = `/blog/${post.slug}`;
+  const title =
+    locale === "bg"
+      ? `${post.title} | Богдана Баракова`
+      : `${post.title} | Bogdana Barakova`;
+  const canonical = localePath(locale, `/blog/${post.slug}`);
 
   return {
     title,
     description: post.excerpt,
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      languages: getAlternateLanguages(`/blog/${post.slug}`),
+    },
     openGraph: {
       title,
       description: post.excerpt,
       type: "article",
       url: canonical,
+      locale: locale === "bg" ? "bg_BG" : "en_US",
       images: [{ url: post.image, alt: post.title }],
-      authors: ["Богдана Баракова"],
+      authors: [locale === "bg" ? "Богдана Баракова" : "Bogdana Barakova"],
     },
     twitter: {
       card: "summary_large_image",
@@ -49,8 +72,15 @@ export async function generateMetadata({
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const { slug } = await params;
-  const post = seoBlogPosts.find((item) => item.slug === slug);
+  const { locale: localeParam, slug } = await params;
+
+  if (!isLocale(localeParam)) {
+    notFound();
+  }
+
+  const locale = localeParam as Locale;
+  const post = findSeoBlogPost(locale, slug);
+  const copy = detailUi[locale].blog;
 
   if (!post) {
     notFound();
@@ -62,11 +92,11 @@ export default async function BlogPostPage({ params }: PageProps) {
     headline: post.title,
     description: post.excerpt,
     image: post.image,
-    url: `${siteUrl}/blog/${post.slug}`,
-    inLanguage: "bg",
+    url: `${siteUrl}${localePath(locale, `/blog/${post.slug}`)}`,
+    inLanguage: locale,
     author: {
       "@type": "Person",
-      name: "Богдана Баракова",
+      name: locale === "bg" ? "Богдана Баракова" : "Bogdana Barakova",
     },
     publisher: {
       "@type": "Organization",
@@ -82,12 +112,15 @@ export default async function BlogPostPage({ params }: PageProps) {
         type="application/ld+json"
       />
       <header className="detail-header">
-        <Link className="detail-brand" href="/">
+        <Link className="detail-brand" href={localePath(locale)}>
           <span>Barakova Luxury Travel</span>
-          <small>by Богдана Баракова</small>
+          <small>{detailUi[locale].brandSubtitle}</small>
         </Link>
-        <Link className="detail-back-link" href="/#blog">
-          Обратно към блога
+        <Link
+          className="detail-back-link"
+          href={localizedHash(locale, copy.backHash)}
+        >
+          {copy.backLabel}
         </Link>
       </header>
 
@@ -116,11 +149,14 @@ export default async function BlogPostPage({ params }: PageProps) {
             ))}
           </div>
           <div className="article-author">
-            <span>Автор</span>
-            <strong>Богдана Баракова</strong>
+            <span>{copy.authorLabel}</span>
+            <strong>{locale === "bg" ? "Богдана Баракова" : "Bogdana Barakova"}</strong>
           </div>
-          <Link className="btn-primary detail-cta" href="/#contact">
-            Заяви персонална консултация
+          <Link
+            className="btn-primary detail-cta"
+            href={localizedHash(locale, "#contact")}
+          >
+            {copy.ctaLabel}
           </Link>
         </div>
       </article>

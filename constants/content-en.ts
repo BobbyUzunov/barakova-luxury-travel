@@ -620,6 +620,7 @@ export const contentEn = {
       fullName: "Please enter your full name.",
       email: "Please enter a valid email address.",
       phone: "Please enter a phone number.",
+      captcha: "Please confirm you are not a robot.",
       submitError:
         "There was a problem sending your inquiry. Please try again.",
     },

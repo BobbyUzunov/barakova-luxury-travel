@@ -1,39 +1,59 @@
 import type { MetadataRoute } from "next";
+import { locales } from "../constants/i18n";
+import { localePath } from "../constants/i18n";
 import {
-  seoBlogPosts,
-  seoCruises,
-  seoDestinations,
+  blogSlugs,
+  cruiseSlugs,
+  destinationSlugs,
 } from "../constants/seo-content";
-
-const siteUrl = "https://barakovaluxurytravel.com";
+import { siteUrl } from "../constants/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
+  const entries: MetadataRoute.Sitemap = [];
 
-  return [
-    {
-      url: siteUrl,
+  for (const locale of locales) {
+    entries.push({
+      url: `${siteUrl}${localePath(locale)}`,
       lastModified,
       changeFrequency: "weekly",
       priority: 1,
-    },
-    ...seoDestinations.map(({ slug }) => ({
-      url: `${siteUrl}/destinations/${slug}`,
+    });
+
+    entries.push({
+      url: `${siteUrl}${localePath(locale, "/privacy")}`,
       lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    })),
-    ...seoCruises.map(({ slug }) => ({
-      url: `${siteUrl}/cruises/${slug}`,
-      lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.75,
-    })),
-    ...seoBlogPosts.map(({ slug }) => ({
-      url: `${siteUrl}/blog/${slug}`,
-      lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    })),
-  ];
+      changeFrequency: "yearly",
+      priority: 0.3,
+    });
+
+    for (const slug of destinationSlugs) {
+      entries.push({
+        url: `${siteUrl}${localePath(locale, `/destinations/${slug}`)}`,
+        lastModified,
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
+    }
+
+    for (const slug of cruiseSlugs) {
+      entries.push({
+        url: `${siteUrl}${localePath(locale, `/cruises/${slug}`)}`,
+        lastModified,
+        changeFrequency: "monthly",
+        priority: 0.75,
+      });
+    }
+
+    for (const slug of blogSlugs) {
+      entries.push({
+        url: `${siteUrl}${localePath(locale, `/blog/${slug}`)}`,
+        lastModified,
+        changeFrequency: "monthly",
+        priority: 0.7,
+      });
+    }
+  }
+
+  return entries;
 }

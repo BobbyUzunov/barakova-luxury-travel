@@ -1,5 +1,6 @@
 import { contentBg } from "./content-bg";
-import type { BlogPost, Destination } from "./content";
+import { contentEn } from "./content-en";
+import type { BlogPost, Destination, Locale } from "./content";
 
 export const destinationSlugs = [
   "maldives",
@@ -34,6 +35,11 @@ export const blogSlugs = [
 type SluggedDestination = Destination & { slug: string };
 type SluggedBlogPost = BlogPost & { slug: string };
 
+const contentByLocale = {
+  bg: contentBg,
+  en: contentEn,
+} as const;
+
 function addSlugs<T extends Destination>(
   entries: T[],
   slugs: readonly string[],
@@ -44,19 +50,24 @@ function addSlugs<T extends Destination>(
   }));
 }
 
-export const seoDestinations = addSlugs(
-  contentBg.destinations,
-  destinationSlugs,
-);
+export function getSeoDestinations(locale: Locale) {
+  return addSlugs(contentByLocale[locale].destinations, destinationSlugs);
+}
 
-export const seoCruises = addSlugs(contentBg.cruises, cruiseSlugs);
+export function getSeoCruises(locale: Locale) {
+  return addSlugs(contentByLocale[locale].cruises, cruiseSlugs);
+}
 
-export const seoBlogPosts: SluggedBlogPost[] = contentBg.blog.posts.map(
-  (post, index) => ({
+export function getSeoBlogPosts(locale: Locale): SluggedBlogPost[] {
+  return contentByLocale[locale].blog.posts.map((post, index) => ({
     ...post,
     slug: blogSlugs[index],
-  }),
-);
+  }));
+}
+
+export const seoDestinations = getSeoDestinations("bg");
+export const seoCruises = getSeoCruises("bg");
+export const seoBlogPosts = getSeoBlogPosts("bg");
 
 export function getDestinationSlug(index: number) {
   return destinationSlugs[index];
@@ -68,4 +79,16 @@ export function getCruiseSlug(index: number) {
 
 export function getBlogSlug(index: number) {
   return blogSlugs[index];
+}
+
+export function findSeoDestination(locale: Locale, slug: string) {
+  return getSeoDestinations(locale).find((item) => item.slug === slug);
+}
+
+export function findSeoCruise(locale: Locale, slug: string) {
+  return getSeoCruises(locale).find((item) => item.slug === slug);
+}
+
+export function findSeoBlogPost(locale: Locale, slug: string) {
+  return getSeoBlogPosts(locale).find((item) => item.slug === slug);
 }
