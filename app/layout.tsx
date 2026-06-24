@@ -3,8 +3,7 @@ import { Analytics } from "./analytics";
 import "./globals.css";
 
 const siteUrl = "https://barakovaluxurytravel.com";
-const siteTitle =
-  "Barakova Luxury Travel | Персонални консултации за луксозни пътувания";
+const siteTitle = "Barakova Luxury Travel | Луксозни пътувания";
 const siteDescription =
   "Персонални туристически консултации, луксозни почивки, бутикови хотели, круизи и внимателно подбрани дестинации по целия свят.";
 
@@ -27,6 +26,10 @@ export const metadata: Metadata = {
   creator: "Богдана Баракова",
   publisher: "Barakova Luxury Travel",
   category: "travel",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+  },
   alternates: {
     canonical: "/",
     languages: {
@@ -83,17 +86,47 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "TravelAgency",
-              name: "Barakova Luxury Travel",
-              url: siteUrl,
-              founder: {
-                "@type": "Person",
-                name: "Богдана Баракова",
-              },
-              email: "bbmobile6666@gmail.com",
-              telephone: "+359883770909",
-              areaServed: ["BG", "Worldwide"],
-              description: siteDescription,
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  "@id": `${siteUrl}/#website`,
+                  name: "Barakova Luxury Travel",
+                  url: siteUrl,
+                  inLanguage: "bg",
+                  publisher: {
+                    "@id": `${siteUrl}/#business`,
+                  },
+                },
+                {
+                  "@type": "TravelAgency",
+                  "@id": `${siteUrl}/#business`,
+                  name: "Barakova Luxury Travel",
+                  url: siteUrl,
+                  founder: {
+                    "@id": `${siteUrl}/#bogdana`,
+                  },
+                  email: "bbmobile6666@gmail.com",
+                  telephone: "+359883770909",
+                  areaServed: ["BG", "Worldwide"],
+                  description: siteDescription,
+                  contactPoint: {
+                    "@type": "ContactPoint",
+                    contactType: "customer service",
+                    email: "bbmobile6666@gmail.com",
+                    telephone: "+359883770909",
+                    availableLanguage: ["Bulgarian", "English"],
+                  },
+                },
+                {
+                  "@type": "Person",
+                  "@id": `${siteUrl}/#bogdana`,
+                  name: "Богдана Баракова",
+                  jobTitle: "Консултант за луксозни пътувания",
+                  worksFor: {
+                    "@id": `${siteUrl}/#business`,
+                  },
+                },
+              ],
             }),
           }}
         />

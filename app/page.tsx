@@ -1,7 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { type FormEvent, useEffect, useMemo, useState } from "react";
+import {
+  type FormEvent,
+  type MouseEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { contentBg } from "../constants/content-bg";
 import { contentEn } from "../constants/content-en";
 import {
@@ -11,6 +17,11 @@ import {
   languageOptions,
   type Locale,
 } from "../constants/content";
+import {
+  getBlogSlug,
+  getCruiseSlug,
+  getDestinationSlug,
+} from "../constants/seo-content";
 
 const contentByLocale = {
   bg: contentBg,
@@ -57,6 +68,7 @@ function DestinationImage({
       src={imageSrc}
       alt={alt}
       fill
+      quality={60}
       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
       className="destination-image"
       onError={() => setImageSrc(destinationImageFallback)}
@@ -131,6 +143,33 @@ export default function Home() {
     document
       .getElementById("destinations")
       ?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const shouldFollowLink = (event: MouseEvent<HTMLAnchorElement>) =>
+    event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+
+  const openDestinationModal = (
+    event: MouseEvent<HTMLAnchorElement>,
+    destination: Destination,
+  ) => {
+    if (shouldFollowLink(event)) {
+      return;
+    }
+
+    event.preventDefault();
+    setSelectedDestination(destination);
+  };
+
+  const openBlogModal = (
+    event: MouseEvent<HTMLAnchorElement>,
+    post: BlogPost,
+  ) => {
+    if (shouldFollowLink(event)) {
+      return;
+    }
+
+    event.preventDefault();
+    setSelectedBlogPost(post);
   };
 
   const validateForm = () => {
@@ -390,13 +429,12 @@ export default function Home() {
           <h2>{content.destinationsSection.title}</h2>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {content.destinations.map((destination) => (
-            <button
-              aria-label={`${content.destinationModal.eyebrow}: ${destination.name}`}
+          {content.destinations.map((destination, index) => (
+            <a
               className="destination-card"
+              href={`/destinations/${getDestinationSlug(index)}`}
               key={destination.name}
-              onClick={() => setSelectedDestination(destination)}
-              type="button"
+              onClick={(event) => openDestinationModal(event, destination)}
             >
               <div className="destination-media">
                 <DestinationImage
@@ -410,7 +448,7 @@ export default function Home() {
                   <p>{destination.description}</p>
                 </div>
               </div>
-            </button>
+            </a>
           ))}
         </div>
       </section>
@@ -424,13 +462,12 @@ export default function Home() {
           )}
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {content.cruises.map((cruise) => (
-            <button
-              aria-label={`${content.destinationModal.eyebrow}: ${cruise.name}`}
+          {content.cruises.map((cruise, index) => (
+            <a
               className="destination-card cruise-card"
+              href={`/cruises/${getCruiseSlug(index)}`}
               key={cruise.name}
-              onClick={() => setSelectedDestination(cruise)}
-              type="button"
+              onClick={(event) => openDestinationModal(event, cruise)}
             >
               <div className="destination-media">
                 <DestinationImage alt={cruise.name} src={cruise.image} />
@@ -441,7 +478,7 @@ export default function Home() {
                   <p>{cruise.description}</p>
                 </div>
               </div>
-            </button>
+            </a>
           ))}
         </div>
       </section>
@@ -558,13 +595,12 @@ export default function Home() {
         </div>
 
         <div className="blog-grid mt-12">
-          {content.blog.posts.map((post) => (
-            <button
-              aria-label={`${content.blog.readMoreLabel}: ${post.title}`}
+          {content.blog.posts.map((post, index) => (
+            <a
               className="blog-card"
+              href={`/blog/${getBlogSlug(index)}`}
               key={post.title}
-              onClick={() => setSelectedBlogPost(post)}
-              type="button"
+              onClick={(event) => openBlogModal(event, post)}
             >
               <div className="blog-card-image">
                 <DestinationImage alt={post.title} src={post.image} />
@@ -577,7 +613,7 @@ export default function Home() {
                   {post.date} · {post.readTime}
                 </small>
               </div>
-            </button>
+            </a>
           ))}
         </div>
       </section>
