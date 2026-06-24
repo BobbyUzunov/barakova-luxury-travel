@@ -1676,16 +1676,27 @@ h2 {
 }
 
 .footer-contact-meta a {
-  color: rgba(45, 42, 38, 0.62);
+  color: rgba(45, 42, 38, 0.72);
+  cursor: pointer;
   font-weight: 750;
-  text-decoration: none;
-  transition: color 180ms ease;
+  text-decoration: underline;
+  text-decoration-color: rgba(200, 169, 106, 0.55);
+  text-underline-offset: 0.18em;
+  transition:
+    color 180ms ease,
+    text-decoration-color 180ms ease,
+    transform 180ms ease;
+}
+
+.footer-contact-link {
+  width: fit-content;
 }
 
 .footer-links a:hover,
 .footer-contact-meta a:hover,
 .developer-credit:hover {
   color: var(--soft-brown);
+  text-decoration-color: var(--champagne);
   transform: translateX(2px);
 }
 

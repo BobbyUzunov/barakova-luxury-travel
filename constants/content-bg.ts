@@ -662,6 +662,7 @@ export const contentBg = {
   floatingContact: {
     groupAriaLabel: "Бързи контакти",
     callAriaLabel: "Обадете се на 0883 770 909",
+    emailAriaLabel: "Изпратете имейл на bbmobile6666@gmail.com",
     whatsappAriaLabel: "Пишете ни в WhatsApp на 0883 770 909",
   },
 } satisfies SiteContent;

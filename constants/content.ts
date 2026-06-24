@@ -170,6 +170,7 @@ export type SiteContent = {
   floatingContact: {
     groupAriaLabel: string;
     callAriaLabel: string;
+    emailAriaLabel: string;
     whatsappAriaLabel: string;
   };
 };
