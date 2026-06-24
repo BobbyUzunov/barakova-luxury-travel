@@ -18,6 +18,10 @@ import {
 } from "../../../constants/images";
 import { localePath } from "../../../constants/i18n";
 import {
+  contactPhoneDisplay,
+  contactPhoneHref,
+} from "../../../constants/site";
+import {
   getBlogSlug,
   getCruiseSlug,
   getDestinationSlug,
@@ -26,6 +30,7 @@ import { BlogModal } from "./blog-modal";
 import { ContactSection } from "./contact-section";
 import { ContentModal } from "./content-modal";
 import { DestinationImage } from "./destination-image";
+import { MobileFloatingContact } from "./mobile-floating-contact";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 
@@ -124,6 +129,7 @@ export function HomePage({ locale }: HomePageProps) {
           src={heroImage}
           alt={content.imageAlts.hero}
           fill
+          fetchPriority="high"
           priority
           quality={90}
           sizes="100vw"
@@ -159,6 +165,17 @@ export function HomePage({ locale }: HomePageProps) {
               >
                 {content.hero.secondaryCta}
               </button>
+            </div>
+            <div className="hero-phone-cta">
+              <a
+                aria-label={content.hero.callAriaLabel}
+                className="hero-phone-link"
+                href={contactPhoneHref}
+              >
+                <span aria-hidden="true">📞</span>
+                {contactPhoneDisplay}
+              </a>
+              <p>{content.hero.phoneNote}</p>
             </div>
           </div>
         </div>
@@ -417,6 +434,7 @@ export function HomePage({ locale }: HomePageProps) {
 
       <ContactSection content={content} locale={locale} />
       <SiteFooter content={content} locale={locale} />
+      <MobileFloatingContact content={content} />
 
       {selectedDestination && (
         <ContentModal

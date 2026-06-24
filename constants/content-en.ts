@@ -22,6 +22,8 @@ export const contentEn = {
       "Personal travel consulting for clients who want a luxury experience without stress, noise, or endless searching.",
     primaryCta: "Request a Private Consultation",
     secondaryCta: "Explore destinations",
+    phoneNote: "Free initial consultation",
+    callAriaLabel: "Call 0883 770 909",
   },
   imageAlts: {
     hero: "Bogdana Barakova on a beach facing the sea",
@@ -600,6 +602,12 @@ export const contentEn = {
       "Time saved",
       "Attention to every detail",
     ],
+    phoneCallout: {
+      title: "Prefer a direct conversation?",
+      lead: "Reach us at",
+      trail: "or complete the form and we will contact you.",
+      callAriaLabel: "Call 0883 770 909",
+    },
     fields: {
       fullName: "Full name",
       email: "Email",
@@ -650,5 +658,10 @@ export const contentEn = {
     copyright: "© 2026 Barakova Luxury Travel",
     rights: "All rights reserved.",
     developerCredit: "Website crafted by Bobby Uzunov",
+  },
+  floatingContact: {
+    groupAriaLabel: "Quick contact options",
+    callAriaLabel: "Call 0883 770 909",
+    whatsappAriaLabel: "Message us on WhatsApp at 0883 770 909",
   },
 } satisfies SiteContent;

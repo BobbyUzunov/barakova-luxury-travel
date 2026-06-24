@@ -18,7 +18,6 @@ export function DestinationImage({
 }) {
   const preferredSrc = resolveDestinationImage(slug, remoteSrc);
   const [imageSrc, setImageSrc] = useState(preferredSrc);
-  const [hasTriedRemote, setHasTriedRemote] = useState(!slug);
 
   return (
     <Image
@@ -28,15 +27,7 @@ export function DestinationImage({
       quality={60}
       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
       className="destination-image"
-      onError={() => {
-        if (slug && !hasTriedRemote) {
-          setHasTriedRemote(true);
-          setImageSrc(remoteSrc);
-          return;
-        }
-
-        setImageSrc(getDestinationImageFallback());
-      }}
+      onError={() => setImageSrc(getDestinationImageFallback())}
     />
   );
 }

@@ -35,7 +35,12 @@ export function SiteFooter({ content, locale }: SiteFooterProps) {
           <h3>{content.footer.contactsTitle}</h3>
           <div className="footer-contact-meta">
             <a href={`mailto:${contactEmail}`}>{content.footer.contacts.email}</a>
-            <a href={contactPhoneHref}>{content.footer.contacts.phone}</a>
+            <a
+              aria-label={content.floatingContact.callAriaLabel}
+              href={contactPhoneHref}
+            >
+              {content.footer.contacts.phone}
+            </a>
           </div>
         </div>
       </div>

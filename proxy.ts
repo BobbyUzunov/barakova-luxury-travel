@@ -4,7 +4,7 @@ import { defaultLocale } from "./constants/i18n";
 
 const legacyPrefixes = ["destinations", "cruises", "blog"] as const;
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname === "/") {

@@ -54,6 +54,8 @@ export type SiteContent = {
     subtitle: string;
     primaryCta: string;
     secondaryCta: string;
+    phoneNote: string;
+    callAriaLabel: string;
   };
   imageAlts: {
     hero: string;
@@ -113,6 +115,12 @@ export type SiteContent = {
     subtitle: string;
     trustTitle: string;
     trustItems: string[];
+    phoneCallout: {
+      title: string;
+      lead: string;
+      trail: string;
+      callAriaLabel: string;
+    };
     fields: {
       fullName: string;
       email: string;
@@ -158,6 +166,11 @@ export type SiteContent = {
     copyright: string;
     rights: string;
     developerCredit: string;
+  };
+  floatingContact: {
+    groupAriaLabel: string;
+    callAriaLabel: string;
+    whatsappAriaLabel: string;
   };
 };
 

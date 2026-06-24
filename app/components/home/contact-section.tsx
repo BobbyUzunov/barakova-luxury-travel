@@ -3,6 +3,10 @@
 import { type FormEvent, useState } from "react";
 import type { Locale, SiteContent } from "../../../constants/content";
 import {
+  contactPhoneDisplay,
+  contactPhoneHref,
+} from "../../../constants/site";
+import {
   isTurnstileConfigured,
   TurnstileWidget,
 } from "../turnstile-widget";
@@ -132,6 +136,21 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
         </div>
 
         <div className="contact-form-shell">
+          <div className="contact-phone-callout">
+            <h3>{content.contact.phoneCallout.title}</h3>
+            <p>
+              {content.contact.phoneCallout.lead}{" "}
+              <a
+                aria-label={content.contact.phoneCallout.callAriaLabel}
+                className="contact-phone-link"
+                href={contactPhoneHref}
+              >
+                {contactPhoneDisplay}
+              </a>{" "}
+              {content.contact.phoneCallout.trail}
+            </p>
+          </div>
+
           {isSubmitted ? (
             <div className="success-card" role="status">
               <span>✓</span>
