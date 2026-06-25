@@ -27,6 +27,7 @@ import {
 } from "../../../constants/seo-content";
 import { ContactSection } from "./contact-section";
 import { DestinationImage } from "./destination-image";
+import { HeroBackground } from "./hero-background";
 import { MobileFloatingContact } from "./mobile-floating-contact";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
@@ -43,6 +44,7 @@ type HomePageProps = {
 export function HomePage({ locale }: HomePageProps) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [heroVideoActive, setHeroVideoActive] = useState(false);
 
   const content = useMemo<SiteContent>(
     () => contentByLocale[locale],
@@ -84,21 +86,20 @@ export function HomePage({ locale }: HomePageProps) {
 
       <section
         id="home"
-        className="hero-section relative min-h-[94svh] px-5 pb-14 pt-40 text-[var(--charcoal)] sm:min-h-[92svh] sm:px-8 sm:pt-36 lg:min-h-[96svh] lg:px-12"
+        className={`hero-section relative overflow-hidden min-h-[94svh] px-5 pb-14 pt-40 text-[var(--charcoal)] sm:min-h-[92svh] sm:px-8 sm:pt-36 lg:min-h-[96svh] lg:px-12${heroVideoActive ? " hero-section--video" : ""}`}
       >
-        <Image
-          src={heroImage}
-          alt={content.imageAlts.hero}
-          fill
-          fetchPriority="high"
-          priority
-          quality={90}
-          sizes="100vw"
-          className="hero-image"
+        <HeroBackground
+          imageAlt={content.imageAlts.hero}
+          imageSrc={heroImage}
+          onVideoActiveChange={setHeroVideoActive}
         />
-        <div className="hero-soft-overlay absolute inset-0" />
-        <div className="hero-gradient-overlay absolute inset-0" />
-        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[var(--ivory)] to-transparent" />
+        <div
+          className={`hero-soft-overlay absolute inset-0${heroVideoActive ? " hero-soft-overlay--video" : ""}`}
+        />
+        <div
+          className={`hero-gradient-overlay absolute inset-0${heroVideoActive ? " hero-gradient-overlay--video" : ""}`}
+        />
+        <div className="hero-bottom-fade absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[var(--ivory)] to-transparent" />
 
         <div className="hero-inner relative z-10 mx-auto flex min-h-[68svh] max-w-7xl items-center justify-center text-center sm:min-h-[66svh] lg:min-h-[72svh] lg:justify-start lg:text-left">
           <div className="hero-copy max-w-3xl animate-rise rounded-[1.6rem] bg-white/24 p-4 backdrop-blur-[2px] sm:rounded-[2rem] sm:p-5 lg:bg-transparent lg:p-0 lg:backdrop-blur-0">

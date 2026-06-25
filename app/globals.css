@@ -374,6 +374,14 @@ h2 {
   min-height: 85svh;
   padding-top: 7.1rem;
   padding-bottom: 2.75rem;
+  overflow: hidden;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .hero-image {
@@ -381,16 +389,73 @@ h2 {
   inset: 0;
   object-fit: cover;
   object-position: 58% center;
+  transition: opacity 900ms ease;
+}
+
+.hero-image--video-ready {
+  opacity: 0;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 900ms ease;
+}
+
+.hero-image--video-ready + .hero-video {
+  opacity: 1;
+}
+
+.hero-video-iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 177.78vh);
+  height: max(100%, 56.25vw);
+  border: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
 }
 
 .hero-soft-overlay {
   background: rgba(248, 243, 236, 0.42);
+  pointer-events: none;
 }
 
 .hero-gradient-overlay {
   background:
     linear-gradient(180deg, rgba(248, 243, 236, 0.7), rgba(248, 243, 236, 0.34) 42%, rgba(248, 243, 236, 0.74)),
     linear-gradient(90deg, rgba(248, 243, 236, 0.52), rgba(248, 243, 236, 0.18));
+  pointer-events: none;
+}
+
+.hero-soft-overlay--video {
+  background:
+    linear-gradient(180deg, rgba(45, 42, 38, 0.34), rgba(45, 42, 38, 0.08) 42%, rgba(200, 169, 106, 0.1)),
+    rgba(200, 169, 106, 0.08);
+}
+
+.hero-gradient-overlay--video {
+  background:
+    linear-gradient(180deg, rgba(45, 42, 38, 0.68) 0%, rgba(45, 42, 38, 0.28) 30%, rgba(200, 169, 106, 0.16) 58%, rgba(248, 243, 236, 0.42) 100%),
+    linear-gradient(90deg, rgba(45, 42, 38, 0.42), rgba(200, 169, 106, 0.12) 48%, transparent 78%);
+}
+
+.hero-bottom-fade {
+  pointer-events: none;
+}
+
+.hero-section--video .hero-copy {
+  text-shadow: 0 1px 24px rgba(248, 243, 236, 0.28);
+}
+
+@media (max-width: 767px) {
+  .hero-video {
+    display: none;
+  }
 }
 
 .hero-inner {
@@ -2082,11 +2147,11 @@ h2 {
     object-position: center center;
   }
 
-  .hero-soft-overlay {
+  .hero-soft-overlay:not(.hero-soft-overlay--video) {
     background: rgba(248, 243, 236, 0.18);
   }
 
-  .hero-gradient-overlay {
+  .hero-gradient-overlay:not(.hero-gradient-overlay--video) {
     background:
       linear-gradient(90deg, rgba(248, 243, 236, 0.82), rgba(248, 243, 236, 0.42) 44%, rgba(248, 243, 236, 0.08)),
       linear-gradient(180deg, rgba(248, 243, 236, 0.08), rgba(248, 243, 236, 0.58));
