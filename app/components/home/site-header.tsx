@@ -29,7 +29,7 @@ export function SiteHeader({
   scrollToContact,
 }: SiteHeaderProps) {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4 lg:px-10">
+    <header className="site-header-shell fixed inset-x-0 top-0 z-50 px-3 sm:px-6 lg:px-10">
       <nav className="site-header mx-auto max-w-7xl">
         <Link className="brand-lockup" href={localePath(locale)}>
           <span>{content.brand.name}</span>

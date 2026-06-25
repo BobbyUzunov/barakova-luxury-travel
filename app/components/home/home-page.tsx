@@ -69,7 +69,7 @@ export function HomePage({ locale }: HomePageProps) {
   };
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[var(--ivory)] text-[var(--charcoal)]">
+    <main className="min-h-screen overflow-x-clip bg-[var(--ivory)] text-[var(--charcoal)]">
       <SiteHeader
         closeMenuLabel={closeMenuLabel}
         content={content}
