@@ -25,7 +25,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
         title: "Кои сме ние",
         paragraphs: [
           "Barakova Luxury Travel предоставя персонални консултации за луксозни пътувания. Администратор на личните данни е Богдана Баракова.",
-          "Контакт: bbmobile6666@gmail.com",
+          "Контакт: info@barakovaluxurytravel.com",
         ],
       },
       {
@@ -77,7 +77,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
         title: "Who we are",
         paragraphs: [
           "Barakova Luxury Travel provides personal consulting for luxury travel. The data controller is Bogdana Barakova.",
-          "Contact: bbmobile6666@gmail.com",
+          "Contact: info@barakovaluxurytravel.com",
         ],
       },
       {

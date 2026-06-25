@@ -650,7 +650,7 @@ export const contentBg = {
       en: "English",
     },
     contacts: {
-      email: "bbmobile6666@gmail.com",
+      email: "info@barakovaluxurytravel.com",
       phone: "0883 770 909",
       whatsapp: "+359 883 770 909",
       viber: "+359 883 770 909",
@@ -662,7 +662,7 @@ export const contentBg = {
   floatingContact: {
     groupAriaLabel: "Бързи контакти",
     callAriaLabel: "Обадете се на 0883 770 909",
-    emailAriaLabel: "Изпратете имейл на bbmobile6666@gmail.com",
+    emailAriaLabel: "Изпратете имейл на info@barakovaluxurytravel.com",
     whatsappAriaLabel: "Пишете ни в WhatsApp на 0883 770 909",
   },
 } satisfies SiteContent;

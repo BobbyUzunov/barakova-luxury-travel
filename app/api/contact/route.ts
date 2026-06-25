@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { contactEmail as defaultRecipientEmail } from "../../../constants/site";
+import { contactEmail as defaultRecipientEmail, resendFromEmailDefault } from "../../../constants/site";
 import {
   buildEmailHtml,
   getClientIp,
@@ -15,9 +15,7 @@ import {
 
 const resendApiUrl = "https://api.resend.com/emails";
 const recipientEmail = process.env.CONTACT_RECIPIENT_EMAIL || defaultRecipientEmail;
-const senderEmail =
-  process.env.RESEND_FROM_EMAIL ||
-  "Barakova Luxury Travel <onboarding@resend.dev>";
+const senderEmail = process.env.RESEND_FROM_EMAIL || resendFromEmailDefault;
 
 export async function POST(request: Request) {
   const ip = getClientIp(request);

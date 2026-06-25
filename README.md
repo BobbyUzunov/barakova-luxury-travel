@@ -75,8 +75,8 @@ https://barakovaluxurytravel.com
 
 ```bash
 RESEND_API_KEY=
-CONTACT_RECIPIENT_EMAIL=bbmobile6666@gmail.com
-RESEND_FROM_EMAIL=Barakova Luxury Travel <onboarding@resend.dev>
+CONTACT_RECIPIENT_EMAIL=info@barakovaluxurytravel.com
+RESEND_FROM_EMAIL=Barakova Luxury Travel <info@barakovaluxurytravel.com>
 NEXT_PUBLIC_GA_ID=
 ```
 
@@ -101,7 +101,7 @@ UPSTASH_REDIS_REST_TOKEN=
 След верифициране на домейна в Resend, `RESEND_FROM_EMAIL` може да бъде сменен към адрес от домейна, например:
 
 ```bash
-RESEND_FROM_EMAIL=Barakova Luxury Travel <noreply@barakovaluxurytravel.com>
+RESEND_FROM_EMAIL=Barakova Luxury Travel <info@barakovaluxurytravel.com>
 ```
 
 ## GitHub repository
