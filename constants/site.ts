@@ -8,7 +8,6 @@ export const resendFromEmailDefault = `Barakova Luxury Travel <${contactEmail}>`
 export const contactPhone = "+359883770909";
 export const contactPhoneDisplay = "0883 770 909";
 export const contactPhoneHref = `tel:${contactPhone}`;
-export const contactWhatsAppHref = "https://wa.me/359883770909";
 
 export function getEmailAriaLabel(locale: Locale) {
   return locale === "bg"
@@ -20,10 +19,4 @@ export function getCallAriaLabel(locale: Locale) {
   return locale === "bg"
     ? `Обадете се на ${contactPhoneDisplay}`
     : `Call ${contactPhoneDisplay}`;
-}
-
-export function getWhatsappAriaLabel(locale: Locale) {
-  return locale === "bg"
-    ? `Пишете ни в WhatsApp на ${contactPhoneDisplay}`
-    : `Message us on WhatsApp at ${contactPhoneDisplay}`;
 }

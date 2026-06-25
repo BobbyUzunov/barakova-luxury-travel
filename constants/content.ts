@@ -160,9 +160,6 @@ export type SiteContent = {
     rights: string;
     developerCredit: string;
   };
-  floatingContact: {
-    groupAriaLabel: string;
-  };
 };
 
 export const defaultLocale: Locale = "bg";

@@ -652,7 +652,4 @@ export const contentBg = {
     rights: "Всички права запазени.",
     developerCredit: "Website crafted by Bobby Uzunov",
   },
-  floatingContact: {
-    groupAriaLabel: "Бързи контакти",
-  },
 } satisfies SiteContent;

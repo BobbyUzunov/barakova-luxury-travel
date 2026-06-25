@@ -652,7 +652,4 @@ export const contentEn = {
     rights: "All rights reserved.",
     developerCredit: "Website crafted by Bobby Uzunov",
   },
-  floatingContact: {
-    groupAriaLabel: "Quick contact options",
-  },
 } satisfies SiteContent;
