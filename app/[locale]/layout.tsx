@@ -14,6 +14,7 @@ import { LocaleHtml } from "../components/locale-html";
 
 type LocaleLayoutProps = {
   children: React.ReactNode;
+  modal: React.ReactNode;
   params: Promise<{ locale: string }>;
 };
 
@@ -70,6 +71,7 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
   children,
+  modal,
   params,
 }: LocaleLayoutProps) {
   const { locale } = await params;
@@ -78,5 +80,10 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  return <LocaleHtml locale={locale as Locale}>{children}</LocaleHtml>;
+  return (
+    <LocaleHtml locale={locale as Locale}>
+      {children}
+      {modal}
+    </LocaleHtml>
+  );
 }

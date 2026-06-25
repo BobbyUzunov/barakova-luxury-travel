@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { type MouseEvent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { contentBg } from "../../../constants/content-bg";
 import { contentEn } from "../../../constants/content-en";
 import {
-  type BlogPost,
-  type Destination,
   type Locale,
   type SiteContent,
 } from "../../../constants/content";
@@ -26,9 +25,7 @@ import {
   getCruiseSlug,
   getDestinationSlug,
 } from "../../../constants/seo-content";
-import { BlogModal } from "./blog-modal";
 import { ContactSection } from "./contact-section";
-import { ContentModal } from "./content-modal";
 import { DestinationImage } from "./destination-image";
 import { MobileFloatingContact } from "./mobile-floating-contact";
 import { SiteFooter } from "./site-footer";
@@ -46,11 +43,6 @@ type HomePageProps = {
 export function HomePage({ locale }: HomePageProps) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [selectedDestination, setSelectedDestination] =
-    useState<Destination | null>(null);
-  const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(
-    null,
-  );
 
   const content = useMemo<SiteContent>(
     () => contentByLocale[locale],
@@ -58,13 +50,9 @@ export function HomePage({ locale }: HomePageProps) {
   );
   const menuLabel = locale === "bg" ? "Меню" : "Menu";
   const closeMenuLabel = locale === "bg" ? "Затвори менюто" : "Close menu";
-  const contentModalLabelId = "content-modal-title";
-  const blogModalLabelId = "blog-modal-title";
 
   const scrollToContact = () => {
     setIsMenuOpen(false);
-    setSelectedDestination(null);
-    setSelectedBlogPost(null);
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -78,33 +66,6 @@ export function HomePage({ locale }: HomePageProps) {
   const handleLocaleChange = (nextLocale: Locale) => {
     setIsMenuOpen(false);
     router.push(localePath(nextLocale));
-  };
-
-  const shouldFollowLink = (event: MouseEvent<HTMLAnchorElement>) =>
-    event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
-
-  const openContentModal = (
-    event: MouseEvent<HTMLAnchorElement>,
-    item: Destination,
-  ) => {
-    if (shouldFollowLink(event)) {
-      return;
-    }
-
-    event.preventDefault();
-    setSelectedDestination(item);
-  };
-
-  const openBlogModal = (
-    event: MouseEvent<HTMLAnchorElement>,
-    post: BlogPost,
-  ) => {
-    if (shouldFollowLink(event)) {
-      return;
-    }
-
-    event.preventDefault();
-    setSelectedBlogPost(post);
   };
 
   return (
@@ -230,14 +191,14 @@ export function HomePage({ locale }: HomePageProps) {
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {content.destinations.map((destination, index) => (
-            <a
+            <Link
               className="destination-card"
               href={localePath(
                 locale,
                 `/destinations/${getDestinationSlug(index)}`,
               )}
               key={destination.name}
-              onClick={(event) => openContentModal(event, destination)}
+              scroll={false}
             >
               <div className="destination-media">
                 <DestinationImage
@@ -253,7 +214,7 @@ export function HomePage({ locale }: HomePageProps) {
                   <p>{destination.description}</p>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </section>
@@ -268,11 +229,11 @@ export function HomePage({ locale }: HomePageProps) {
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {content.cruises.map((cruise, index) => (
-            <a
+            <Link
               className="destination-card cruise-card"
               href={localePath(locale, `/cruises/${getCruiseSlug(index)}`)}
               key={cruise.name}
-              onClick={(event) => openContentModal(event, cruise)}
+              scroll={false}
             >
               <div className="destination-media">
                 <DestinationImage
@@ -288,7 +249,7 @@ export function HomePage({ locale }: HomePageProps) {
                   <p>{cruise.description}</p>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </section>
@@ -405,11 +366,11 @@ export function HomePage({ locale }: HomePageProps) {
 
         <div className="blog-grid mt-12">
           {content.blog.posts.map((post, index) => (
-            <a
+            <Link
               className="blog-card"
               href={localePath(locale, `/blog/${getBlogSlug(index)}`)}
               key={post.title}
-              onClick={(event) => openBlogModal(event, post)}
+              scroll={false}
             >
               <div className="blog-card-image">
                 <DestinationImage
@@ -427,7 +388,7 @@ export function HomePage({ locale }: HomePageProps) {
                   {post.date} · {post.readTime}
                 </small>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </section>
@@ -435,25 +396,6 @@ export function HomePage({ locale }: HomePageProps) {
       <ContactSection content={content} locale={locale} />
       <SiteFooter content={content} locale={locale} />
       <MobileFloatingContact content={content} locale={locale} />
-
-      {selectedDestination && (
-        <ContentModal
-          content={content}
-          item={selectedDestination}
-          labelId={contentModalLabelId}
-          onClose={() => setSelectedDestination(null)}
-          onContact={scrollToContact}
-        />
-      )}
-
-      {selectedBlogPost && (
-        <BlogModal
-          content={content}
-          labelId={blogModalLabelId}
-          onClose={() => setSelectedBlogPost(null)}
-          post={selectedBlogPost}
-        />
-      )}
     </main>
   );
 }
