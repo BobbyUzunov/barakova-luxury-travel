@@ -102,7 +102,13 @@ export function HomePage({ locale }: HomePageProps) {
         <div className="hero-bottom-fade absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[var(--ivory)] to-transparent" />
 
         <div className="hero-inner relative z-10 mx-auto flex min-h-[68svh] max-w-7xl items-center justify-center text-center sm:min-h-[66svh] lg:min-h-[72svh] lg:justify-start lg:text-left">
-          <div className="hero-copy max-w-3xl animate-rise rounded-[1.6rem] bg-white/24 p-4 backdrop-blur-[2px] sm:rounded-[2rem] sm:p-5 lg:bg-transparent lg:p-0 lg:backdrop-blur-0">
+          <div
+            className={`hero-copy max-w-3xl animate-rise rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-5${
+              heroVideoActive
+                ? " hero-copy--video-panel"
+                : " bg-white/24 backdrop-blur-[2px] lg:bg-transparent lg:p-0 lg:backdrop-blur-0"
+            }`}
+          >
             <p className="hero-label mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[var(--soft-brown)] sm:mb-5 sm:text-sm sm:tracking-[0.32em]">
               {content.hero.label}
             </p>
