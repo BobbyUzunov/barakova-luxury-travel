@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   heroVideoMinWidth,
   heroVimeoEmbedUrl,
 } from "../../../constants/hero-video";
 
 const VIDEO_LOAD_TIMEOUT_MS = 12_000;
+const VIMEO_ORIGIN = "https://player.vimeo.com";
 
 type HeroBackgroundProps = {
   imageAlt: string;
@@ -26,13 +27,25 @@ function shouldEnableHeroVideo() {
   );
 }
 
+function postToVimeoPlayer(
+  iframe: HTMLIFrameElement,
+  method: string,
+  value?: string,
+) {
+  iframe.contentWindow?.postMessage(
+    JSON.stringify(value ? { method, value } : { method }),
+    VIMEO_ORIGIN,
+  );
+}
+
 export function HeroBackground({
   imageAlt,
   imageSrc,
   onVideoActiveChange,
 }: HeroBackgroundProps) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [loadVideo, setLoadVideo] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
 
   useEffect(() => {
@@ -40,35 +53,62 @@ export function HeroBackground({
       return;
     }
 
+    const preconnect = document.createElement("link");
+    preconnect.rel = "preconnect";
+    preconnect.href = VIMEO_ORIGIN;
+    document.head.appendChild(preconnect);
+
     let cancelled = false;
-    let idleId: number | undefined;
-    let timeoutId: ReturnType<typeof setTimeout> | undefined;
-
-    const scheduleVideo = () => {
-      if (!cancelled) {
-        setLoadVideo(true);
-      }
-    };
-
-    if ("requestIdleCallback" in window) {
-      idleId = window.requestIdleCallback(scheduleVideo, { timeout: 1500 });
-    } else {
-      timeoutId = setTimeout(scheduleVideo, 400);
-    }
+    const frameId = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        if (!cancelled) {
+          setLoadVideo(true);
+        }
+      });
+    });
 
     return () => {
       cancelled = true;
-      if (idleId !== undefined) {
-        window.cancelIdleCallback(idleId);
-      }
-      if (timeoutId !== undefined) {
-        clearTimeout(timeoutId);
-      }
+      window.cancelAnimationFrame(frameId);
+      preconnect.remove();
     };
   }, []);
 
   useEffect(() => {
-    if (!loadVideo || videoFailed || videoReady) {
+    if (!loadVideo) {
+      return;
+    }
+
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== VIMEO_ORIGIN || typeof event.data !== "string") {
+        return;
+      }
+
+      try {
+        const data = JSON.parse(event.data) as { event?: string };
+
+        if (data.event === "ready") {
+          const iframe = iframeRef.current;
+          if (iframe) {
+            postToVimeoPlayer(iframe, "addEventListener", "playing");
+            postToVimeoPlayer(iframe, "play");
+          }
+        }
+
+        if (data.event === "playing") {
+          setVideoPlaying(true);
+        }
+      } catch {
+        // Ignore non-JSON Vimeo messages.
+      }
+    };
+
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [loadVideo]);
+
+  useEffect(() => {
+    if (!loadVideo || videoFailed || videoPlaying) {
       return;
     }
 
@@ -77,11 +117,22 @@ export function HeroBackground({
     }, VIDEO_LOAD_TIMEOUT_MS);
 
     return () => window.clearTimeout(timeoutId);
-  }, [loadVideo, videoFailed, videoReady]);
+  }, [loadVideo, videoFailed, videoPlaying]);
 
   useEffect(() => {
-    onVideoActiveChange?.(videoReady && !videoFailed);
-  }, [onVideoActiveChange, videoFailed, videoReady]);
+    onVideoActiveChange?.(videoPlaying && !videoFailed);
+  }, [onVideoActiveChange, videoFailed, videoPlaying]);
+
+  const handleIframeLoad = () => {
+    const iframe = iframeRef.current;
+    if (!iframe) {
+      return;
+    }
+
+    postToVimeoPlayer(iframe, "addEventListener", "ready");
+    postToVimeoPlayer(iframe, "addEventListener", "playing");
+    postToVimeoPlayer(iframe, "play");
+  };
 
   const showVideo = loadVideo && !videoFailed;
 
@@ -89,7 +140,7 @@ export function HeroBackground({
     <div aria-hidden="true" className="hero-media">
       <Image
         alt={imageAlt}
-        className={`hero-image${videoReady ? " hero-image--video-ready" : ""}`}
+        className={`hero-image${videoPlaying ? " hero-image--video-ready" : ""}`}
         fetchPriority="high"
         fill
         priority
@@ -98,13 +149,15 @@ export function HeroBackground({
         src={imageSrc}
       />
       {showVideo ? (
-        <div className="hero-video">
+        <div
+          className={`hero-video${videoPlaying ? " hero-video--playing" : ""}`}
+        >
           <iframe
             allow="autoplay; fullscreen; picture-in-picture"
             className="hero-video-iframe"
-            loading="lazy"
             onError={() => setVideoFailed(true)}
-            onLoad={() => setVideoReady(true)}
+            onLoad={handleIframeLoad}
+            ref={iframeRef}
             src={heroVimeoEmbedUrl}
             tabIndex={-1}
             title=""

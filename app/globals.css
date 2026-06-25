@@ -389,7 +389,7 @@ h2 {
   inset: 0;
   object-fit: cover;
   object-position: 58% center;
-  transition: opacity 900ms ease;
+  transition: opacity 500ms ease;
 }
 
 .hero-image--video-ready {
@@ -402,10 +402,10 @@ h2 {
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 900ms ease;
+  transition: opacity 500ms ease;
 }
 
-.hero-image--video-ready + .hero-video {
+.hero-video--playing {
   opacity: 1;
 }
 
