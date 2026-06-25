@@ -105,7 +105,7 @@ export function HomePage({ locale }: HomePageProps) {
           <div
             className={`hero-copy max-w-3xl animate-rise rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-5${
               heroVideoActive
-                ? " hero-copy--video-panel"
+                ? " hero-copy--video-panel lg:p-0"
                 : " bg-white/24 backdrop-blur-[2px] lg:bg-transparent lg:p-0 lg:backdrop-blur-0"
             }`}
           >

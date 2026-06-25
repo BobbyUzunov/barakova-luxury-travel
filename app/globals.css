@@ -463,38 +463,42 @@ h2 {
 .hero-copy--video-panel {
   position: relative;
   z-index: 1;
-  border: 1px solid rgba(255, 255, 255, 0.62);
-  background: rgba(248, 243, 236, 0.86);
-  backdrop-filter: blur(14px);
-  box-shadow:
-    0 24px 68px rgba(45, 42, 38, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
 }
 
 .hero-section--video .hero-title {
   color: var(--charcoal);
+  text-shadow:
+    0 2px 28px rgba(248, 243, 236, 0.96),
+    0 1px 10px rgba(248, 243, 236, 0.82);
 }
 
 .hero-section--video .hero-subtitle {
-  color: rgba(45, 42, 38, 0.86);
+  color: rgba(45, 42, 38, 0.9);
+  text-shadow: 0 1px 20px rgba(248, 243, 236, 0.92);
 }
 
 .hero-section--video .hero-label {
   color: #6f5a46;
+  text-shadow: 0 1px 14px rgba(248, 243, 236, 0.88);
 }
 
 .hero-section--video .hero-phone-link {
   color: #5f4d3c;
+  text-shadow: 0 1px 12px rgba(248, 243, 236, 0.85);
 }
 
 .hero-section--video .hero-phone-cta p {
-  color: rgba(45, 42, 38, 0.74);
+  color: rgba(45, 42, 38, 0.78);
+  text-shadow: 0 1px 12px rgba(248, 243, 236, 0.82);
 }
 
 @media (min-width: 1024px) {
   .hero-copy--video-panel {
-    padding: 1.85rem 2.1rem;
-    background: rgba(248, 243, 236, 0.84);
+    padding: 0;
   }
 
   .hero-gradient-overlay--video {
@@ -518,9 +522,9 @@ h2 {
 
 @media (max-width: 767px) {
   .hero-copy--video-panel {
-    background: rgba(248, 243, 236, 0.9);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 20px 52px rgba(45, 42, 38, 0.16);
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
   }
 
   .hero-section--video .hero-soft-overlay--video {
