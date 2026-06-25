@@ -23,6 +23,7 @@ export const contentBg = {
     primaryCta: "Заяви персонална консултация",
     secondaryCta: "Разгледай дестинациите",
     phoneNote: "Безплатна първоначална консултация",
+    phoneLinkLabel: "Обади се веднага",
   },
   imageAlts: {
     hero: "Богдана Баракова на плаж с поглед към морето",

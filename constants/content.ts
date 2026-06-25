@@ -55,6 +55,7 @@ export type SiteContent = {
     primaryCta: string;
     secondaryCta: string;
     phoneNote: string;
+    phoneLinkLabel: string;
   };
   imageAlts: {
     hero: string;

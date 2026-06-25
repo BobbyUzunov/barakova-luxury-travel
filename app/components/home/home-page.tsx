@@ -18,7 +18,6 @@ import {
 } from "../../../constants/images";
 import { localePath } from "../../../constants/i18n";
 import {
-  contactPhoneDisplay,
   contactPhoneHref,
   getCallAriaLabel,
 } from "../../../constants/site";
@@ -174,7 +173,7 @@ export function HomePage({ locale }: HomePageProps) {
                 href={contactPhoneHref}
               >
                 <span aria-hidden="true">📞</span>
-                {contactPhoneDisplay}
+                {content.hero.phoneLinkLabel}
               </a>
               <p>{content.hero.phoneNote}</p>
             </div>

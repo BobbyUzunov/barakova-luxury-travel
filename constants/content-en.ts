@@ -23,6 +23,7 @@ export const contentEn = {
     primaryCta: "Request a Private Consultation",
     secondaryCta: "Explore destinations",
     phoneNote: "Free initial consultation",
+    phoneLinkLabel: "Call now",
   },
   imageAlts: {
     hero: "Bogdana Barakova on a beach facing the sea",
