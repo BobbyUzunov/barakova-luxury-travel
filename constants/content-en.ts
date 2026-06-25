@@ -23,7 +23,6 @@ export const contentEn = {
     primaryCta: "Request a Private Consultation",
     secondaryCta: "Explore destinations",
     phoneNote: "Free initial consultation",
-    callAriaLabel: "Call 0883 770 909",
   },
   imageAlts: {
     hero: "Bogdana Barakova on a beach facing the sea",
@@ -606,7 +605,6 @@ export const contentEn = {
       title: "Prefer a direct conversation?",
       lead: "Reach us at",
       trail: "or complete the form and we will contact you.",
-      callAriaLabel: "Call 0883 770 909",
     },
     fields: {
       fullName: "Full name",
@@ -649,20 +647,11 @@ export const contentEn = {
       bg: "Български",
       en: "English",
     },
-    contacts: {
-      email: "info@barakovaluxurytravel.com",
-      phone: "0883 770 909",
-      whatsapp: "+359 883 770 909",
-      viber: "+359 883 770 909",
-    },
     copyright: "© 2026 Barakova Luxury Travel",
     rights: "All rights reserved.",
     developerCredit: "Website crafted by Bobby Uzunov",
   },
   floatingContact: {
     groupAriaLabel: "Quick contact options",
-    callAriaLabel: "Call 0883 770 909",
-    emailAriaLabel: "Send an email to info@barakovaluxurytravel.com",
-    whatsappAriaLabel: "Message us on WhatsApp at 0883 770 909",
   },
 } satisfies SiteContent;

@@ -1,7 +1,14 @@
 import Link from "next/link";
 import type { Locale, SiteContent } from "../../../constants/content";
 import { localePath } from "../../../constants/i18n";
-import { contactEmail, contactEmailHref, contactPhoneHref } from "../../../constants/site";
+import {
+  contactEmail,
+  contactEmailHref,
+  contactPhoneDisplay,
+  contactPhoneHref,
+  getCallAriaLabel,
+  getEmailAriaLabel,
+} from "../../../constants/site";
 
 type SiteFooterProps = {
   content: SiteContent;
@@ -35,18 +42,18 @@ export function SiteFooter({ content, locale }: SiteFooterProps) {
           <h3>{content.footer.contactsTitle}</h3>
           <div className="footer-contact-meta">
             <a
-              aria-label={content.floatingContact.emailAriaLabel}
+              aria-label={getEmailAriaLabel(locale)}
               className="footer-contact-link"
               href={contactEmailHref}
             >
               {contactEmail}
             </a>
             <a
-              aria-label={content.floatingContact.callAriaLabel}
+              aria-label={getCallAriaLabel(locale)}
               className="footer-contact-link"
               href={contactPhoneHref}
             >
-              {content.footer.contacts.phone}
+              {contactPhoneDisplay}
             </a>
           </div>
         </div>

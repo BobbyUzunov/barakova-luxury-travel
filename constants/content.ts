@@ -55,7 +55,6 @@ export type SiteContent = {
     primaryCta: string;
     secondaryCta: string;
     phoneNote: string;
-    callAriaLabel: string;
   };
   imageAlts: {
     hero: string;
@@ -119,7 +118,6 @@ export type SiteContent = {
       title: string;
       lead: string;
       trail: string;
-      callAriaLabel: string;
     };
     fields: {
       fullName: string;
@@ -157,21 +155,12 @@ export type SiteContent = {
     contactsTitle: string;
     languageTitle: string;
     languageNames: Record<Locale, string>;
-    contacts: {
-      email: string;
-      phone: string;
-      whatsapp: string;
-      viber: string;
-    };
     copyright: string;
     rights: string;
     developerCredit: string;
   };
   floatingContact: {
     groupAriaLabel: string;
-    callAriaLabel: string;
-    emailAriaLabel: string;
-    whatsappAriaLabel: string;
   };
 };
 

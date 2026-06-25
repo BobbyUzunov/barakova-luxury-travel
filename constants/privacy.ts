@@ -1,4 +1,5 @@
 import type { Locale } from "./content";
+import { contactEmail } from "./site";
 
 type PrivacySection = {
   title: string;
@@ -25,7 +26,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
         title: "Кои сме ние",
         paragraphs: [
           "Barakova Luxury Travel предоставя персонални консултации за луксозни пътувания. Администратор на личните данни е Богдана Баракова.",
-          "Контакт: info@barakovaluxurytravel.com",
+          `Контакт: ${contactEmail}`,
         ],
       },
       {
@@ -77,7 +78,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
         title: "Who we are",
         paragraphs: [
           "Barakova Luxury Travel provides personal consulting for luxury travel. The data controller is Bogdana Barakova.",
-          "Contact: info@barakovaluxurytravel.com",
+          `Contact: ${contactEmail}`,
         ],
       },
       {

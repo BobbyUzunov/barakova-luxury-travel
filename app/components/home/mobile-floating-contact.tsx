@@ -1,23 +1,25 @@
 import Image from "next/image";
-import type { SiteContent } from "../../../constants/content";
+import type { Locale, SiteContent } from "../../../constants/content";
 import {
-  contactPhoneDisplay,
   contactPhoneHref,
   contactWhatsAppHref,
+  getCallAriaLabel,
+  getWhatsappAriaLabel,
 } from "../../../constants/site";
 
 type MobileFloatingContactProps = {
   content: SiteContent;
+  locale: Locale;
 };
 
-export function MobileFloatingContact({ content }: MobileFloatingContactProps) {
+export function MobileFloatingContact({ content, locale }: MobileFloatingContactProps) {
   return (
     <div
       aria-label={content.floatingContact.groupAriaLabel}
       className="floating-contact-buttons"
     >
       <a
-        aria-label={content.floatingContact.whatsappAriaLabel}
+        aria-label={getWhatsappAriaLabel(locale)}
         className="floating-contact-button"
         href={contactWhatsAppHref}
         rel="noreferrer"
@@ -32,7 +34,7 @@ export function MobileFloatingContact({ content }: MobileFloatingContactProps) {
         />
       </a>
       <a
-        aria-label={content.floatingContact.callAriaLabel}
+        aria-label={getCallAriaLabel(locale)}
         className="floating-contact-button floating-contact-button-call"
         href={contactPhoneHref}
       >

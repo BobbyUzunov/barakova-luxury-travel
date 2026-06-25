@@ -20,6 +20,7 @@ import { localePath } from "../../../constants/i18n";
 import {
   contactPhoneDisplay,
   contactPhoneHref,
+  getCallAriaLabel,
 } from "../../../constants/site";
 import {
   getBlogSlug,
@@ -168,7 +169,7 @@ export function HomePage({ locale }: HomePageProps) {
             </div>
             <div className="hero-phone-cta">
               <a
-                aria-label={content.hero.callAriaLabel}
+                aria-label={getCallAriaLabel(locale)}
                 className="hero-phone-link"
                 href={contactPhoneHref}
               >
@@ -434,7 +435,7 @@ export function HomePage({ locale }: HomePageProps) {
 
       <ContactSection content={content} locale={locale} />
       <SiteFooter content={content} locale={locale} />
-      <MobileFloatingContact content={content} />
+      <MobileFloatingContact content={content} locale={locale} />
 
       {selectedDestination && (
         <ContentModal

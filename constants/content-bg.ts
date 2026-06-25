@@ -23,7 +23,6 @@ export const contentBg = {
     primaryCta: "Заяви персонална консултация",
     secondaryCta: "Разгледай дестинациите",
     phoneNote: "Безплатна първоначална консултация",
-    callAriaLabel: "Обадете се на 0883 770 909",
   },
   imageAlts: {
     hero: "Богдана Баракова на плаж с поглед към морето",
@@ -606,7 +605,6 @@ export const contentBg = {
       title: "Предпочитате директен разговор?",
       lead: "Свържете се с нас на",
       trail: "или попълнете формата и ще се свържем с вас.",
-      callAriaLabel: "Обадете се на 0883 770 909",
     },
     fields: {
       fullName: "Име и фамилия",
@@ -649,20 +647,11 @@ export const contentBg = {
       bg: "Български",
       en: "English",
     },
-    contacts: {
-      email: "info@barakovaluxurytravel.com",
-      phone: "0883 770 909",
-      whatsapp: "+359 883 770 909",
-      viber: "+359 883 770 909",
-    },
     copyright: "© 2026 Barakova Luxury Travel",
     rights: "Всички права запазени.",
     developerCredit: "Website crafted by Bobby Uzunov",
   },
   floatingContact: {
     groupAriaLabel: "Бързи контакти",
-    callAriaLabel: "Обадете се на 0883 770 909",
-    emailAriaLabel: "Изпратете имейл на info@barakovaluxurytravel.com",
-    whatsappAriaLabel: "Пишете ни в WhatsApp на 0883 770 909",
   },
 } satisfies SiteContent;

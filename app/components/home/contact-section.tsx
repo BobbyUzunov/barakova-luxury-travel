@@ -5,6 +5,7 @@ import type { Locale, SiteContent } from "../../../constants/content";
 import {
   contactPhoneDisplay,
   contactPhoneHref,
+  getCallAriaLabel,
 } from "../../../constants/site";
 import {
   isTurnstileConfigured,
@@ -141,7 +142,7 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
             <p>
               {content.contact.phoneCallout.lead}{" "}
               <a
-                aria-label={content.contact.phoneCallout.callAriaLabel}
+                aria-label={getCallAriaLabel(locale)}
                 className="contact-phone-link"
                 href={contactPhoneHref}
               >
