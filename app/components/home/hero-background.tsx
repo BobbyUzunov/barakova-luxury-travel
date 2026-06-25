@@ -3,11 +3,14 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
-  heroVideoMinWidth,
+  canUseHeroVideo,
+  getHeroVideoLoadDelayMs,
   heroVimeoEmbedUrl,
+  isMobileViewport,
 } from "../../../constants/hero-video";
 
 const VIDEO_LOAD_TIMEOUT_MS = 12_000;
+const MOBILE_VIDEO_LOAD_TIMEOUT_MS = 8_000;
 const VIMEO_ORIGIN = "https://player.vimeo.com";
 
 type HeroBackgroundProps = {
@@ -15,17 +18,6 @@ type HeroBackgroundProps = {
   imageSrc: string;
   onVideoActiveChange?: (active: boolean) => void;
 };
-
-function shouldEnableHeroVideo() {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  return (
-    window.matchMedia(`(min-width: ${heroVideoMinWidth}px)`).matches &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-}
 
 function postToVimeoPlayer(
   iframe: HTMLIFrameElement,
@@ -36,6 +28,16 @@ function postToVimeoPlayer(
     JSON.stringify(value ? { method, value } : { method }),
     VIMEO_ORIGIN,
   );
+}
+
+function configureVimeoPlayer(iframe: HTMLIFrameElement) {
+  postToVimeoPlayer(iframe, "addEventListener", "ready");
+  postToVimeoPlayer(iframe, "addEventListener", "playing");
+  postToVimeoPlayer(iframe, "play");
+
+  if (isMobileViewport()) {
+    postToVimeoPlayer(iframe, "setQuality", "360p");
+  }
 }
 
 export function HeroBackground({
@@ -49,7 +51,7 @@ export function HeroBackground({
   const [videoFailed, setVideoFailed] = useState(false);
 
   useEffect(() => {
-    if (!shouldEnableHeroVideo()) {
+    if (!canUseHeroVideo()) {
       return;
     }
 
@@ -59,17 +61,43 @@ export function HeroBackground({
     document.head.appendChild(preconnect);
 
     let cancelled = false;
-    const frameId = window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        if (!cancelled) {
-          setLoadVideo(true);
-        }
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    let frameId: number | undefined;
+
+    const startVideoLoad = () => {
+      if (!cancelled) {
+        setLoadVideo(true);
+      }
+    };
+
+    const delayMs = getHeroVideoLoadDelayMs();
+
+    if (delayMs > 0) {
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(startVideoLoad, {
+          timeout: delayMs + 400,
+        });
+      } else {
+        timeoutId = setTimeout(startVideoLoad, delayMs);
+      }
+    } else {
+      frameId = window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(startVideoLoad);
       });
-    });
+    }
 
     return () => {
       cancelled = true;
-      window.cancelAnimationFrame(frameId);
+      if (idleId !== undefined) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
+      if (frameId !== undefined) {
+        window.cancelAnimationFrame(frameId);
+      }
       preconnect.remove();
     };
   }, []);
@@ -90,8 +118,7 @@ export function HeroBackground({
         if (data.event === "ready") {
           const iframe = iframeRef.current;
           if (iframe) {
-            postToVimeoPlayer(iframe, "addEventListener", "playing");
-            postToVimeoPlayer(iframe, "play");
+            configureVimeoPlayer(iframe);
           }
         }
 
@@ -112,9 +139,13 @@ export function HeroBackground({
       return;
     }
 
+    const timeoutMs = isMobileViewport()
+      ? MOBILE_VIDEO_LOAD_TIMEOUT_MS
+      : VIDEO_LOAD_TIMEOUT_MS;
+
     const timeoutId = window.setTimeout(() => {
       setVideoFailed(true);
-    }, VIDEO_LOAD_TIMEOUT_MS);
+    }, timeoutMs);
 
     return () => window.clearTimeout(timeoutId);
   }, [loadVideo, videoFailed, videoPlaying]);
@@ -123,15 +154,32 @@ export function HeroBackground({
     onVideoActiveChange?.(videoPlaying && !videoFailed);
   }, [onVideoActiveChange, videoFailed, videoPlaying]);
 
+  useEffect(() => {
+    if (!videoPlaying) {
+      return;
+    }
+
+    const onVisibilityChange = () => {
+      const iframe = iframeRef.current;
+      if (!iframe) {
+        return;
+      }
+
+      postToVimeoPlayer(iframe, document.hidden ? "pause" : "play");
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, [videoPlaying]);
+
   const handleIframeLoad = () => {
     const iframe = iframeRef.current;
     if (!iframe) {
       return;
     }
 
-    postToVimeoPlayer(iframe, "addEventListener", "ready");
-    postToVimeoPlayer(iframe, "addEventListener", "playing");
-    postToVimeoPlayer(iframe, "play");
+    configureVimeoPlayer(iframe);
   };
 
   const showVideo = loadVideo && !videoFailed;
@@ -144,7 +192,7 @@ export function HeroBackground({
         fetchPriority="high"
         fill
         priority
-        quality={90}
+        quality={85}
         sizes="100vw"
         src={imageSrc}
       />

@@ -453,8 +453,28 @@ h2 {
 }
 
 @media (max-width: 767px) {
-  .hero-video {
-    display: none;
+  .hero-section--video .hero-copy {
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    background: rgba(255, 255, 255, 0.34);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 18px 48px rgba(45, 42, 38, 0.12);
+  }
+
+  .hero-section--video .hero-soft-overlay--video {
+    background:
+      linear-gradient(180deg, rgba(45, 42, 38, 0.5), rgba(45, 42, 38, 0.16) 46%, rgba(200, 169, 106, 0.14)),
+      rgba(200, 169, 106, 0.1);
+  }
+
+  .hero-section--video .hero-gradient-overlay--video {
+    background:
+      linear-gradient(180deg, rgba(45, 42, 38, 0.72) 0%, rgba(45, 42, 38, 0.34) 36%, rgba(248, 243, 236, 0.5) 100%),
+      linear-gradient(90deg, rgba(45, 42, 38, 0.34), rgba(200, 169, 106, 0.1) 55%, transparent 85%);
+  }
+
+  .hero-video-iframe {
+    width: max(100%, 220vh);
+    height: max(100%, 56.25vw);
   }
 }
 
