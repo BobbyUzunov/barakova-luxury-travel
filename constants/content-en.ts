@@ -26,7 +26,7 @@ export const contentEn = {
     phoneLinkLabel: "Call now",
   },
   imageAlts: {
-    hero: "Bogdana Barakova on a beach facing the sea",
+    hero: "Bogdana Barakova on a beach with open arms facing the sea",
     profileMain: "Portrait of Bogdana Barakova",
     profileSecondary: "Bogdana Barakova, luxury travel consultant",
   },

@@ -388,7 +388,7 @@ h2 {
   position: absolute;
   inset: 0;
   object-fit: cover;
-  object-position: 58% center;
+  object-position: center 72%;
   transition: opacity 500ms ease;
 }
 
@@ -1950,7 +1950,7 @@ h2 {
   }
 
   .hero-image {
-    object-position: 55% center;
+    object-position: center 68%;
   }
 }
 
@@ -2036,7 +2036,7 @@ h2 {
   }
 
   .hero-image {
-    object-position: 54% center;
+    object-position: center 70%;
   }
 
   .lux-card,
@@ -2237,7 +2237,7 @@ h2 {
   }
 
   .hero-image {
-    object-position: center center;
+    object-position: center 70%;
   }
 
   .hero-soft-overlay:not(.hero-soft-overlay--video) {
