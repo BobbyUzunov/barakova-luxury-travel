@@ -45,6 +45,15 @@ public/images/destinations/mediterranean.webp
 
 Сайтът автоматично ще ги ползва вместо Unsplash, ако файлът съществува.
 
+## Оптимизация на изображения и икони
+
+```bash
+npm run optimize-images
+npm run generate-icons
+```
+
+`optimize-images` конвертира hero и profile снимки към WebP. `generate-icons` създава PNG икони за PWA и iOS от `app/icon.svg`.
+
 ## Vercel checklist (production)
 
 1. Свържете GitHub repo-то с Vercel и deploy от `main`

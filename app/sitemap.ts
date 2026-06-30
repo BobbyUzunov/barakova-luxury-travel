@@ -6,10 +6,10 @@ import {
   cruiseSlugs,
   destinationSlugs,
 } from "../constants/seo-content";
-import { siteUrl } from "../constants/site";
+import { siteContentUpdated, siteUrl } from "../constants/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+  const lastModified = siteContentUpdated;
   const entries: MetadataRoute.Sitemap = [];
 
   for (const locale of locales) {

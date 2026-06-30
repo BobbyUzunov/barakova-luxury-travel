@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Barakova Luxury Travel",
     short_name: "Barakova Travel",
     description:
-      "Персонални консултации за луксозни пътувания с Богдана Баракова.",
+      "Персонални консултации за луксозни пътувания с Богдана Баракова. Personal luxury travel consulting by Bogdana Barakova.",
     start_url: `/${defaultLocale}`,
     display: "standalone",
     background_color: "#F8F3EC",
@@ -20,9 +20,21 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
       {
-        src: "/icon.svg",
-        sizes: "any",
-        type: "image/svg+xml",
+        src: "/icon-192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/icon-512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/icon-512.png",
+        sizes: "512x512",
+        type: "image/png",
         purpose: "maskable",
       },
     ],

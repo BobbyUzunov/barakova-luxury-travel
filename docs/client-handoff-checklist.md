@@ -164,12 +164,12 @@ These are optional enhancements for a later phase — the current site is comple
 - Publish more blog articles over time
 
 ### Product & admin
-- **Admin panel / CMS with [Sanity](https://www.sanity.io/)** — planned for a future phase so the client can edit destinations, cruises, and blog posts without code changes
-- Until then, text and image updates are made by Bobby Uzunov via the codebase
+- Content and image updates are made by Bobby Uzunov via the codebase
+- A self-service CMS may be considered in a future phase if needed
 
 ### Technical polish (optional)
-- Localized server-side error messages for the contact API
-- Dedicated PWA icons (PNG) for “Add to Home Screen” on iOS
+- Add higher-resolution hero source photo (current file is 1024px wide)
+- Replace Unsplash stock images with client photography
 - Further analytics and conversion tracking beyond basic GA
 
 ---
@@ -183,7 +183,7 @@ These are optional enhancements for a later phase — the current site is comple
 | Contact email | **info@barakovaluxurytravel.com** (forwarded to Gmail) |
 | Phone on site | **0883 770 909** |
 
-For content updates, bug reports, or new features, contact Bobby Uzunov. Major content management will become self-service once the Sanity CMS phase is implemented.
+For content updates, bug reports, or new features, contact Bobby Uzunov.
 
 ---
 

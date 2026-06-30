@@ -14,7 +14,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://images.unsplash.com",
   "font-src 'self' data:",
-  "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://challenges.cloudflare.com",
+  "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://challenges.cloudflare.com https://player.vimeo.com https://vimeo.com https://f.vimeocdn.com https://i.vimeocdn.com",
   "frame-src https://challenges.cloudflare.com https://player.vimeo.com",
   "upgrade-insecure-requests",
 ].join("; ");

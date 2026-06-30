@@ -2,6 +2,7 @@ import type { Locale } from "./content";
 
 export const siteUrl = "https://barakovaluxurytravel.com";
 export const siteName = "Barakova Luxury Travel";
+export const siteContentUpdated = new Date("2026-06-30T00:00:00.000Z");
 export const contactEmail = "info@barakovaluxurytravel.com";
 export const contactEmailHref = `mailto:${contactEmail}`;
 export const resendFromEmailDefault = `Barakova Luxury Travel <${contactEmail}>`;

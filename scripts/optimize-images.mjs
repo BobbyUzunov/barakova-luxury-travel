@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 
 const images = [
-  ["public/hero-bogdana-beach.jpeg", "public/hero-bogdana-beach.webp", 1920, 82],
+  ["public/hero-bogdana-beach.jpeg", "public/hero-bogdana-beach.webp", 1920, 88],
   ["public/images/barakova-1.jpg", "public/images/barakova-1.webp", 1400, 78],
   ["public/images/barakova-2.jpg", "public/images/barakova-2.webp", 1200, 72],
 ];
