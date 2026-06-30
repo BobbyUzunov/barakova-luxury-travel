@@ -6,7 +6,7 @@ import {
   siteUrl,
 } from "../constants/site";
 import { getAlternateLanguages } from "../constants/i18n";
-import { heroImage } from "../constants/images";
+import { heroImage, heroImageHeight, heroImageWidth } from "../constants/images";
 import { Analytics } from "./analytics";
 import { CookieConsent } from "./cookie-consent";
 import "./globals.css";
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: heroImage,
-        width: 1200,
-        height: 630,
+        width: heroImageWidth,
+        height: heroImageHeight,
         alt: "Barakova Luxury Travel",
       },
     ],
@@ -88,7 +88,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bg" data-scroll-behavior="smooth">
+    <html lang="bg" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

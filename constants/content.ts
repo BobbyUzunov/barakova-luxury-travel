@@ -59,6 +59,7 @@ export type SiteContent = {
   };
   imageAlts: {
     hero: string;
+    heroVideo: string;
     profileMain: string;
     profileSecondary: string;
   };

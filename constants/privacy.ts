@@ -11,6 +11,8 @@ export type PrivacyContent = {
   backLabel: string;
   lastUpdated: string;
   intro: string;
+  otherLocaleTitle: string;
+  otherLocaleLink: string;
   sections: PrivacySection[];
 };
 
@@ -21,6 +23,8 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
     lastUpdated: "Последна актуализация: юни 2026",
     intro:
       "Barakova Luxury Travel уважава вашата поверителност. Тази политика описва какви данни събираме, защо ги използваме и какви са вашите права.",
+    otherLocaleTitle: "Версия на английски",
+    otherLocaleLink: "Прочетете политиката на английски",
     sections: [
       {
         title: "Кои сме ние",
@@ -73,6 +77,8 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
     lastUpdated: "Last updated: June 2026",
     intro:
       "Barakova Luxury Travel respects your privacy. This policy explains what data we collect, why we use it, and what your rights are.",
+    otherLocaleTitle: "Bulgarian version",
+    otherLocaleLink: "Read the policy in Bulgarian",
     sections: [
       {
         title: "Who we are",

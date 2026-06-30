@@ -16,6 +16,7 @@ const VIMEO_ORIGIN = "https://player.vimeo.com";
 type HeroBackgroundProps = {
   imageAlt: string;
   imageSrc: string;
+  videoTitle?: string;
   onVideoActiveChange?: (active: boolean) => void;
 };
 
@@ -43,6 +44,7 @@ function configureVimeoPlayer(iframe: HTMLIFrameElement) {
 export function HeroBackground({
   imageAlt,
   imageSrc,
+  videoTitle,
   onVideoActiveChange,
 }: HeroBackgroundProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -208,7 +210,7 @@ export function HeroBackground({
             ref={iframeRef}
             src={heroVimeoEmbedUrl}
             tabIndex={-1}
-            title=""
+            title={videoTitle || imageAlt}
           />
         </div>
       ) : null}

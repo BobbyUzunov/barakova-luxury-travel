@@ -27,6 +27,7 @@ export const contentEn = {
   },
   imageAlts: {
     hero: "Bogdana Barakova on a beach with open arms facing the sea",
+    heroVideo: "Background video of beach and sea",
     profileMain: "Portrait of Bogdana Barakova",
     profileSecondary: "Bogdana Barakova, luxury travel consultant",
   },

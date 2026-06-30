@@ -91,6 +91,7 @@ export function HomePage({ locale }: HomePageProps) {
         <HeroBackground
           imageAlt={content.imageAlts.hero}
           imageSrc={heroImage}
+          videoTitle={content.imageAlts.heroVideo}
           onVideoActiveChange={setHeroVideoActive}
         />
         <div

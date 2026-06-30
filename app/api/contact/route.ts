@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { contactEmail as defaultRecipientEmail, resendFromEmailDefault } from "../../../constants/site";
+import { contactApiMessage } from "../../../lib/contact-api-messages";
 import {
   buildEmailHtml,
   getClientIp,
+  getContactEmailSubject,
   normalizeBody,
   type ContactRequestBody,
   validateContactBody,
@@ -20,11 +22,15 @@ const senderEmail = process.env.RESEND_FROM_EMAIL || resendFromEmailDefault;
 export async function POST(request: Request) {
   const ip = getClientIp(request);
 
-  if (await isContactRateLimited(ip)) {
-    return NextResponse.json(
-      { message: "Too many requests. Please try again later." },
-      { status: 429 },
-    );
+  try {
+    if (await isContactRateLimited(ip)) {
+      return NextResponse.json(
+        { message: contactApiMessage("rateLimit") },
+        { status: 429 },
+      );
+    }
+  } catch {
+    // Fail open when rate limiting is unavailable.
   }
 
   let body: ContactRequestBody;
@@ -33,7 +39,7 @@ export async function POST(request: Request) {
     body = normalizeBody((await request.json()) as ContactRequestBody);
   } catch {
     return NextResponse.json(
-      { message: "Invalid request body." },
+      { message: contactApiMessage("invalidBody") },
       { status: 400 },
     );
   }
@@ -47,23 +53,32 @@ export async function POST(request: Request) {
 
     if (validation.error === "missing-fields") {
       return NextResponse.json(
-        { message: "Missing required fields." },
+        { message: contactApiMessage("missingFields", body.locale) },
         { status: 400 },
       );
     }
 
     return NextResponse.json(
-      { message: "Invalid email address." },
+      { message: contactApiMessage("invalidEmail", body.locale) },
       { status: 400 },
     );
   }
 
   if (isTurnstileEnabled()) {
-    const isHuman = await verifyTurnstileToken(body.turnstileToken, ip);
+    let isHuman = false;
+
+    try {
+      isHuman = await verifyTurnstileToken(body.turnstileToken, ip);
+    } catch {
+      return NextResponse.json(
+        { message: contactApiMessage("serverError", body.locale) },
+        { status: 503 },
+      );
+    }
 
     if (!isHuman) {
       return NextResponse.json(
-        { message: "Captcha verification failed." },
+        { message: contactApiMessage("captchaFailed", body.locale) },
         { status: 400 },
       );
     }
@@ -73,29 +88,36 @@ export async function POST(request: Request) {
 
   if (!resendApiKey) {
     return NextResponse.json(
-      { message: "Email delivery is not configured." },
+      { message: contactApiMessage("notConfigured", body.locale) },
       { status: 500 },
     );
   }
 
-  const resendResponse = await fetch(resendApiUrl, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: senderEmail,
-      to: recipientEmail,
-      subject: "Ново запитване от сайта",
-      reply_to: body.email,
-      html: buildEmailHtml(body),
-    }),
-  });
+  try {
+    const resendResponse = await fetch(resendApiUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: senderEmail,
+        to: recipientEmail,
+        subject: getContactEmailSubject(body.locale),
+        reply_to: body.email,
+        html: buildEmailHtml(body),
+      }),
+    });
 
-  if (!resendResponse.ok) {
+    if (!resendResponse.ok) {
+      return NextResponse.json(
+        { message: contactApiMessage("deliveryFailed", body.locale) },
+        { status: 502 },
+      );
+    }
+  } catch {
     return NextResponse.json(
-      { message: "Email delivery failed." },
+      { message: contactApiMessage("deliveryFailed", body.locale) },
       { status: 502 },
     );
   }

@@ -20,24 +20,28 @@ export async function verifyTurnstileToken(
     return false;
   }
 
-  const response = await fetch(turnstileVerifyUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      secret: secretKey,
-      response: token,
-      remoteip: remoteIp === "unknown" ? "" : remoteIp,
-    }),
-  });
+  try {
+    const response = await fetch(turnstileVerifyUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        secret: secretKey,
+        response: token,
+        remoteip: remoteIp === "unknown" ? "" : remoteIp,
+      }),
+    });
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return false;
+    }
+
+    const data = (await response.json()) as TurnstileVerifyResponse;
+    return data.success;
+  } catch {
     return false;
   }
-
-  const data = (await response.json()) as TurnstileVerifyResponse;
-  return data.success;
 }
 
 export function isTurnstileEnabled() {

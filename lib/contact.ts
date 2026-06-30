@@ -1,3 +1,6 @@
+import type { Locale } from "../constants/content";
+import { resolveRequestLocale } from "./contact-api-messages";
+
 export type ContactRequestBody = {
   fullName?: string;
   email?: string;
@@ -16,20 +19,50 @@ export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const maxFieldLength = 500;
 export const maxMessageLength = 4000;
 
-const fieldLabels: Record<
-  keyof Omit<ContactRequestBody, "website" | "turnstileToken">,
-  string
+const fieldLabelsByLocale: Record<
+  Locale,
+  Record<
+    keyof Omit<ContactRequestBody, "website" | "turnstileToken">,
+    string
+  >
 > = {
-  fullName: "Име и фамилия",
-  email: "Email",
-  phone: "Телефон",
-  destination: "Желана дестинация",
-  travelPeriod: "Период на пътуване",
-  travelers: "Брой пътуващи",
-  budget: "Приблизителен бюджет",
-  message: "Съобщение",
-  locale: "Език",
+  bg: {
+    fullName: "Име и фамилия",
+    email: "Email",
+    phone: "Телефон",
+    destination: "Желана дестинация",
+    travelPeriod: "Период на пътуване",
+    travelers: "Брой пътуващи",
+    budget: "Приблизителен бюджет",
+    message: "Съобщение",
+    locale: "Език",
+  },
+  en: {
+    fullName: "Full name",
+    email: "Email",
+    phone: "Phone",
+    destination: "Desired destination",
+    travelPeriod: "Travel period",
+    travelers: "Number of travelers",
+    budget: "Approximate budget",
+    message: "Message",
+    locale: "Language",
+  },
 };
+
+const emailSubjects: Record<Locale, string> = {
+  bg: "Ново запитване от сайта",
+  en: "New inquiry from the website",
+};
+
+const emailHeadings: Record<Locale, string> = {
+  bg: "Ново запитване от сайта",
+  en: "New inquiry from the website",
+};
+
+export function getContactEmailSubject(locale?: string) {
+  return emailSubjects[resolveRequestLocale(locale)];
+}
 
 export function getClientIp(request: Request) {
   return (
@@ -94,6 +127,10 @@ export function validateContactBody(body: ContactRequestBody) {
 }
 
 export function buildEmailHtml(body: ContactRequestBody) {
+  const locale = resolveRequestLocale(body.locale);
+  const fieldLabels = fieldLabelsByLocale[locale];
+  const heading = emailHeadings[locale];
+
   const rows = Object.entries(fieldLabels)
     .map(([field, label]) => {
       const value = body[field as keyof ContactRequestBody]?.trim() || "-";
@@ -112,7 +149,7 @@ export function buildEmailHtml(body: ContactRequestBody) {
       <div style="max-width: 680px; margin: 0 auto; background: #ffffff; border: 1px solid #E8DCC8; border-radius: 18px; overflow: hidden;">
         <div style="padding: 24px 28px; background: #2D2A26; color: #ffffff;">
           <p style="margin: 0 0 8px; color: #C8A96A; letter-spacing: 0.12em; text-transform: uppercase; font-size: 12px;">Barakova Luxury Travel</p>
-          <h1 style="margin: 0; font-size: 24px;">Ново запитване от сайта</h1>
+          <h1 style="margin: 0; font-size: 24px;">${heading}</h1>
         </div>
         <table style="width: 100%; border-collapse: collapse;">
           <tbody>${rows}</tbody>

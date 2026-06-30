@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import type { Locale } from "../constants/content";
 import { localePath } from "../constants/i18n";
 import {
@@ -39,6 +39,7 @@ function getConsentStoreServerSnapshot() {
 }
 
 export function CookieConsent() {
+  const acceptButtonRef = useRef<HTMLButtonElement>(null);
   const storeValue = useSyncExternalStore(
     subscribeToConsentStore,
     getConsentStoreSnapshot,
@@ -48,6 +49,14 @@ export function CookieConsent() {
     consent: CookieConsentValue | null;
     locale: Locale;
   };
+
+  useEffect(() => {
+    if (consent) {
+      return;
+    }
+
+    acceptButtonRef.current?.focus();
+  }, [consent]);
 
   const saveConsent = (value: CookieConsentValue) => {
     window.localStorage.setItem(cookieConsentStorageKey, value);
@@ -65,6 +74,7 @@ export function CookieConsent() {
   return (
     <div
       aria-labelledby="cookie-consent-title"
+      aria-modal="true"
       className="cookie-consent"
       role="dialog"
     >
@@ -87,6 +97,7 @@ export function CookieConsent() {
           <button
             className="btn-primary cookie-consent-accept"
             onClick={() => saveConsent("accepted")}
+            ref={acceptButtonRef}
             type="button"
           >
             {copy.accept}

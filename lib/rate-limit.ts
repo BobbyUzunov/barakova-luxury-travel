@@ -39,8 +39,12 @@ function isRateLimitedInMemory(ip: string) {
 
 export async function isContactRateLimited(ip: string) {
   if (upstashLimiter) {
-    const { success } = await upstashLimiter.limit(ip);
-    return !success;
+    try {
+      const { success } = await upstashLimiter.limit(ip);
+      return !success;
+    } catch {
+      return isRateLimitedInMemory(ip);
+    }
   }
 
   return isRateLimitedInMemory(ip);

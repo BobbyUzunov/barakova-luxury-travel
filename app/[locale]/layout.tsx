@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { Locale } from "../../constants/content";
-import { heroImage } from "../../constants/images";
+import { heroImage, heroImageHeight, heroImageWidth } from "../../constants/images";
 import {
   getAlternateLanguages,
   isLocale,
@@ -54,8 +54,8 @@ export async function generateMetadata({
       images: [
         {
           url: heroImage,
-          width: 1200,
-          height: 630,
+          width: heroImageWidth,
+          height: heroImageHeight,
           alt: siteName,
         },
       ],

@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   getDestinationImageFallback,
-  resolveDestinationImage,
+  getLocalDestinationImage,
 } from "../../../constants/destination-images";
 
 export function DestinationImage({
@@ -16,8 +16,19 @@ export function DestinationImage({
   remoteSrc: string;
   slug?: string;
 }) {
-  const preferredSrc = resolveDestinationImage(slug, remoteSrc);
-  const [imageSrc, setImageSrc] = useState(preferredSrc);
+  const sources = useMemo(
+    () =>
+      slug
+        ? [
+            getLocalDestinationImage(slug),
+            remoteSrc,
+            getDestinationImageFallback(),
+          ]
+        : [remoteSrc, getDestinationImageFallback()],
+    [remoteSrc, slug],
+  );
+  const [sourceIndex, setSourceIndex] = useState(0);
+  const imageSrc = sources[Math.min(sourceIndex, sources.length - 1)];
 
   return (
     <Image
@@ -27,7 +38,11 @@ export function DestinationImage({
       quality={60}
       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
       className="destination-image"
-      onError={() => setImageSrc(getDestinationImageFallback())}
+      onError={() =>
+        setSourceIndex((current) =>
+          Math.min(current + 1, sources.length - 1),
+        )
+      }
     />
   );
 }

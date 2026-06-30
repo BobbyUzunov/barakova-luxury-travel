@@ -100,7 +100,14 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
       });
 
       if (!response.ok) {
-        throw new Error("Contact request failed");
+        const data = (await response.json().catch(() => null)) as
+          | { message?: string }
+          | null;
+        setTurnstileToken("");
+        setFormErrors({
+          form: data?.message || content.contact.validation.submitError,
+        });
+        return;
       }
 
       setIsSubmitted(true);

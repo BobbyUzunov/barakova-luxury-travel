@@ -17,7 +17,6 @@ export default async function PrivacyPage({ params }: PageProps) {
 
   const content = privacyContent[localeParam];
   const secondaryLocale = localeParam === "bg" ? "en" : "bg";
-  const secondaryContent = privacyContent[secondaryLocale];
 
   return (
     <main className="privacy-page">
@@ -46,16 +45,13 @@ export default async function PrivacyPage({ params }: PageProps) {
         ))}
 
         <section className="privacy-locale-note">
-          <h2>{secondaryContent.pageTitle}</h2>
-          <p>{secondaryContent.intro}</p>
-          {secondaryContent.sections.map((section) => (
-            <div key={section.title}>
-              <h3>{section.title}</h3>
-              {section.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
-          ))}
+          <h2>{content.otherLocaleTitle}</h2>
+          <Link
+            className="detail-back-link"
+            href={localePath(secondaryLocale, "/privacy")}
+          >
+            {content.otherLocaleLink}
+          </Link>
         </section>
       </article>
     </main>
