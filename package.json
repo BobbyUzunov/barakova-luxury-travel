@@ -8,6 +8,7 @@
     "start": "next start",
     "optimize-images": "node scripts/optimize-images.mjs",
     "generate-icons": "node scripts/generate-icons.mjs",
+    "generate-learning-guide-pdf": "node scripts/generate-learning-guide-pdf.mjs",
     "lint": "eslint .",
     "test": "node --import tsx --test lib/**/*.test.ts"
   },
