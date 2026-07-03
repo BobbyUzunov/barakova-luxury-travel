@@ -2,30 +2,18 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import {
-  getDestinationImageFallback,
-  getLocalDestinationImage,
-} from "../../../constants/destination-images";
+import { getDestinationImageFallback } from "../../../constants/destination-images";
 
 export function DestinationImage({
   alt,
   remoteSrc,
-  slug,
 }: {
   alt: string;
   remoteSrc: string;
-  slug?: string;
 }) {
   const sources = useMemo(
-    () =>
-      slug
-        ? [
-            getLocalDestinationImage(slug),
-            remoteSrc,
-            getDestinationImageFallback(),
-          ]
-        : [remoteSrc, getDestinationImageFallback()],
-    [remoteSrc, slug],
+    () => [remoteSrc, getDestinationImageFallback()],
+    [remoteSrc],
   );
   const [sourceIndex, setSourceIndex] = useState(0);
   const imageSrc = sources[Math.min(sourceIndex, sources.length - 1)];
