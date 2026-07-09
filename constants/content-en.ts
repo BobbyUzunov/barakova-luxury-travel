@@ -592,15 +592,16 @@ export const contentEn = {
     button: "Send inquiry",
   },
   inquiryAgent: {
-    launcherLabel: "Inquiry assistant",
-    title: "Barakova Travel assistant",
-    subtitle: "Quick answers about services, destinations, and consultations",
+    launcherLabel: "AI assistant",
+    launcherShortLabel: "AI",
+    title: "AI assistant",
+    subtitle: "Ask a question and get an intelligent travel answer",
     placeholder: "Type your question...",
     send: "Send",
     sending: "Thinking...",
     close: "Close chat",
     welcome:
-      "Hello! I am the Barakova Luxury Travel assistant. Ask about services, destinations, the consultation process, or how to get in touch.",
+      "Hello! I am the AI assistant for Barakova Luxury Travel. Ask about services, destinations, the consultation process, or how to get in touch.",
     contactCta: "Go to inquiry form",
     error: "Something went wrong. Please try again.",
     poweredNote:

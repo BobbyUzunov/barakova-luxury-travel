@@ -196,9 +196,29 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
         type="button"
       >
         <span aria-hidden="true" className="inquiry-agent-launcher-icon">
-          ✦
+          <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 2.5l1.15 4.2 4.2 1.15-4.2 1.15L12 13.2l-1.15-4.2-4.2-1.15 4.2-1.15L12 2.5Z"
+              fill="currentColor"
+            />
+            <path
+              d="M18.5 12.5l.75 2.75 2.75.75-2.75.75-.75 2.75-.75-2.75-2.75-.75 2.75-.75.75-2.75-2.75-.75 2.75-.75.75-2.75Z"
+              fill="currentColor"
+              opacity="0.9"
+            />
+            <path
+              d="M6.25 14.25l.55 2 2 .55-2 .55-.55 2-.55-2-2-.55 2-.55.55-2 2-.55-.55-2Z"
+              fill="currentColor"
+              opacity="0.75"
+            />
+          </svg>
         </span>
-        <span className="inquiry-agent-launcher-text">{copy.launcherLabel}</span>
+        <span className="inquiry-agent-launcher-copy">
+          <span className="inquiry-agent-launcher-text">{copy.launcherLabel}</span>
+          <span className="inquiry-agent-launcher-short">
+            {copy.launcherShortLabel}
+          </span>
+        </span>
       </button>
 
       {isOpen ? (
@@ -213,7 +233,10 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
       >
         <header className="inquiry-agent-header">
           <div>
-            <p className="inquiry-agent-eyebrow">{content.brand.name}</p>
+            <p className="inquiry-agent-eyebrow">
+              <span className="inquiry-agent-ai-badge">{copy.launcherShortLabel}</span>
+              {content.brand.name}
+            </p>
             <h2 className="inquiry-agent-title">{copy.title}</h2>
             <p className="inquiry-agent-subtitle">{copy.subtitle}</p>
           </div>
