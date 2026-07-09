@@ -1,0 +1,61 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dev",
+      "type": "shell",
+      "command": "npm run dev",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "npm run build",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "start",
+      "type": "shell",
+      "command": "npm run start",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "lint",
+      "type": "shell",
+      "command": "npm run lint",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "npm run test",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "optimize-images",
+      "type": "shell",
+      "command": "npm run optimize-images",
+      "problemMatcher": []
+    },
+    {
+      "label": "generate-icons",
+      "type": "shell",
+      "command": "npm run generate-icons",
+      "problemMatcher": []
+    },
+    {
+      "label": "generate-learning-guide-pdf",
+      "type": "shell",
+      "command": "npm run generate-learning-guide-pdf",
+      "problemMatcher": []
+    }
+  ]
+}
