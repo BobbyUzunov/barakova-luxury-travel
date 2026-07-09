@@ -95,6 +95,7 @@ export function SiteHeader({
         </div>
 
         <div
+          aria-hidden={!isMenuOpen}
           className={`mobile-menu ${isMenuOpen ? "is-open" : ""}`}
           id="mobile-menu"
         >

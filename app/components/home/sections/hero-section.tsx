@@ -18,7 +18,7 @@ export function HeroSection({ content }: HeroSectionProps) {
   return (
     <section
       id="home"
-      className={`hero-section relative overflow-hidden min-h-[94svh] px-5 pb-14 pt-40 text-[var(--charcoal)] sm:min-h-[92svh] sm:px-8 sm:pt-36 lg:min-h-[96svh] lg:px-12${heroVideoActive ? " hero-section--video" : ""}`}
+      className={`hero-section relative overflow-hidden min-h-[90svh] px-5 pb-12 pt-36 text-[var(--charcoal)] sm:min-h-[92svh] sm:px-8 sm:pb-14 sm:pt-36 lg:min-h-[96svh] lg:px-12${heroVideoActive ? " hero-section--video" : ""}`}
     >
       <HeroBackground
         imageAlt={content.imageAlts.hero}

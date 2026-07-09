@@ -57,5 +57,28 @@ export function canUseHeroVideo() {
 }
 
 export function getHeroVideoLoadDelayMs() {
-  return isMobileViewport() ? 700 : 0;
+  return isMobileViewport() ? 1200 : 0;
+}
+
+export function shouldLoadHeroVideoOnMobile() {
+  if (!isMobileViewport()) {
+    return true;
+  }
+
+  const connection = (navigator as Navigator & { connection?: NetworkInformation })
+    .connection;
+
+  if (connection?.saveData) {
+    return false;
+  }
+
+  if (
+    connection?.effectiveType === "2g" ||
+    connection?.effectiveType === "slow-2g" ||
+    connection?.effectiveType === "3g"
+  ) {
+    return false;
+  }
+
+  return true;
 }

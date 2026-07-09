@@ -523,6 +523,41 @@ h2 {
 }
 
 @media (max-width: 767px) {
+  .section-shell {
+    padding-block: 3rem;
+    padding-inline: 1rem;
+  }
+
+  .hero-inner {
+    min-height: calc(78svh - 8.5rem);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 9.5vw, 2.45rem);
+  }
+
+  .hero-subtitle {
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  .contact-section {
+    padding-bottom: calc(4.75rem + var(--safe-bottom));
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .mobile-sticky-call,
+  .menu-toggle {
+    touch-action: manipulation;
+  }
+
+  .destination-card,
+  .blog-card,
+  .lux-card {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .hero-copy--video-panel {
     background: transparent;
     backdrop-filter: none;
