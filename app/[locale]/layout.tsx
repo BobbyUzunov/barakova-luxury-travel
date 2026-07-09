@@ -10,6 +10,7 @@ import {
 } from "../../constants/i18n";
 import { localeMetadata } from "../../constants/locale-metadata";
 import { siteName } from "../../constants/site";
+import { InquiryAgent } from "../components/inquiry-agent/inquiry-agent";
 import { LocaleHtml } from "../components/locale-html";
 
 type LocaleLayoutProps = {
@@ -84,6 +85,7 @@ export default async function LocaleLayout({
     <LocaleHtml locale={locale as Locale}>
       {children}
       {modal}
+      <InquiryAgent locale={locale as Locale} />
     </LocaleHtml>
   );
 }

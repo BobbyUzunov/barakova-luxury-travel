@@ -110,6 +110,23 @@ export type SiteContent = {
     subtitle: string;
     button: string;
   };
+  inquiryAgent: {
+    launcherLabel: string;
+    title: string;
+    subtitle: string;
+    placeholder: string;
+    send: string;
+    sending: string;
+    close: string;
+    welcome: string;
+    contactCta: string;
+    error: string;
+    poweredNote: string;
+    sourceLabels: {
+      faq: string;
+      ai: string;
+    };
+  };
   contact: {
     eyebrow: string;
     title: string;

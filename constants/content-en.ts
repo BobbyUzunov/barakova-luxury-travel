@@ -591,6 +591,25 @@ export const contentEn = {
     subtitle: "Let us create your next luxury experience.",
     button: "Send inquiry",
   },
+  inquiryAgent: {
+    launcherLabel: "Inquiry assistant",
+    title: "Barakova Travel assistant",
+    subtitle: "Quick answers about services, destinations, and consultations",
+    placeholder: "Type your question...",
+    send: "Send",
+    sending: "Thinking...",
+    close: "Close chat",
+    welcome:
+      "Hello! I am the Barakova Luxury Travel assistant. Ask about services, destinations, the consultation process, or how to get in touch.",
+    contactCta: "Go to inquiry form",
+    error: "Something went wrong. Please try again.",
+    poweredNote:
+      "Common questions are answered instantly; more complex ones use AI assistance.",
+    sourceLabels: {
+      faq: "Quick answer",
+      ai: "Personalized answer",
+    },
+  },
   contact: {
     eyebrow: "Inquiry",
     title: "Request your private consultation",
