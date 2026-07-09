@@ -38,6 +38,7 @@ export function SiteHeader({
 
         <div
           className="header-nav"
+          role="navigation"
           aria-label={
             locale === "bg" ? "Основна навигация" : "Primary navigation"
           }
@@ -81,6 +82,7 @@ export function SiteHeader({
           </button>
 
           <button
+            aria-controls="mobile-menu"
             aria-expanded={isMenuOpen}
             aria-label={isMenuOpen ? closeMenuLabel : menuLabel}
             className="menu-toggle"

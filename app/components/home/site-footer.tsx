@@ -70,7 +70,7 @@ export function SiteFooter({ content, locale }: SiteFooterProps) {
         <a
           className="developer-credit"
           href="https://github.com/BobbyUzunov"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           target="_blank"
         >
           {content.footer.developerCredit}

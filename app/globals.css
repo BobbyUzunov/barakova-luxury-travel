@@ -7,6 +7,8 @@
   --soft-brown: #7a6652;
   --charcoal: #2d2a26;
   --white: #ffffff;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -579,6 +581,11 @@ h2 {
   margin-inline: auto;
   max-width: 1280px;
   padding: 4rem 1.25rem;
+  scroll-margin-top: calc(5.75rem + var(--safe-top));
+}
+
+#home {
+  scroll-margin-top: calc(5.75rem + var(--safe-top));
 }
 
 .section-heading {
@@ -1446,7 +1453,7 @@ h2 {
 }
 
 .contact-section {
-  scroll-margin-top: 7rem;
+  scroll-margin-top: calc(5.75rem + var(--safe-top));
 }
 
 .contact-panel {

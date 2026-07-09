@@ -1,12 +1,43 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { privacyContent } from "../../../constants/privacy";
 import { detailUi } from "../../../constants/detail-ui";
-import { isLocale, localePath } from "../../../constants/i18n";
+import {
+  getAlternateLanguages,
+  isLocale,
+  localePath,
+} from "../../../constants/i18n";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+
+  if (!isLocale(localeParam)) {
+    return {};
+  }
+
+  const content = privacyContent[localeParam];
+  const canonical = localePath(localeParam, "/privacy");
+
+  return {
+    title: `${content.pageTitle} | Barakova Luxury Travel`,
+    description: content.intro,
+    alternates: {
+      canonical,
+      languages: getAlternateLanguages("/privacy"),
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default async function PrivacyPage({ params }: PageProps) {
   const { locale: localeParam } = await params;

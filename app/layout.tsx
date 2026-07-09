@@ -95,6 +95,8 @@ export default function RootLayout({
   return (
     <html lang="bg" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
+        <link href="https://images.unsplash.com" rel="dns-prefetch" />
+        <link href="https://player.vimeo.com" rel="dns-prefetch" />
         <script
           type="application/ld+json"
           suppressHydrationWarning
