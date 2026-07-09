@@ -114,6 +114,7 @@ export type SiteContent = {
     launcherLabel: string;
     launcherShortLabel: string;
     launcherByline: string;
+    launcherBylineShort: string;
     title: string;
     subtitle: string;
     placeholder: string;

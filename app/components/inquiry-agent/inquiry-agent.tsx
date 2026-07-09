@@ -190,9 +190,10 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
       <button
         aria-controls={panelId}
         aria-expanded={isOpen}
+        aria-hidden={isOpen}
         aria-label={`${copy.launcherLabel}. ${copy.launcherByline}`}
-        className="inquiry-agent-launcher"
-        onClick={() => setIsOpen((current) => !current)}
+        className={`inquiry-agent-launcher${isOpen ? " is-chat-open" : ""}`}
+        onClick={() => setIsOpen(true)}
         type="button"
       >
         <span aria-hidden="true" className="inquiry-agent-launcher-icon">
@@ -215,14 +216,22 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
         </span>
         <span className="inquiry-agent-launcher-copy">
           <span className="inquiry-agent-launcher-title">{copy.launcherLabel}</span>
-          <span className="inquiry-agent-launcher-byline">
+          <span className="inquiry-agent-launcher-byline inquiry-agent-launcher-byline--full">
             {copy.launcherByline}
+          </span>
+          <span className="inquiry-agent-launcher-byline inquiry-agent-launcher-byline--short">
+            {copy.launcherBylineShort}
           </span>
         </span>
       </button>
 
       {isOpen ? (
-        <div className="inquiry-agent-backdrop" onClick={() => setIsOpen(false)} />
+        <button
+          aria-label={copy.close}
+          className="inquiry-agent-backdrop"
+          onClick={() => setIsOpen(false)}
+          type="button"
+        />
       ) : null}
 
       <section
@@ -230,6 +239,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
         aria-label={copy.title}
         className={`inquiry-agent-panel${isOpen ? " is-open" : ""}`}
         id={panelId}
+        inert={!isOpen ? true : undefined}
       >
         <header className="inquiry-agent-header">
           <div>

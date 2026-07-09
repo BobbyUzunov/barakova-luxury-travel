@@ -595,6 +595,7 @@ export const contentBg = {
     launcherLabel: "AI асистент",
     launcherShortLabel: "AI",
     launcherByline: "by Barakova Luxury Travel",
+    launcherBylineShort: "by Barakova",
     title: "AI асистент",
     subtitle: "Задайте въпрос и получете интелигентен отговор за пътувания",
     placeholder: "Напишете въпроса си...",

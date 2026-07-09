@@ -595,6 +595,7 @@ export const contentEn = {
     launcherLabel: "AI assistant",
     launcherShortLabel: "AI",
     launcherByline: "by Barakova Luxury Travel",
+    launcherBylineShort: "by Barakova",
     title: "AI assistant",
     subtitle: "Ask a question and get an intelligent travel answer",
     placeholder: "Type your question...",
