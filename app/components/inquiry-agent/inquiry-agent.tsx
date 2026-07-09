@@ -190,7 +190,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
       <button
         aria-controls={panelId}
         aria-expanded={isOpen}
-        aria-label={copy.launcherLabel}
+        aria-label={`${copy.launcherLabel}. ${copy.launcherByline}`}
         className="inquiry-agent-launcher"
         onClick={() => setIsOpen((current) => !current)}
         type="button"
@@ -214,9 +214,9 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
           </svg>
         </span>
         <span className="inquiry-agent-launcher-copy">
-          <span className="inquiry-agent-launcher-text">{copy.launcherLabel}</span>
-          <span className="inquiry-agent-launcher-short">
-            {copy.launcherShortLabel}
+          <span className="inquiry-agent-launcher-title">{copy.launcherLabel}</span>
+          <span className="inquiry-agent-launcher-byline">
+            {copy.launcherByline}
           </span>
         </span>
       </button>

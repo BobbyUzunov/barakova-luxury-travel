@@ -113,6 +113,7 @@ export type SiteContent = {
   inquiryAgent: {
     launcherLabel: string;
     launcherShortLabel: string;
+    launcherByline: string;
     title: string;
     subtitle: string;
     placeholder: string;
