@@ -4,6 +4,12 @@ import {
   contactEmail,
   contactPhoneDisplay,
 } from "../constants/site";
+import {
+  destinationMentionedIn,
+  isSimpleDestinationQuestion,
+  normalizeText,
+  shouldPreferAiReply,
+} from "./chat-routing";
 
 export type FaqEntry = {
   id: string;
@@ -11,16 +17,6 @@ export type FaqEntry = {
   answer: string;
   quickReply?: string;
 };
-
-function normalizeText(value: string) {
-  return value
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\p{L}\p{N}\s]/gu, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
 
 function buildStaticFaqs(locale: Locale): FaqEntry[] {
   const content = getSiteContent(locale);
@@ -41,14 +37,13 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
         id: "services",
         quickReply: "Какви услуги предлагате?",
         keywords: [
+          "какви услуги",
           "услуги",
           "услуга",
           "предлагате",
           "помагате",
           "правите",
-          "консултация",
-          "луксозни",
-          "почивки",
+          "луксозни почивки",
         ],
         answer: `Предлагам персонални консултации за луксозни пътувания:\n\n${servicesList}\n\nАко искате, мога да насоча към контакт формата за персонално предложение.`,
       },
@@ -56,13 +51,12 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
         id: "process",
         quickReply: "Как работи процесът?",
         keywords: [
-          "процес",
           "как работи",
+          "процес",
           "стъпки",
-          "консултация",
-          "започва",
-          "процедура",
           "какво следва",
+          "процедура",
+          "консултацията",
         ],
         answer: `${content.processSection.title}:\n\n${stepsList}\n\n${content.processSection.description ?? ""}`,
       },
@@ -70,6 +64,7 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
         id: "contact",
         quickReply: "Как да се свържа с вас?",
         keywords: [
+          "как да се свържа",
           "контакт",
           "телефон",
           "обадя",
@@ -85,13 +80,12 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
         id: "consultation",
         quickReply: "Безплатна ли е консултацията?",
         keywords: [
+          "безплатна ли",
           "безплатна",
           "безплатно",
-          "цена",
           "такса",
           "заплащане",
-          "консултация",
-          "първоначална",
+          "първоначална консултация",
         ],
         answer:
           "Първоначалната консултация е безплатна. След като споделите какво търсите, подготвям внимателно подбрани предложения според вашия стил, бюджет и предпочитания.",
@@ -100,32 +94,31 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
         id: "destinations",
         quickReply: "Кои дестинации предлагате?",
         keywords: [
+          "кои дестинации",
+          "дестинации предлагате",
           "дестинации",
-          "дестинация",
-          "къде",
+          "къде пътувате",
           "маршрути",
-          "предлагате",
-          "пътуване",
         ],
         answer: `Работя с внимателно подбрани луксозни дестинации, включително: ${destinationsList}. Мога да разкажа повече за конкретна дестинация, ако попитате.`,
       },
       {
         id: "cruises",
         quickReply: "Имате ли круизи?",
-        keywords: ["круиз", "круизи", "кораб", "море", "река"],
+        keywords: ["имате ли круизи", "круиз", "круизи", "кораб", "речен круиз"],
         answer: `Да, предлагам и луксозни круизи, включително: ${cruisesList}. Мога да помогна с избор според сезона, стила и бюджета ви.`,
       },
       {
         id: "about",
         quickReply: "Кой е Barakova Luxury Travel?",
         keywords: [
+          "богдана баракова",
           "богдана",
           "баракова",
           "barakova",
+          "кой сте",
           "за вас",
-          "за мен",
           "консултант",
-          "опит",
         ],
         answer: `${content.about.title}\n\n${content.about.intro}\n\n${content.about.mission}`,
       },
@@ -133,13 +126,11 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
         id: "budget",
         quickReply: "Какъв бюджет е нужен?",
         keywords: [
-          "бюджет",
-          "цена",
+          "какъв бюджет",
+          "бюджет е нужен",
+          "колко струва",
           "цени",
-          "колко",
-          "струва",
           "разходи",
-          "луксозно",
         ],
         answer:
           "Всяко пътуване е индивидуално. Споделяте приблизителен бюджет и предпочитания, а аз подбирам предложения, които съответстват на очакванията ви за комфорт и стил. Попълнете формата за запитване с бюджет и период.",
@@ -152,13 +143,13 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
       id: "services",
       quickReply: "What services do you offer?",
       keywords: [
+        "what services",
         "services",
         "service",
-        "offer",
+        "do you offer",
         "help",
         "consulting",
-        "luxury",
-        "vacations",
+        "luxury vacations",
       ],
       answer: `I offer personal luxury travel consulting:\n\n${servicesList}\n\nI can also guide you to the contact form for a tailored proposal.`,
     },
@@ -166,10 +157,10 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
       id: "process",
       quickReply: "How does the process work?",
       keywords: [
-        "process",
+        "how does the process",
         "how it works",
+        "process",
         "steps",
-        "consultation",
         "procedure",
         "what happens next",
       ],
@@ -179,6 +170,7 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
       id: "contact",
       quickReply: "How can I contact you?",
       keywords: [
+        "how can i contact",
         "contact",
         "phone",
         "call",
@@ -192,12 +184,11 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
       id: "consultation",
       quickReply: "Is the consultation free?",
       keywords: [
+        "is the consultation free",
+        "free consultation",
         "free",
         "fee",
-        "price",
-        "cost",
-        "consultation",
-        "initial",
+        "initial consultation",
         "charge",
       ],
       answer:
@@ -207,30 +198,30 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
       id: "destinations",
       quickReply: "Which destinations do you offer?",
       keywords: [
+        "which destinations",
+        "destinations do you offer",
         "destinations",
-        "destination",
-        "where",
+        "where do you travel",
         "routes",
-        "travel",
       ],
       answer: `I work with carefully selected luxury destinations, including: ${destinationsList}. Ask about a specific destination and I can share more details.`,
     },
     {
       id: "cruises",
       quickReply: "Do you offer cruises?",
-      keywords: ["cruise", "cruises", "ship", "sea", "river"],
+      keywords: ["do you offer cruises", "cruise", "cruises", "ship", "river cruise"],
       answer: `Yes, I also offer luxury cruises, including: ${cruisesList}. I can help you choose based on season, style, and budget.`,
     },
     {
       id: "about",
       quickReply: "Who is Barakova Luxury Travel?",
       keywords: [
+        "who is barakova",
+        "bogdana barakova",
         "bogdana",
         "barakova",
         "about",
         "consultant",
-        "who",
-        "experience",
       ],
       answer: `${content.about.title}\n\n${content.about.intro}\n\n${content.about.mission}`,
     },
@@ -238,13 +229,11 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
       id: "budget",
       quickReply: "What budget should I plan for?",
       keywords: [
-        "budget",
-        "price",
+        "what budget",
+        "budget should",
+        "how much",
         "prices",
         "cost",
-        "how much",
-        "expensive",
-        "luxury",
       ],
       answer:
         "Every trip is personal. Share your approximate budget and preferences, and I prepare proposals that match your expectations for comfort and style. Use the inquiry form with your budget and travel period.",
@@ -257,15 +246,103 @@ function buildDestinationFaqs(locale: Locale): FaqEntry[] {
 
   return content.destinations.map((destination) => ({
     id: `destination-${destination.name.toLowerCase().replace(/\s+/g, "-")}`,
-    keywords: [
-      destination.name.toLowerCase(),
-      ...destination.name.toLowerCase().split(/\s+/),
-      ...destination.highlights
-        .flatMap((highlight) => highlight.toLowerCase().split(/\s+/))
-        .filter((word) => word.length > 4),
-    ],
+    keywords: [destination.name.toLowerCase()],
     answer: `${destination.name}: ${destination.description}\n\n${destination.detail}`,
   }));
+}
+
+function scoreFaqEntry(normalizedMessage: string, entry: FaqEntry) {
+  let score = 0;
+
+  for (const keyword of entry.keywords) {
+    const normalizedKeyword = normalizeText(keyword);
+
+    if (!normalizedKeyword) {
+      continue;
+    }
+
+    if (normalizedMessage === normalizedKeyword) {
+      score += 8;
+      continue;
+    }
+
+    if (normalizedKeyword.includes(" ") && normalizedMessage.includes(normalizedKeyword)) {
+      score += 7;
+      continue;
+    }
+
+    if (normalizedMessage.includes(normalizedKeyword)) {
+      score += normalizedKeyword.length >= 8 ? 4 : 2;
+    }
+  }
+
+  return score;
+}
+
+function getStaticFaqThreshold(normalizedMessage: string) {
+  const wordCount = normalizedMessage.split(/\s+/).filter(Boolean).length;
+
+  if (wordCount >= 8) {
+    return 6;
+  }
+
+  if (wordCount >= 5) {
+    return 5;
+  }
+
+  return 4;
+}
+
+function matchStaticFaq(locale: Locale, message: string) {
+  const normalizedMessage = normalizeText(message);
+  let bestEntry: FaqEntry | null = null;
+  let bestScore = 0;
+
+  for (const entry of buildStaticFaqs(locale)) {
+    const score = scoreFaqEntry(normalizedMessage, entry);
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestEntry = entry;
+    }
+  }
+
+  if (!bestEntry || bestScore < getStaticFaqThreshold(normalizedMessage)) {
+    return null;
+  }
+
+  return {
+    id: bestEntry.id,
+    answer: bestEntry.answer,
+  };
+}
+
+function matchDestinationFaq(locale: Locale, message: string) {
+  if (!isSimpleDestinationQuestion(message, locale)) {
+    return null;
+  }
+
+  const content = getSiteContent(locale);
+  const destination = content.destinations.find((entry) =>
+    destinationMentionedIn(message, entry.name),
+  );
+
+  if (!destination) {
+    return null;
+  }
+
+  const faqEntry = buildDestinationFaqs(locale).find((entry) =>
+    entry.id.endsWith(destination.name.toLowerCase().replace(/\s+/g, "-")),
+  );
+
+  if (!faqEntry) {
+    return null;
+  }
+
+  return {
+    id: faqEntry.id,
+    answer: faqEntry.answer,
+  };
 }
 
 export function getFaqEntries(locale: Locale) {
@@ -287,41 +364,9 @@ export function matchFaqAnswer(locale: Locale, message: string) {
     return null;
   }
 
-  let bestEntry: FaqEntry | null = null;
-  let bestScore = 0;
-
-  for (const entry of getFaqEntries(locale)) {
-    let score = 0;
-
-    for (const keyword of entry.keywords) {
-      const normalizedKeyword = normalizeText(keyword);
-
-      if (!normalizedKeyword) {
-        continue;
-      }
-
-      if (normalizedMessage === normalizedKeyword) {
-        score += 6;
-        continue;
-      }
-
-      if (normalizedMessage.includes(normalizedKeyword)) {
-        score += normalizedKeyword.length >= 8 ? 4 : 2;
-      }
-    }
-
-    if (score > bestScore) {
-      bestScore = score;
-      bestEntry = entry;
-    }
-  }
-
-  if (!bestEntry || bestScore < 3) {
+  if (shouldPreferAiReply(message, locale)) {
     return null;
   }
 
-  return {
-    id: bestEntry.id,
-    answer: bestEntry.answer,
-  };
+  return matchStaticFaq(locale, message) ?? matchDestinationFaq(locale, message);
 }
