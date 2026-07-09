@@ -3010,16 +3010,22 @@ h2 {
   border: 0;
 }
 
-.inquiry-agent-launcher {
+.inquiry-agent-shell {
   position: fixed;
   left: max(1rem, var(--safe-left));
   bottom: var(--mobile-sticky-bottom);
-  z-index: 65;
+  z-index: 70;
+  width: min(24rem, calc(100vw - 2rem - var(--safe-left) - var(--safe-right)));
+}
+
+.inquiry-agent-launcher {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
   min-height: 3rem;
-  max-width: min(15.5rem, calc(100vw - 2rem - var(--safe-left) - var(--safe-right)));
+  max-width: 100%;
   padding: 0.72rem 1rem 0.72rem 0.72rem;
   border: 1px solid rgba(122, 102, 82, 0.2);
   border-radius: 999px;
@@ -3033,16 +3039,16 @@ h2 {
   font-weight: 700;
   touch-action: manipulation;
   transition:
-    opacity 160ms ease,
-    visibility 160ms ease,
-    transform 160ms ease;
+    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .inquiry-agent-launcher.is-chat-open {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(0.35rem);
+  transform: scale(0.96);
 }
 
 .inquiry-agent-launcher:hover {
@@ -3122,37 +3128,52 @@ h2 {
   background: rgba(24, 20, 16, 0.34);
   cursor: pointer;
   touch-action: manipulation;
+  animation: inquiry-backdrop-in 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes inquiry-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .inquiry-agent-panel {
-  position: fixed;
-  right: max(1rem, var(--safe-right));
-  bottom: calc(5.25rem + var(--safe-bottom));
-  z-index: 70;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   width: min(24rem, calc(100vw - 2rem - var(--safe-left) - var(--safe-right)));
   max-height: min(38rem, calc(100svh - 7rem - var(--safe-top) - var(--safe-bottom)));
   border: 1px solid rgba(122, 102, 82, 0.16);
   border-radius: 1.35rem;
-  background: rgba(255, 252, 247, 0.98);
-  box-shadow: 0 28px 70px rgba(45, 42, 38, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 252, 247, 0.99), rgba(250, 245, 238, 0.98));
+  box-shadow:
+    0 28px 70px rgba(45, 42, 38, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.45) inset;
   overflow: hidden;
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(1rem) scale(0.98);
+  transform: scale(0.84) translateY(0.85rem);
+  transform-origin: left bottom;
   transition:
-    opacity 180ms ease,
-    transform 180ms ease,
-    visibility 180ms ease;
+    opacity 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .inquiry-agent-panel.is-open {
   pointer-events: auto;
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
+  transform: scale(1) translateY(0);
 }
 
 .inquiry-agent-header {
@@ -3309,17 +3330,23 @@ h2 {
 }
 
 @media (min-width: 768px) {
-  .inquiry-agent-launcher {
+  .inquiry-agent-shell {
     bottom: 1.5rem;
   }
 
   .inquiry-agent-panel {
-    bottom: 5.5rem;
-    width: 24rem;
+    max-height: min(36rem, calc(100svh - 3.5rem - var(--safe-top) - var(--safe-bottom)));
   }
 }
 
 @media (max-width: 767px) {
+  .inquiry-agent-shell {
+    width: min(
+      24rem,
+      calc(100vw - 1rem - var(--safe-left) - var(--safe-right))
+    );
+  }
+
   .inquiry-agent-launcher {
     max-width: min(
       11.75rem,
@@ -3352,18 +3379,12 @@ h2 {
   }
 
   .inquiry-agent-panel {
-    inset-inline: max(0.75rem, var(--safe-left)) max(0.75rem, var(--safe-right));
-    bottom: calc(4.75rem + var(--safe-bottom));
-    width: auto;
+    width: 100%;
     max-height: min(42rem, calc(100svh - 5.5rem - var(--safe-top) - var(--safe-bottom)));
   }
 
-  body:has(.cookie-consent) .inquiry-agent-launcher {
+  body:has(.cookie-consent) .inquiry-agent-shell {
     bottom: calc(6.5rem + var(--safe-bottom));
-  }
-
-  body:has(.cookie-consent) .inquiry-agent-panel {
-    bottom: calc(7.5rem + var(--safe-bottom));
   }
 
   .inquiry-agent-actions {

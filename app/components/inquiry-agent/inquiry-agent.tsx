@@ -187,15 +187,25 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
 
   return (
     <>
-      <button
-        aria-controls={panelId}
-        aria-expanded={isOpen}
-        aria-hidden={isOpen}
-        aria-label={`${copy.launcherLabel}. ${copy.launcherByline}`}
-        className={`inquiry-agent-launcher${isOpen ? " is-chat-open" : ""}`}
-        onClick={() => setIsOpen(true)}
-        type="button"
-      >
+      {isOpen ? (
+        <button
+          aria-label={copy.close}
+          className="inquiry-agent-backdrop"
+          onClick={() => setIsOpen(false)}
+          type="button"
+        />
+      ) : null}
+
+      <div className="inquiry-agent-shell">
+        <button
+          aria-controls={panelId}
+          aria-expanded={isOpen}
+          aria-hidden={isOpen}
+          aria-label={`${copy.launcherLabel}. ${copy.launcherByline}`}
+          className={`inquiry-agent-launcher${isOpen ? " is-chat-open" : ""}`}
+          onClick={() => setIsOpen(true)}
+          type="button"
+        >
         <span aria-hidden="true" className="inquiry-agent-launcher-icon">
           <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -223,24 +233,15 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
             {copy.launcherBylineShort}
           </span>
         </span>
-      </button>
+        </button>
 
-      {isOpen ? (
-        <button
-          aria-label={copy.close}
-          className="inquiry-agent-backdrop"
-          onClick={() => setIsOpen(false)}
-          type="button"
-        />
-      ) : null}
-
-      <section
-        aria-hidden={!isOpen}
-        aria-label={copy.title}
-        className={`inquiry-agent-panel${isOpen ? " is-open" : ""}`}
-        id={panelId}
-        inert={!isOpen ? true : undefined}
-      >
+        <section
+          aria-hidden={!isOpen}
+          aria-label={copy.title}
+          className={`inquiry-agent-panel${isOpen ? " is-open" : ""}`}
+          id={panelId}
+          inert={!isOpen ? true : undefined}
+        >
         <header className="inquiry-agent-header">
           <div>
             <p className="inquiry-agent-eyebrow">
@@ -337,7 +338,8 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
         </form>
 
         <p className="inquiry-agent-note">{copy.poweredNote}</p>
-      </section>
+        </section>
+      </div>
     </>
   );
 }
