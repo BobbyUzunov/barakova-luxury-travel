@@ -17,10 +17,17 @@ export function MobileFloatingContact({
       href={contactPhoneHref}
     >
       <span aria-hidden="true" className="mobile-sticky-call-icon">
-        <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          fill="none"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
-            d="M8.86 2.5c.45 0 .86.25 1.06.64l1.28 2.56a1.2 1.2 0 01-.22 1.3l-1.02 1.02a12.2 12.2 0 005.36 5.36l1.02-1.02a1.2 1.2 0 011.3-.22l2.56 1.28c.39.2.64.61.64 1.06v2.56c0 .66-.54 1.2-1.2 1.2C10.4 18.78 5.22 13.6 5.22 7.1c0-.66.54-1.2 1.2-1.2h2.44z"
-            fill="currentColor"
+            d="M7.1 3.5H4.9c-.77 0-1.4.63-1.4 1.4 0 8.62 6.98 15.6 15.6 15.6.77 0 1.4-.63 1.4-1.4v-2.2a1.4 1.4 0 0 0-1.05-1.36l-2.17-.54a1.4 1.4 0 0 0-1.45.48l-.48.62a1.4 1.4 0 0 1-1.67.42 13.2 13.2 0 0 1-6.2-6.2 1.4 1.4 0 0 1 .42-1.67l.62-.48A1.4 1.4 0 0 0 9 6.72l-.54-2.17A1.4 1.4 0 0 0 7.1 3.5Z"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.7"
           />
         </svg>
       </span>
