@@ -1,15 +1,17 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useRef, useState } from "react";
 import type { Locale, SiteContent } from "../../../constants/content";
 import {
   contactPhoneDisplay,
   contactPhoneHref,
   getCallAriaLabel,
 } from "../../../constants/site";
+import { resetTurnstileChallenge } from "../../../lib/turnstile-reset";
 import {
   isTurnstileConfigured,
   TurnstileWidget,
+  type TurnstileWidgetHandle,
 } from "../turnstile-widget";
 
 const initialFormValues = {
@@ -35,6 +37,7 @@ type ContactSectionProps = {
 };
 
 export function ContactSection({ content, locale }: ContactSectionProps) {
+  const turnstileRef = useRef<TurnstileWidgetHandle>(null);
   const [formValues, setFormValues] =
     useState<ContactFormValues>(initialFormValues);
   const [formErrors, setFormErrors] = useState<ContactFormErrors>({});
@@ -42,6 +45,13 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
   const requiredLabel = content.contact.requiredMark;
+
+  const resetTurnstile = () => {
+    resetTurnstileChallenge(
+      () => setTurnstileToken(""),
+      () => turnstileRef.current?.reset(),
+    );
+  };
 
   const validateForm = () => {
     const nextErrors: ContactFormErrors = {};
@@ -103,7 +113,7 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
         const data = (await response.json().catch(() => null)) as
           | { message?: string }
           | null;
-        setTurnstileToken("");
+        resetTurnstile();
         setFormErrors({
           form: data?.message || content.contact.validation.submitError,
         });
@@ -112,10 +122,10 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
 
       setIsSubmitted(true);
       setFormValues(initialFormValues);
-      setTurnstileToken("");
+      resetTurnstile();
       setFormErrors({});
     } catch {
-      setTurnstileToken("");
+      resetTurnstile();
       setFormErrors({ form: content.contact.validation.submitError });
     } finally {
       setIsSubmitting(false);
@@ -305,6 +315,7 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
               </div>
 
               <TurnstileWidget
+                ref={turnstileRef}
                 onExpire={() => setTurnstileToken("")}
                 onTokenChange={setTurnstileToken}
               />

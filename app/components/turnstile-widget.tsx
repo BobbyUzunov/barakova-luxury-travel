@@ -1,45 +1,69 @@
 "use client";
 
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
-import { useRef } from "react";
+import {
+  Turnstile,
+  type TurnstileInstance,
+} from "@marsidev/react-turnstile";
+import {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+} from "react";
+import { isTurnstileSiteKeyConfigured } from "../../lib/turnstile-config";
 
 const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
-type TurnstileWidgetProps = {
-  onTokenChange: (token: string) => void;
-  onExpire?: () => void;
+export type TurnstileWidgetHandle = {
+  reset: () => void;
 };
 
-export function TurnstileWidget({ onTokenChange, onExpire }: TurnstileWidgetProps) {
+type TurnstileWidgetProps = {
+  onExpire?: () => void;
+  onTokenChange: (token: string) => void;
+};
+
+export const TurnstileWidget = forwardRef<
+  TurnstileWidgetHandle,
+  TurnstileWidgetProps
+>(function TurnstileWidget({ onExpire, onTokenChange }, ref) {
   const turnstileRef = useRef<TurnstileInstance>(null);
+
+  useImperativeHandle(ref, () => ({
+    reset: () => {
+      onTokenChange("");
+      turnstileRef.current?.reset();
+    },
+  }));
 
   if (!siteKey) {
     return null;
   }
+
+  const handleReset = () => {
+    onTokenChange("");
+    turnstileRef.current?.reset();
+  };
 
   return (
     <div className="turnstile-widget">
       <Turnstile
         ref={turnstileRef}
         siteKey={siteKey}
-        onSuccess={onTokenChange}
+        onError={handleReset}
         onExpire={() => {
-          onTokenChange("");
           onExpire?.();
-          turnstileRef.current?.reset();
+          handleReset();
         }}
-        onError={() => {
-          onTokenChange("");
-        }}
+        onSuccess={onTokenChange}
         options={{
-          theme: "light",
           language: "auto",
+          theme: "light",
         }}
       />
     </div>
   );
-}
+});
 
 export function isTurnstileConfigured() {
-  return Boolean(siteKey);
+  return isTurnstileSiteKeyConfigured();
 }

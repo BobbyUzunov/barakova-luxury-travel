@@ -16,6 +16,8 @@ type PageProps = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getSeoDestinations("bg")
     .flatMap((destination) => [

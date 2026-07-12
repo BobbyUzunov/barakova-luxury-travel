@@ -19,7 +19,11 @@ export function BlogModal({
   post,
 }: BlogModalProps) {
   const modalRef = useRef<HTMLElement>(null);
-  useModalAccessibility(true, onClose, modalRef, labelId);
+  useModalAccessibility({
+    containerRef: modalRef,
+    isOpen: true,
+    onClose,
+  });
 
   return (
     <div

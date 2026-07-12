@@ -2,6 +2,7 @@
 
 import {
   type FormEvent,
+  useCallback,
   useEffect,
   useId,
   useMemo,
@@ -13,6 +14,8 @@ import { getSiteContent } from "../../../constants/content-by-locale";
 import { localizedHash } from "../../../constants/i18n";
 import { getQuickReplyFaqs } from "../../../lib/chat-faq";
 import type { ChatHistoryMessage } from "../../../lib/chat";
+import { lockElementInert } from "../../../lib/element-inert-lock";
+import { useModalAccessibility } from "../../../lib/use-modal-accessibility";
 
 type ChatMessage = {
   id: string;
@@ -35,8 +38,11 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
   const quickReplies = useMemo(() => getQuickReplyFaqs(locale), [locale]);
   const panelId = useId();
   const inputId = useId();
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const launcherRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -49,29 +55,70 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
     },
   ]);
 
+  const closePanel = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  useModalAccessibility({
+    containerRef: panelRef,
+    initialFocusRef: closeButtonRef,
+    isOpen,
+    lockScroll: true,
+    onClose: closePanel,
+    restoreFocusRef: launcherRef,
+    restoreFocusStrategy: "animationFrame",
+  });
+
   useEffect(() => {
     if (!isOpen) {
       return;
     }
 
-    document.body.style.overflow = "hidden";
-    const frameId = window.requestAnimationFrame(() => {
-      inputRef.current?.focus();
+    let outerFrameId = 0;
+    let innerFrameId = 0;
+
+    outerFrameId = window.requestAnimationFrame(() => {
+      innerFrameId = window.requestAnimationFrame(() => {
+        closeButtonRef.current?.focus({ preventScroll: true });
+      });
     });
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-      }
+    return () => {
+      window.cancelAnimationFrame(outerFrameId);
+      window.cancelAnimationFrame(innerFrameId);
     };
+  }, [isOpen]);
 
-    window.addEventListener("keydown", onKeyDown);
+  useEffect(() => {
+    const launcher = launcherRef.current;
+
+    if (!isOpen) {
+      launcher?.setAttribute("aria-hidden", "false");
+      return;
+    }
+
+    const frameId = window.requestAnimationFrame(() => {
+      launcher?.setAttribute("aria-hidden", "true");
+    });
 
     return () => {
-      document.body.style.overflow = "";
       window.cancelAnimationFrame(frameId);
-      window.removeEventListener("keydown", onKeyDown);
+      launcher?.setAttribute("aria-hidden", "false");
     };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const appContent = document.getElementById("app-content");
+
+    if (!appContent) {
+      return;
+    }
+
+    return lockElementInert(appContent);
   }, [isOpen]);
 
   useEffect(() => {
@@ -171,7 +218,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
   };
 
   const handleContactClick = () => {
-    setIsOpen(false);
+    closePanel();
     const contactHash = localizedHash(locale, "contact");
     const isHomePage =
       window.location.pathname === `/${locale}` ||
@@ -191,153 +238,158 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
         <button
           aria-label={copy.close}
           className="inquiry-agent-backdrop"
-          onClick={() => setIsOpen(false)}
+          onClick={closePanel}
           type="button"
         />
       ) : null}
 
-      <div className="inquiry-agent-shell">
+      <div className="inquiry-agent-shell" id="inquiry-agent-shell">
         <button
           aria-controls={panelId}
           aria-expanded={isOpen}
-          aria-hidden={isOpen}
           aria-label={`${copy.launcherLabel}. ${copy.launcherByline}`}
           className={`inquiry-agent-launcher${isOpen ? " is-chat-open" : ""}`}
           onClick={() => setIsOpen(true)}
+          ref={launcherRef}
           type="button"
         >
-        <span aria-hidden="true" className="inquiry-agent-launcher-icon">
-          <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M12 2.5l1.15 4.2 4.2 1.15-4.2 1.15L12 13.2l-1.15-4.2-4.2-1.15 4.2-1.15L12 2.5Z"
-              fill="currentColor"
-            />
-            <path
-              d="M18.5 12.5l.75 2.75 2.75.75-2.75.75-.75 2.75-.75-2.75-2.75-.75 2.75-.75.75-2.75-2.75-.75 2.75-.75.75-2.75Z"
-              fill="currentColor"
-              opacity="0.9"
-            />
-            <path
-              d="M6.25 14.25l.55 2 2 .55-2 .55-.55 2-.55-2-2-.55 2-.55.55-2 2-.55-.55-2Z"
-              fill="currentColor"
-              opacity="0.75"
-            />
-          </svg>
-        </span>
-        <span className="inquiry-agent-launcher-copy">
-          <span className="inquiry-agent-launcher-title">{copy.launcherLabel}</span>
-          <span className="inquiry-agent-launcher-byline inquiry-agent-launcher-byline--full">
-            {copy.launcherByline}
+          <span aria-hidden="true" className="inquiry-agent-launcher-icon">
+            <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 2.5l1.15 4.2 4.2 1.15-4.2 1.15L12 13.2l-1.15-4.2-4.2-1.15 4.2-1.15L12 2.5Z"
+                fill="currentColor"
+              />
+              <path
+                d="M18.5 12.5l.75 2.75 2.75.75-2.75.75-.75 2.75-.75-2.75-2.75-.75 2.75-.75.75-2.75-2.75-.75 2.75-.75.75-2.75Z"
+                fill="currentColor"
+                opacity="0.9"
+              />
+              <path
+                d="M6.25 14.25l.55 2 2 .55-2 .55-.55 2-.55-2-2-.55 2-.55.55-2 2-.55-.55-2Z"
+                fill="currentColor"
+                opacity="0.75"
+              />
+            </svg>
           </span>
-          <span className="inquiry-agent-launcher-byline inquiry-agent-launcher-byline--short">
-            {copy.launcherBylineShort}
+          <span className="inquiry-agent-launcher-copy">
+            <span className="inquiry-agent-launcher-title">{copy.launcherLabel}</span>
+            <span className="inquiry-agent-launcher-byline inquiry-agent-launcher-byline--full">
+              {copy.launcherByline}
+            </span>
+            <span className="inquiry-agent-launcher-byline inquiry-agent-launcher-byline--short">
+              {copy.launcherBylineShort}
+            </span>
           </span>
-        </span>
         </button>
 
         <section
-          aria-hidden={!isOpen}
-          aria-label={copy.title}
+          aria-labelledby={`${panelId}-title`}
+          aria-modal={isOpen ? "true" : undefined}
           className={`inquiry-agent-panel${isOpen ? " is-open" : ""}`}
           id={panelId}
           inert={!isOpen ? true : undefined}
+          ref={panelRef}
+          role={isOpen ? "dialog" : undefined}
         >
-        <header className="inquiry-agent-header">
-          <div>
-            <p className="inquiry-agent-eyebrow">
-              <span className="inquiry-agent-ai-badge">{copy.launcherShortLabel}</span>
-              {content.brand.name}
-            </p>
-            <h2 className="inquiry-agent-title">{copy.title}</h2>
-            <p className="inquiry-agent-subtitle">{copy.subtitle}</p>
-          </div>
-          <button
-            aria-label={copy.close}
-            className="inquiry-agent-close"
-            onClick={() => setIsOpen(false)}
-            type="button"
-          >
-            ×
-          </button>
-        </header>
-
-        <div className="inquiry-agent-messages" role="log" aria-live="polite">
-          {messages.map((message) => (
-            <article
-              className={`inquiry-agent-message inquiry-agent-message--${message.role}`}
-              key={message.id}
-            >
-              <p>{message.content}</p>
-              {message.role === "assistant" && message.source ? (
-                <span className="inquiry-agent-source">
-                  {message.source === "faq"
-                    ? copy.sourceLabels.faq
-                    : copy.sourceLabels.ai}
-                </span>
-              ) : null}
-            </article>
-          ))}
-          {isSending ? (
-            <article className="inquiry-agent-message inquiry-agent-message--assistant inquiry-agent-message--typing">
-              <p>{copy.sending}</p>
-            </article>
-          ) : null}
-          <div ref={messagesEndRef} />
-        </div>
-
-        <div className="inquiry-agent-quick-replies">
-          {quickReplies.map((entry) => (
+          <header className="inquiry-agent-header">
+            <div>
+              <p className="inquiry-agent-eyebrow">
+                <span className="inquiry-agent-ai-badge">{copy.launcherShortLabel}</span>
+                {content.brand.name}
+              </p>
+              <h2 className="inquiry-agent-title" id={`${panelId}-title`}>
+                {copy.title}
+              </h2>
+              <p className="inquiry-agent-subtitle">{copy.subtitle}</p>
+            </div>
             <button
-              className="inquiry-agent-quick-reply"
+              aria-label={copy.close}
+              className="inquiry-agent-close"
+              onClick={closePanel}
+              ref={closeButtonRef}
+              type="button"
+            >
+              ×
+            </button>
+          </header>
+
+          <div className="inquiry-agent-messages" role="log" aria-live="polite">
+            {messages.map((message) => (
+              <article
+                className={`inquiry-agent-message inquiry-agent-message--${message.role}`}
+                key={message.id}
+              >
+                <p>{message.content}</p>
+                {message.role === "assistant" && message.source ? (
+                  <span className="inquiry-agent-source">
+                    {message.source === "faq"
+                      ? copy.sourceLabels.faq
+                      : copy.sourceLabels.ai}
+                  </span>
+                ) : null}
+              </article>
+            ))}
+            {isSending ? (
+              <article className="inquiry-agent-message inquiry-agent-message--assistant inquiry-agent-message--typing">
+                <p>{copy.sending}</p>
+              </article>
+            ) : null}
+            <div ref={messagesEndRef} />
+          </div>
+
+          <div className="inquiry-agent-quick-replies">
+            {quickReplies.map((entry) => (
+              <button
+                className="inquiry-agent-quick-reply"
+                disabled={isSending}
+                key={entry.id}
+                onClick={() => sendMessage({ faqId: entry.id })}
+                type="button"
+              >
+                {entry.quickReply}
+              </button>
+            ))}
+          </div>
+
+          <form className="inquiry-agent-form" onSubmit={handleSubmit}>
+            <label className="sr-only" htmlFor={inputId}>
+              {copy.placeholder}
+            </label>
+            <textarea
+              className="inquiry-agent-input"
               disabled={isSending}
-              key={entry.id}
-              onClick={() => sendMessage({ faqId: entry.id })}
-              type="button"
-            >
-              {entry.quickReply}
-            </button>
-          ))}
-        </div>
+              id={inputId}
+              onChange={(event) => setInputValue(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && !event.shiftKey) {
+                  event.preventDefault();
+                  event.currentTarget.form?.requestSubmit();
+                }
+              }}
+              placeholder={copy.placeholder}
+              ref={inputRef}
+              rows={2}
+              value={inputValue}
+            />
+            <div className="inquiry-agent-actions">
+              <button
+                className="btn-secondary inquiry-agent-contact"
+                onClick={handleContactClick}
+                type="button"
+              >
+                {copy.contactCta}
+              </button>
+              <button
+                className="btn-primary inquiry-agent-send"
+                disabled={isSending || !inputValue.trim()}
+                type="submit"
+              >
+                {isSending ? copy.sending : copy.send}
+              </button>
+            </div>
+          </form>
 
-        <form className="inquiry-agent-form" onSubmit={handleSubmit}>
-          <label className="sr-only" htmlFor={inputId}>
-            {copy.placeholder}
-          </label>
-          <textarea
-            className="inquiry-agent-input"
-            disabled={isSending}
-            id={inputId}
-            onChange={(event) => setInputValue(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault();
-                event.currentTarget.form?.requestSubmit();
-              }
-            }}
-            placeholder={copy.placeholder}
-            ref={inputRef}
-            rows={2}
-            value={inputValue}
-          />
-          <div className="inquiry-agent-actions">
-            <button
-              className="btn-secondary inquiry-agent-contact"
-              onClick={handleContactClick}
-              type="button"
-            >
-              {copy.contactCta}
-            </button>
-            <button
-              className="btn-primary inquiry-agent-send"
-              disabled={isSending || !inputValue.trim()}
-              type="submit"
-            >
-              {isSending ? copy.sending : copy.send}
-            </button>
-          </div>
-        </form>
-
-        <p className="inquiry-agent-note">{copy.poweredNote}</p>
+          <p className="inquiry-agent-note">{copy.poweredNote}</p>
         </section>
       </div>
     </>

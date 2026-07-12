@@ -21,7 +21,11 @@ export function ContentModal({
   onContact,
 }: ContentModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-  useModalAccessibility(true, onClose, modalRef, labelId);
+  useModalAccessibility({
+    containerRef: modalRef,
+    isOpen: true,
+    onClose,
+  });
 
   return (
     <div

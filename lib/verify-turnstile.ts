@@ -1,3 +1,5 @@
+import { isTurnstileSecretConfigured } from "./turnstile-config";
+
 const turnstileVerifyUrl =
   "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
@@ -45,5 +47,5 @@ export async function verifyTurnstileToken(
 }
 
 export function isTurnstileEnabled() {
-  return Boolean(process.env.TURNSTILE_SECRET_KEY);
+  return isTurnstileSecretConfigured();
 }

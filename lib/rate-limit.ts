@@ -1,5 +1,6 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { checkInMemoryRateLimit } from "./in-memory-rate-limit";
 
 const rateLimitWindowMs = 60_000;
 const maxContactRequestsPerWindow = 5;
@@ -33,23 +34,6 @@ const upstashChatLimiter = createUpstashLimiter(
   maxChatRequestsPerWindow,
 );
 
-function isRateLimitedInMemory(
-  ip: string,
-  store: Map<string, { count: number; resetAt: number }>,
-  maxRequests: number,
-) {
-  const now = Date.now();
-  const current = store.get(ip);
-
-  if (!current || current.resetAt <= now) {
-    store.set(ip, { count: 1, resetAt: now + rateLimitWindowMs });
-    return false;
-  }
-
-  current.count += 1;
-  return current.count > maxRequests;
-}
-
 async function isRateLimited(
   ip: string,
   limiter: Ratelimit | null,
@@ -61,11 +45,23 @@ async function isRateLimited(
       const { success } = await limiter.limit(ip);
       return !success;
     } catch {
-      return isRateLimitedInMemory(ip, store, maxRequests);
+      return checkInMemoryRateLimit(
+        ip,
+        store,
+        maxRequests,
+        Date.now(),
+        rateLimitWindowMs,
+      );
     }
   }
 
-  return isRateLimitedInMemory(ip, store, maxRequests);
+  return checkInMemoryRateLimit(
+    ip,
+    store,
+    maxRequests,
+    Date.now(),
+    rateLimitWindowMs,
+  );
 }
 
 export async function isContactRateLimited(ip: string) {
@@ -85,3 +81,11 @@ export async function isChatRateLimited(ip: string) {
     maxChatRequestsPerWindow,
   );
 }
+
+export {
+  chatRequestLog,
+  maxChatRequestsPerWindow,
+  maxContactRequestsPerWindow,
+  rateLimitWindowMs,
+  requestLog,
+};

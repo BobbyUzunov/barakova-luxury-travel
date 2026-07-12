@@ -1,21 +1,50 @@
-import { type RefObject, useEffect, useId } from "react";
+"use client";
 
-const focusableSelector =
-  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+import { type RefObject, useEffect, useRef } from "react";
+import { lockBodyScroll } from "./body-scroll-lock";
+import { getFocusRestoreTarget } from "./focus-restore";
+import {
+  scheduleFocusRestore,
+  type FocusRestoreStrategy,
+} from "./focus-restore-scheduler";
+import { getFocusableElements, handleFocusTrapKeyDown } from "./focus-trap";
 
-export function useModalAccessibility(
-  isOpen: boolean,
-  onClose: () => void,
-  containerRef: RefObject<HTMLElement | null>,
-  labelId: string,
-) {
-  const fallbackLabelId = useId();
-  const resolvedLabelId = labelId || fallbackLabelId;
+type UseModalAccessibilityOptions = {
+  containerRef: RefObject<HTMLElement | null>;
+  initialFocusRef?: RefObject<HTMLElement | null>;
+  isOpen: boolean;
+  lockScroll?: boolean;
+  onClose: () => void;
+  restoreFocusRef?: RefObject<HTMLElement | null>;
+  restoreFocusStrategy?: FocusRestoreStrategy;
+};
+
+export function useModalAccessibility({
+  containerRef,
+  initialFocusRef,
+  isOpen,
+  lockScroll = true,
+  onClose,
+  restoreFocusRef,
+  restoreFocusStrategy = "immediate",
+}: UseModalAccessibilityOptions) {
+  const pendingRestoreCancelRef = useRef<(() => void) | null>(null);
+  const previouslyFocusedRef = useRef<Element | null>(null);
+
+  useEffect(() => {
+    return () => {
+      pendingRestoreCancelRef.current?.();
+      pendingRestoreCancelRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     if (!isOpen) {
       return;
     }
+
+    pendingRestoreCancelRef.current?.();
+    pendingRestoreCancelRef.current = null;
 
     const container = containerRef.current;
 
@@ -23,49 +52,67 @@ export function useModalAccessibility(
       return;
     }
 
-    const previousActiveElement = document.activeElement as HTMLElement | null;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const unlockScroll = lockScroll ? lockBodyScroll() : () => {};
+    previouslyFocusedRef.current = document.activeElement;
+    const initialTarget =
+      initialFocusRef?.current ?? getFocusableElements(container)[0] ?? null;
 
-    const focusableElements = Array.from(
-      container.querySelectorAll<HTMLElement>(focusableSelector),
-    ).filter((element) => !element.hasAttribute("disabled"));
+    initialTarget?.focus({ preventScroll: true });
 
-    const firstFocusable = focusableElements[0];
-    const lastFocusable = focusableElements[focusableElements.length - 1];
+    const fallbackFocusFrameId = window.requestAnimationFrame(() => {
+      if (!container.contains(document.activeElement)) {
+        initialTarget?.focus({ preventScroll: true });
+      }
+    });
 
-    firstFocusable?.focus();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        event.preventDefault();
         onClose();
         return;
       }
 
-      if (event.key !== "Tab" || focusableElements.length === 0) {
-        return;
-      }
-
-      if (event.shiftKey && document.activeElement === firstFocusable) {
-        event.preventDefault();
-        lastFocusable?.focus();
-        return;
-      }
-
-      if (!event.shiftKey && document.activeElement === lastFocusable) {
-        event.preventDefault();
-        firstFocusable?.focus();
+      if (containerRef.current) {
+        handleFocusTrapKeyDown(containerRef.current, event);
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-      previousActiveElement?.focus();
+      document.removeEventListener("keydown", onKeyDown);
+      window.cancelAnimationFrame(fallbackFocusFrameId);
+      unlockScroll();
     };
-  }, [containerRef, isOpen, onClose]);
+  }, [
+    containerRef,
+    initialFocusRef,
+    isOpen,
+    lockScroll,
+    onClose,
+    restoreFocusRef,
+    restoreFocusStrategy,
+  ]);
 
-  return resolvedLabelId;
+  useEffect(() => {
+    if (isOpen) {
+      return;
+    }
+
+    const restoreTarget = getFocusRestoreTarget(
+      restoreFocusRef,
+      previouslyFocusedRef.current,
+    );
+
+    pendingRestoreCancelRef.current?.();
+    pendingRestoreCancelRef.current = scheduleFocusRestore(
+      restoreTarget,
+      restoreFocusStrategy,
+    );
+
+    return () => {
+      pendingRestoreCancelRef.current?.();
+      pendingRestoreCancelRef.current = null;
+    };
+  }, [isOpen, restoreFocusRef, restoreFocusStrategy]);
 }
