@@ -1712,6 +1712,7 @@ h2 {
   z-index: 60;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.45rem;
   min-height: 3.05rem;
   border: 1px solid rgba(255, 255, 255, 0.42);
@@ -1726,9 +1727,22 @@ h2 {
   text-decoration: none;
   text-transform: uppercase;
   box-shadow: 0 18px 44px rgba(122, 102, 82, 0.24);
+  touch-action: manipulation;
   transition:
     transform 220ms ease,
     box-shadow 220ms ease;
+}
+
+.mobile-sticky-call-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mobile-sticky-call-icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
 .mobile-sticky-call:hover {
@@ -2828,8 +2842,28 @@ h2 {
   }
 
   .mobile-sticky-call {
-    max-width: calc(100vw - 2rem - var(--safe-left) - var(--safe-right));
+    width: 3.25rem;
+    height: 3.25rem;
+    min-height: 0;
+    padding: 0;
+    gap: 0;
+  }
+
+  .mobile-sticky-call-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
     white-space: nowrap;
+    border: 0;
+  }
+
+  .mobile-sticky-call-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
   }
 }
 
@@ -3349,8 +3383,8 @@ h2 {
 
   .inquiry-agent-launcher {
     max-width: min(
-      11.75rem,
-      calc(100vw - 9.5rem - var(--safe-left) - var(--safe-right))
+      13.5rem,
+      calc(100vw - 5.75rem - var(--safe-left) - var(--safe-right))
     );
     min-width: 0;
     justify-content: flex-start;
