@@ -11,18 +11,6 @@ export function getLocaleFromPathname(pathname: string | null | undefined): Loca
   return defaultLocale;
 }
 
-export function getLocaleFromHeaders(
-  getHeader: (name: string) => string | null,
-): Locale {
-  const locale = getHeader("x-locale");
-
-  if (locale && isLocale(locale)) {
-    return locale;
-  }
-
-  return defaultLocale;
-}
-
 export function resolveCookieBannerLocale(
   pathname: string | null | undefined,
   storedLocale: Locale,

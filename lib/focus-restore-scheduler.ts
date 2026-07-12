@@ -1,4 +1,4 @@
-export type FocusRestoreStrategy = "immediate" | "animationFrame";
+export type FocusRestoreStrategy = "immediate" | "deferred";
 
 export function scheduleFocusRestore(
   target: HTMLElement | null,
@@ -13,21 +13,22 @@ export function scheduleFocusRestore(
     return () => {};
   }
 
-  let frameId = 0;
+  let timeoutId = 0;
   let cancelled = false;
 
-  frameId = window.requestAnimationFrame(() => {
-    window.requestAnimationFrame(() => {
-      if (cancelled || !document.contains(target)) {
-        return;
-      }
+  // Run after the originating click/keyboard event has finished. A timer is
+  // deliberate here: animation frames can be throttled indefinitely in a
+  // background tab, which would leave focus on <body> after closing a dialog.
+  timeoutId = window.setTimeout(() => {
+    if (cancelled || !document.contains(target)) {
+      return;
+    }
 
-      target.focus({ preventScroll: true });
-    });
-  });
+    target.focus({ preventScroll: true });
+  }, 0);
 
   return () => {
     cancelled = true;
-    window.cancelAnimationFrame(frameId);
+    window.clearTimeout(timeoutId);
   };
 }

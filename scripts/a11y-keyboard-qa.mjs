@@ -3,9 +3,9 @@ import { chromium } from "playwright";
 const baseUrl = process.env.QA_BASE_URL ?? "http://127.0.0.1:3010";
 
 async function clearConsent(page) {
-  await page.addInitScript(() => {
+  await page.evaluate(() => {
     window.localStorage.removeItem("barakova-cookie-consent");
-    window.localStorage.removeItem("barakova-locale");
+    window.localStorage.removeItem("barakova-luxury-travel-locale");
   });
 }
 
@@ -66,7 +66,16 @@ async function waitForFocusedSelector(page, selector, attempts = 80) {
     await page.waitForTimeout(50);
   }
 
-  throw new Error(`Expected focus on ${selector}`);
+  const activeElement = await page.locator(":root").evaluate(() => ({
+    tag: document.activeElement?.tagName ?? "",
+    id: document.activeElement?.id ?? "",
+    className: document.activeElement?.className ?? "",
+    ariaLabel: document.activeElement?.getAttribute("aria-label") ?? "",
+  }));
+
+  throw new Error(
+    `Expected focus on ${selector}; active element: ${JSON.stringify(activeElement)}`,
+  );
 }
 
 async function runChecks() {
@@ -74,8 +83,9 @@ async function runChecks() {
   const page = await browser.newPage();
 
   try {
-    await clearConsent(page);
     await page.goto(`${baseUrl}/bg`, { waitUntil: "networkidle" });
+    await clearConsent(page);
+    await page.reload({ waitUntil: "networkidle" });
 
     const bgLang = await page.locator("html").getAttribute("lang");
     if (bgLang !== "bg") {
@@ -151,7 +161,7 @@ async function runChecks() {
 
     await page.evaluate(() => {
       window.localStorage.removeItem("barakova-cookie-consent");
-      window.localStorage.removeItem("barakova-locale");
+      window.localStorage.removeItem("barakova-luxury-travel-locale");
     });
     await page.goto(`${baseUrl}/en`, { waitUntil: "networkidle" });
     await cookieDialog.waitFor({ state: "visible" });

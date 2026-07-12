@@ -66,7 +66,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
     lockScroll: true,
     onClose: closePanel,
     restoreFocusRef: launcherRef,
-    restoreFocusStrategy: "animationFrame",
+    restoreFocusStrategy: "deferred",
   });
 
   useEffect(() => {

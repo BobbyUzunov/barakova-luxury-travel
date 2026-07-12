@@ -1,36 +1,9 @@
 import { contentBg } from "./content-bg";
 import { contentEn } from "./content-en";
 import type { BlogPost, Destination, Locale } from "./content";
+import { blogSlugs, cruiseSlugs, destinationSlugs } from "./seo-slugs";
 
-export const destinationSlugs = [
-  "maldives",
-  "seychelles",
-  "japan",
-  "mauritius",
-  "zanzibar",
-  "sicily",
-  "dubai",
-  "china",
-  "dominican-republic",
-  "singapore",
-  "usa",
-  "mexico",
-] as const;
-
-export const cruiseSlugs = [
-  "mediterranean",
-  "greek-islands",
-  "caribbean",
-  "norwegian-fjords",
-  "arabian-gulf",
-  "japan-asia",
-] as const;
-
-export const blogSlugs = [
-  "how-to-choose-a-luxury-hotel",
-  "maldives-beyond-the-photos",
-  "why-a-personal-itinerary-matters",
-] as const;
+export { blogSlugs, cruiseSlugs, destinationSlugs } from "./seo-slugs";
 
 type SluggedDestination = Destination & { slug: string };
 type SluggedBlogPost = BlogPost & { slug: string };

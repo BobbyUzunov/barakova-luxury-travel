@@ -2,15 +2,13 @@ import assert from "node:assert/strict";
 import { afterEach, describe, it } from "node:test";
 import { scheduleFocusRestore } from "./focus-restore-scheduler.ts";
 
-type FrameCallback = FrameRequestCallback;
-
 afterEach(() => {
   delete (globalThis as { window?: Window }).window;
 });
 
 describe("deferred focus restoration", () => {
-  it("restores focus on the next animation frame", () => {
-    const queue: FrameCallback[] = [];
+  it("restores focus after the current interaction", () => {
+    const queue: Array<() => void> = [];
     let focused = false;
     const target = {
       focus() {
@@ -19,11 +17,11 @@ describe("deferred focus restoration", () => {
     } as unknown as HTMLElement;
 
     globalThis.window = {
-      requestAnimationFrame(callback: FrameCallback) {
+      setTimeout(callback: () => void) {
         queue.push(callback);
         return queue.length;
       },
-      cancelAnimationFrame() {},
+      clearTimeout() {},
     } as Window;
 
     Object.defineProperty(globalThis, "document", {
@@ -33,19 +31,17 @@ describe("deferred focus restoration", () => {
       },
     });
 
-    const cancel = scheduleFocusRestore(target, "animationFrame");
+    const cancel = scheduleFocusRestore(target, "deferred");
 
     assert.equal(focused, false);
-    queue[0]?.(0);
-    assert.equal(focused, false);
-    queue[1]?.(0);
+    queue[0]?.();
     assert.equal(focused, true);
 
     cancel();
   });
 
-  it("cancels a pending animation frame restore", () => {
-    const queue: FrameCallback[] = [];
+  it("cancels a pending deferred restore", () => {
+    const queue: Array<() => void> = [];
     let focused = false;
     const target = {
       focus() {
@@ -54,12 +50,12 @@ describe("deferred focus restoration", () => {
     } as unknown as HTMLElement;
 
     globalThis.window = {
-      requestAnimationFrame(callback: FrameCallback) {
+      setTimeout(callback: () => void) {
         queue.push(callback);
         return queue.length;
       },
-      cancelAnimationFrame(frameId: number) {
-        queue.splice(frameId - 1, 1);
+      clearTimeout(timeoutId: number) {
+        queue.splice(timeoutId - 1, 1);
       },
     } as Window;
 
@@ -70,9 +66,9 @@ describe("deferred focus restoration", () => {
       },
     });
 
-    const cancel = scheduleFocusRestore(target, "animationFrame");
+    const cancel = scheduleFocusRestore(target, "deferred");
     cancel();
-    queue[0]?.(0);
+    queue[0]?.();
 
     assert.equal(focused, false);
   });

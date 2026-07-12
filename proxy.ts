@@ -1,16 +1,20 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { defaultLocale } from "./constants/i18n";
+import {
+  isKnownLocalizedPath,
+  renderLocalizedNotFoundDocument,
+} from "./lib/localized-not-found";
 
 const legacyPrefixes = ["destinations", "cruises", "blog"] as const;
 
-function continueWithLocale(request: NextRequest, locale: "bg" | "en") {
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-locale", locale);
-
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
+function localizedNotFound(locale: "bg" | "en") {
+  return new NextResponse(renderLocalizedNotFoundDocument(locale), {
+    status: 404,
+    headers: {
+      "Cache-Control": "no-store",
+      "Content-Type": "text/html; charset=utf-8",
+      "X-Robots-Tag": "noindex, nofollow",
     },
   });
 }
@@ -40,12 +44,12 @@ export function proxy(request: NextRequest) {
   const finalSegment = pathname.split("/").filter(Boolean).at(-1);
 
   if (firstSegment === "bg" || firstSegment === "en") {
-    return continueWithLocale(request, firstSegment);
+    return isKnownLocalizedPath(pathname)
+      ? NextResponse.next()
+      : localizedNotFound(firstSegment);
   }
 
-  if (
-    !finalSegment?.includes(".")
-  ) {
+  if (!finalSegment?.includes(".")) {
     return NextResponse.redirect(
       new URL(`/${defaultLocale}${pathname}`, request.url),
     );
