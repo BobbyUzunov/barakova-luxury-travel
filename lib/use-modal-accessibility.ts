@@ -3,6 +3,7 @@
 import { type RefObject, useEffect, useRef } from "react";
 import { lockBodyScroll } from "./body-scroll-lock";
 import { getFocusRestoreTarget } from "./focus-restore";
+import { shouldRestoreModalFocus } from "./modal-focus-restore";
 import {
   scheduleFocusRestore,
   type FocusRestoreStrategy,
@@ -30,6 +31,7 @@ export function useModalAccessibility({
 }: UseModalAccessibilityOptions) {
   const pendingRestoreCancelRef = useRef<(() => void) | null>(null);
   const previouslyFocusedRef = useRef<Element | null>(null);
+  const wasOpenRef = useRef(false);
 
   useEffect(() => {
     return () => {
@@ -96,6 +98,11 @@ export function useModalAccessibility({
 
   useEffect(() => {
     if (isOpen) {
+      wasOpenRef.current = true;
+      return;
+    }
+
+    if (!shouldRestoreModalFocus(wasOpenRef.current, isOpen)) {
       return;
     }
 

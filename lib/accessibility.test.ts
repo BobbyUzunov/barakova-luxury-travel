@@ -1,7 +1,19 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { getMobileMenuInertAttribute } from "./mobile-menu-a11y.ts";
+import { shouldRestoreModalFocus } from "./modal-focus-restore.ts";
 import { resetTurnstileChallenge } from "./turnstile-reset.ts";
+
+describe("modal focus restore helpers", () => {
+  it("does not restore focus before a modal has opened", () => {
+    assert.equal(shouldRestoreModalFocus(false, false), false);
+  });
+
+  it("restores focus only after a true to false transition", () => {
+    assert.equal(shouldRestoreModalFocus(true, false), true);
+    assert.equal(shouldRestoreModalFocus(true, true), false);
+  });
+});
 
 describe("turnstile retry reset", () => {
   it("clears token state and resets the widget after server errors", () => {

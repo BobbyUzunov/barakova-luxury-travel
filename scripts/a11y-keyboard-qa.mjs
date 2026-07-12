@@ -101,6 +101,24 @@ async function runChecks() {
 
     await acceptConsentIfVisible(page);
 
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.reload({ waitUntil: "networkidle" });
+    await page.waitForTimeout(300);
+    const activeOnLoad = await page.locator(":root").evaluate(() => ({
+      tag: document.activeElement?.tagName ?? "",
+      className: document.activeElement?.className ?? "",
+    }));
+
+    if (activeOnLoad.className.includes("menu-toggle")) {
+      throw new Error("Menu button must not receive focus on initial page load");
+    }
+
+    if (activeOnLoad.tag !== "BODY") {
+      throw new Error(
+        `Expected body focus on load with saved consent, received ${JSON.stringify(activeOnLoad)}`,
+      );
+    }
+
     await openMobileMenu(page);
     await waitForFocusWithin(page, "#mobile-menu.is-open");
     await page.keyboard.press("Tab");
