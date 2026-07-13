@@ -1,137 +1,155 @@
 # Barakova Luxury Travel
 
-Бутикова лендинг страница за луксозни туристически консултации на Богдана Баракова.
+Двуезичен (BG/EN) уебсайт за луксозни туристически консултации на **Богдана Баракова**.
+
+**Live:** [barakovaluxurytravel.com](https://barakovaluxurytravel.com)
 
 ## Функционалности
 
-* Премиум дизайн
-* Responsive дизайн
-* Бутикова визия
-* Представяне на луксозни дестинации
-* Лендинг страница за консултации
-* Mobile-first подход
-* Модерна Next.js архитектура
+- Премиум, mobile-first дизайн с бутикова визия
+- Двуезични маршрути `/bg` и `/en` със server-rendered `lang` и статично генерирани страници (SSG)
+- Секции: услуги, дестинации, круизи, блог, процес, контакт
+- Детайлни страници за дестинации, круизи и блог постове + intercepting modals
+- Контактна форма с **Cloudflare Turnstile**, имейл чрез **Resend**
+- Хибриден **AI асистент** (FAQ + OpenAI fallback)
+- Фоново hero видео чрез **Vimeo** embed
+- Cookie consent банер + **Google Analytics** (само след съгласие)
+- Политика за поверителност (`/bg/privacy`, `/en/privacy`)
+- Security headers (CSP, HSTS, X-Frame-Options и др.)
+- Rate limiting (Upstash Redis в production, in-memory fallback)
+- Accessibility: focus trap, inert locks, keyboard navigation за меню, cookie dialog и AI панел
 
-## Използвани технологии
+## Технологии
 
-* Next.js
-* TypeScript
-* Tailwind CSS
-* React
+- **Next.js 16** (App Router, Turbopack)
+- **React 19** + **TypeScript**
+- **Tailwind CSS 4**
+- **Vercel** (hosting)
+- **Resend** · **Cloudflare Turnstile** · **Upstash Redis** · **OpenAI** · **Vimeo**
 
 ## Стартиране локално
 
 ```bash
 npm install
+cp .env.example .env.local   # попълнете нужните ключове
 npm run dev
 ```
 
-## Production Build
+Отворете [http://localhost:3000](http://localhost:3000) — root пренасочва към `/bg`.
 
-```bash
-npm run lint
-npm run test
-npm run build
-```
+## Скриптове
 
-## Качване на снимки за дестинации
+| Команда | Описание |
+|---------|----------|
+| `npm run dev` | Development сървър |
+| `npm run build` | Production build |
+| `npm run start` | Production сървър |
+| `npm run lint` | ESLint |
+| `npm run test` | Unit тестове (`lib/**/*.test.ts`) |
+| `npm run qa:a11y` | Browser keyboard QA (Playwright; изисква `npm start`) |
+| `npm run optimize-images` | WebP оптимизация на hero/profile |
+| `npm run generate-icons` | PWA и iOS икони от `app/icon.svg` |
 
-Качете WebP файлове в `public/images/destinations/` с име по slug, например:
+## Environment variables
 
-```bash
-public/images/destinations/maldives.webp
-public/images/destinations/mediterranean.webp
-```
+Копирайте `.env.example` → `.env.local` (локално) или добавете в **Vercel → Settings → Environment Variables** (Production + Preview).
 
-Сайтът автоматично ще ги ползва вместо Unsplash, ако файлът съществува.
-
-## Оптимизация на изображения и икони
-
-```bash
-npm run optimize-images
-npm run generate-icons
-```
-
-`optimize-images` конвертира hero и profile снимки към WebP. `generate-icons` създава PNG икони за PWA и iOS от `app/icon.svg`.
-
-## Vercel checklist (production)
-
-1. Свържете GitHub repo-то с Vercel и deploy от `main`
-2. Добавете environment variables (Production + Preview):
-   - `RESEND_API_KEY`
-   - `CONTACT_RECIPIENT_EMAIL`
-   - `RESEND_FROM_EMAIL`
-   - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY`
-   - `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`
-   - `NEXT_PUBLIC_GA_ID` (по избор)
-3. В Resend верифицирайте домейна `barakovaluxurytravel.com`
-4. В Cloudflare Turnstile добавете `barakovaluxurytravel.com` и `localhost`
-5. След deploy проверете `/bg`, `/en`, контакт формата и cookie banner-а
-
-## Deploy
-
-Проектът е подготвен за Vercel.
-
-Production домейн:
-
-```bash
-https://barakovaluxurytravel.com
-```
-
-## Environment Variables
-
-За контакт формата във Vercel:
+### Контактна форма (Resend)
 
 ```bash
 RESEND_API_KEY=
 CONTACT_RECIPIENT_EMAIL=info@barakovaluxurytravel.com
 RESEND_FROM_EMAIL=Barakova Luxury Travel <info@barakovaluxurytravel.com>
-NEXT_PUBLIC_GA_ID=
 ```
 
-За защита срещу спам (Cloudflare Turnstile — безплатен):
+### Spam защита (Cloudflare Turnstile)
+
+И двата ключа са **задължителни** за пълна защита (widget + server verify):
 
 ```bash
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=
 TURNSTILE_SECRET_KEY=
 ```
 
-Създайте widget на [Cloudflare Turnstile](https://dash.cloudflare.com/?to=/:account/turnstile) с домейна `barakovaluxurytravel.com` (и `localhost` за локално тестване).
+Създайте widget на [Cloudflare Turnstile](https://dash.cloudflare.com/?to=/:account/turnstile) с домейн `barakovaluxurytravel.com` (и `localhost` за локално тестване).
 
-За production rate limiting (препоръчително на Vercel):
+### AI асистент (OpenAI)
+
+```bash
+OPENAI_API_KEY=
+OPENAI_CHAT_MODEL=gpt-4o-mini
+```
+
+Без `OPENAI_API_KEY` асистентът отговаря само от вградените FAQ.
+
+### Rate limiting (Upstash — препоръчително в production)
 
 ```bash
 UPSTASH_REDIS_REST_URL=
 UPSTASH_REDIS_REST_TOKEN=
 ```
 
-Без Upstash лимитът работи in-memory (по-слаб при serverless).
-
-След верифициране на домейна в Resend, `RESEND_FROM_EMAIL` може да бъде сменен към адрес от домейна, например:
+### Аналитика (по избор)
 
 ```bash
-RESEND_FROM_EMAIL=Barakova Luxury Travel <info@barakovaluxurytravel.com>
+NEXT_PUBLIC_GA_ID=
 ```
 
-## GitHub repository
+## Vercel checklist (production)
 
-Препоръчително име на repository:
+1. Свържете GitHub repo с Vercel и deploy от `main`
+2. Добавете всички environment variables (виж по-горе)
+3. В **Resend** верифицирайте домейна `barakovaluxurytravel.com`
+4. В **Cloudflare Turnstile** добавете hostname-ите на сайта
+5. След deploy проверете:
+   - `/bg` и `/en` — коректен `html lang`
+   - Контактна форма + Turnstile widget
+   - AI асистент (FAQ и сложен въпрос)
+   - Cookie banner + `/bg/privacy`, `/en/privacy`
+   - Невалиден slug → HTTP 404 (напр. `/en/destinations/not-real`)
 
-```bash
-barakova-luxury-travel
+## Качване на снимки за дестинации
+
+WebP файлове в `public/images/destinations/` по slug:
+
+```text
+public/images/destinations/maldives.webp
+public/images/destinations/mediterranean.webp
 ```
 
-Команди за свързване към GitHub repository:
+Ако файлът съществува, сайтът го ползва вместо Unsplash.
 
-```bash
-git remote set-url origin https://github.com/<username>/barakova-luxury-travel.git
-git branch -M main
-git push -u origin main
+## Структура на проекта (накратко)
+
+```text
+app/[locale]/          # BG/EN страници и layouts
+app/api/contact/       # Контактна форма API
+app/api/chat/          # AI асистент API
+constants/             # Съдържание, privacy, SEO slugs
+lib/                   # Helpers, rate limit, a11y, Turnstile
+proxy.ts               # Redirects, locale 404, legacy paths
+scripts/               # Image/icon tooling, a11y QA
+```
+
+## Privacy и трети страни
+
+Политиката за поверителност описва обработката на данни от:
+
+- **Google Analytics** (със съгласие)
+- **Cloudflare Turnstile** (контактна форма)
+- **Vimeo** (вградено hero видео)
+- **OpenAI** (AI асистент при сложни въпроси)
+- **Resend**, **Vercel**, **Upstash**
+
+## GitHub
+
+```text
+https://github.com/BobbyUzunov/barakova-luxury-travel
 ```
 
 ## Автор
 
-Богдана Баракова
+Богдана Баракова · Barakova Luxury Travel
 
 ## Права
 
