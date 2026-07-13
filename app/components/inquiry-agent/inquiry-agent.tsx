@@ -5,14 +5,12 @@ import {
   useCallback,
   useEffect,
   useId,
-  useMemo,
   useRef,
   useState,
 } from "react";
 import type { Locale } from "../../../constants/content";
 import { getSiteContent } from "../../../constants/content-by-locale";
 import { localizedHash } from "../../../constants/i18n";
-import { getQuickReplyFaqs } from "../../../lib/chat-faq";
 import type { ChatHistoryMessage } from "../../../lib/chat";
 import { lockElementInert } from "../../../lib/element-inert-lock";
 import { useModalAccessibility } from "../../../lib/use-modal-accessibility";
@@ -35,7 +33,6 @@ function createMessageId() {
 export function InquiryAgent({ locale }: InquiryAgentProps) {
   const content = getSiteContent(locale);
   const copy = content.inquiryAgent;
-  const quickReplies = useMemo(() => getQuickReplyFaqs(locale), [locale]);
   const panelId = useId();
   const inputId = useId();
   const launcherRef = useRef<HTMLButtonElement>(null);
@@ -125,27 +122,17 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, isSending]);
 
-  const sendMessage = async ({
-    message,
-    faqId,
-  }: {
-    message?: string;
-    faqId?: string;
-  }) => {
+  const sendMessage = async ({ message }: { message?: string }) => {
     const trimmedMessage = message?.trim();
 
-    if (!faqId && !trimmedMessage) {
+    if (!trimmedMessage) {
       return;
     }
 
     const userMessage: ChatMessage = {
       id: createMessageId(),
       role: "user",
-      content: faqId
-        ? quickReplies.find((entry) => entry.id === faqId)?.quickReply ??
-          trimmedMessage ??
-          ""
-        : trimmedMessage ?? "",
+      content: trimmedMessage,
     };
 
     const nextMessages = [...messages, userMessage];
@@ -168,7 +155,6 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
         },
         body: JSON.stringify({
           message: trimmedMessage,
-          faqId,
           locale,
           history,
         }),
@@ -335,20 +321,6 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
               </article>
             ) : null}
             <div ref={messagesEndRef} />
-          </div>
-
-          <div className="inquiry-agent-quick-replies">
-            {quickReplies.map((entry) => (
-              <button
-                className="inquiry-agent-quick-reply"
-                disabled={isSending}
-                key={entry.id}
-                onClick={() => sendMessage({ faqId: entry.id })}
-                type="button"
-              >
-                {entry.quickReply}
-              </button>
-            ))}
           </div>
 
           <form className="inquiry-agent-form" onSubmit={handleSubmit}>
