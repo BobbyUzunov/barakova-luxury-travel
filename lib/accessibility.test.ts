@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { getMobileMenuInertAttribute } from "./mobile-menu-a11y.ts";
-import { shouldRestoreModalFocus } from "./modal-focus-restore.ts";
+import {
+  shouldRestoreModalFocus,
+  shouldRestoreModalFocusOnUnmount,
+} from "./modal-focus-restore.ts";
 import { resetTurnstileChallenge } from "./turnstile-reset.ts";
 
 describe("modal focus restore helpers", () => {
@@ -12,6 +15,12 @@ describe("modal focus restore helpers", () => {
   it("restores focus only after a true to false transition", () => {
     assert.equal(shouldRestoreModalFocus(true, false), true);
     assert.equal(shouldRestoreModalFocus(true, true), false);
+  });
+
+  it("restores focus on unmount when the modal is still open", () => {
+    assert.equal(shouldRestoreModalFocusOnUnmount(true, true), true);
+    assert.equal(shouldRestoreModalFocusOnUnmount(true, false), false);
+    assert.equal(shouldRestoreModalFocusOnUnmount(false, true), false);
   });
 });
 

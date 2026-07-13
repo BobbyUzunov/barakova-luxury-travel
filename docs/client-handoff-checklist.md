@@ -35,19 +35,21 @@
 - Language switcher between Bulgarian and English
 
 ### Contact & communication
-- Contact form with validation
+- Contact form with validation and accessible field error announcements
 - Click-to-call phone link
 - Mailto link to **info@barakovaluxurytravel.com**
 - Cloudflare Turnstile spam protection
 - Rate limiting (Upstash Redis in production)
 - Email delivery via Resend API
+- **AI inquiry assistant** (floating chat): answers common questions from built-in FAQ; may use OpenAI for open-ended replies when configured
 
 ### SEO & technical
 - Per-locale metadata, Open Graph, and hreflang tags
 - XML sitemap and `robots.txt`
 - 95 statically generated pages
-- Security headers (CSP, HSTS)
-- Optional Google Analytics (`NEXT_PUBLIC_GA_ID`)
+- Security headers in production (CSP, HSTS)
+- Optional Google Analytics (`NEXT_PUBLIC_GA_ID`) — loaded only after cookie consent
+- Keyboard accessibility: focus trap and focus restore for menus, modals, cookie dialog, and AI chat panel
 
 ### Email setup (current)
 - Public contact address: **info@barakovaluxurytravel.com**
@@ -68,7 +70,9 @@ Use this checklist before signing off on the handoff. Test on at least one phone
 - [ ] Call the phone number from the site and confirm it connects
 - [ ] Switch between Bulgarian and English and spot-check key pages
 - [ ] Accept or decline cookies and confirm the banner behaves correctly
-- [ ] Read the privacy policy page in both languages
+- [ ] Read the privacy policy page in both languages (covers Vimeo, Turnstile, OpenAI, and analytics)
+- [ ] Open the AI chat assistant (bottom-right), ask a question, and close it with Escape or the close button
+- [ ] On desktop, tab through the homepage and confirm focus is visible on links and buttons
 
 ---
 
@@ -79,7 +83,8 @@ Use this checklist before signing off on the handoff. Test on at least one phone
 3. Fill in all required fields:
    - Name
    - Email (use a real address you can check)
-   - Message
+   - Phone
+   - Message (optional but recommended for a realistic test)
 4. Complete the Cloudflare Turnstile challenge if shown.
 5. Submit the form.
 6. Confirm a success message appears in the correct language.
@@ -102,6 +107,7 @@ These items are configured in Vercel and Resend (not in the website UI). Confirm
   - `RESEND_FROM_EMAIL` → `Barakova Luxury Travel <info@barakovaluxurytravel.com>`
   - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY`
   - `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` (recommended)
+  - `OPENAI_API_KEY` (optional — enables AI replies in the chat assistant; FAQ answers work without it)
 - [ ] Turnstile widget allows `barakovaluxurytravel.com` (and `localhost` for development)
 - [ ] Test submission delivers to the Gmail inbox via forwarding
 - [ ] Sender address is not marked as spam (check Promotions/Spam folders on first test)
@@ -119,7 +125,7 @@ Test on iPhone (Safari) and Android (Chrome) if possible.
 - [ ] Sticky **“Обади се веднага”** / **“Call now”** button is visible and taps through to the phone dialer
 - [ ] Sticky call button does not overlap the cookie banner awkwardly
 - [ ] Navigation and section links scroll smoothly
-- [ ] Destination/cruise modals open and close correctly; URL updates in the address bar
+- [ ] Destination/cruise/blog modals open and close correctly; URL updates in the address bar; after closing, keyboard focus returns to the card or link that opened the modal
 - [ ] Contact form fields are easy to tap; keyboard does not hide the submit button
 - [ ] Turnstile challenge works on mobile
 - [ ] Language switcher works on small screens
@@ -138,6 +144,7 @@ Test on iPhone (Safari) and Android (Chrome) if possible.
 | Blog section and articles | [ ] | [ ] |
 | About and services copy | [ ] | [ ] |
 | Contact form labels and success/error messages | [ ] | [ ] |
+| AI chat assistant welcome text and replies | [ ] | [ ] |
 | Cookie banner and privacy policy | [ ] | [ ] |
 | Page title and browser tab text | [ ] | [ ] |
 | Phone CTA: „Обади се веднага“ / “Call now” | [ ] | [ ] |
@@ -171,6 +178,7 @@ These are optional enhancements for a later phase — the current site is comple
 - Add higher-resolution hero source photo (current file is 1024px wide)
 - Replace Unsplash stock images with client photography
 - Further analytics and conversion tracking beyond basic GA
+- Self-service CMS for content updates (currently via developer)
 
 ---
 
@@ -198,4 +206,4 @@ For content updates, bug reports, or new features, contact Bobby Uzunov.
 
 ---
 
-*Document version: handoff checklist — June 2025*
+*Document version: handoff checklist — July 2026*

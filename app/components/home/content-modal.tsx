@@ -25,6 +25,7 @@ export function ContentModal({
     containerRef: modalRef,
     isOpen: true,
     onClose,
+    restoreFocusStrategy: "deferred",
   });
 
   return (

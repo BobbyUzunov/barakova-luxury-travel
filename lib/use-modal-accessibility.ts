@@ -3,7 +3,10 @@
 import { type RefObject, useEffect, useRef } from "react";
 import { lockBodyScroll } from "./body-scroll-lock";
 import { getFocusRestoreTarget } from "./focus-restore";
-import { shouldRestoreModalFocus } from "./modal-focus-restore";
+import {
+  shouldRestoreModalFocus,
+  shouldRestoreModalFocusOnUnmount,
+} from "./modal-focus-restore";
 import {
   scheduleFocusRestore,
   type FocusRestoreStrategy,
@@ -32,9 +35,35 @@ export function useModalAccessibility({
   const pendingRestoreCancelRef = useRef<(() => void) | null>(null);
   const previouslyFocusedRef = useRef<Element | null>(null);
   const wasOpenRef = useRef(false);
+  const isOpenRef = useRef(isOpen);
+  const restoreFocusRefRef = useRef(restoreFocusRef);
+  const restoreFocusStrategyRef = useRef(restoreFocusStrategy);
+
+  useEffect(() => {
+    restoreFocusRefRef.current = restoreFocusRef;
+    restoreFocusStrategyRef.current = restoreFocusStrategy;
+  });
 
   useEffect(() => {
     return () => {
+      if (
+        shouldRestoreModalFocusOnUnmount(
+          wasOpenRef.current,
+          isOpenRef.current,
+        )
+      ) {
+        const restoreTarget = getFocusRestoreTarget(
+          restoreFocusRefRef.current,
+          previouslyFocusedRef.current,
+        );
+
+        pendingRestoreCancelRef.current?.();
+        pendingRestoreCancelRef.current = scheduleFocusRestore(
+          restoreTarget,
+          restoreFocusStrategyRef.current,
+        );
+      }
+
       pendingRestoreCancelRef.current?.();
       pendingRestoreCancelRef.current = null;
     };
@@ -97,6 +126,8 @@ export function useModalAccessibility({
   ]);
 
   useEffect(() => {
+    isOpenRef.current = isOpen;
+
     if (isOpen) {
       wasOpenRef.current = true;
       return;
@@ -116,6 +147,7 @@ export function useModalAccessibility({
       restoreTarget,
       restoreFocusStrategy,
     );
+    wasOpenRef.current = false;
 
     return () => {
       pendingRestoreCancelRef.current?.();

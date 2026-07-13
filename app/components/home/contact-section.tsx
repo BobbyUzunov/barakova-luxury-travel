@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useRef, useState } from "react";
+import { type FormEvent, useId, useRef, useState } from "react";
 import type { Locale, SiteContent } from "../../../constants/content";
 import {
   contactPhoneDisplay,
@@ -45,6 +45,10 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
   const requiredLabel = content.contact.requiredMark;
+  const fullNameErrorId = useId();
+  const emailErrorId = useId();
+  const phoneErrorId = useId();
+  const formErrorId = useId();
 
   const resetTurnstile = () => {
     resetTurnstileChallenge(
@@ -190,6 +194,9 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
                     {content.contact.fields.fullName} {requiredLabel}
                   </span>
                   <input
+                    aria-describedby={
+                      formErrors.fullName ? fullNameErrorId : undefined
+                    }
                     aria-invalid={Boolean(formErrors.fullName)}
                     autoComplete="name"
                     name="fullName"
@@ -199,7 +206,9 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
                     type="text"
                     value={formValues.fullName}
                   />
-                  {formErrors.fullName && <small>{formErrors.fullName}</small>}
+                  {formErrors.fullName && (
+                    <small id={fullNameErrorId}>{formErrors.fullName}</small>
+                  )}
                 </label>
 
                 <label>
@@ -207,6 +216,9 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
                     {content.contact.fields.email} {requiredLabel}
                   </span>
                   <input
+                    aria-describedby={
+                      formErrors.email ? emailErrorId : undefined
+                    }
                     aria-invalid={Boolean(formErrors.email)}
                     autoComplete="email"
                     name="email"
@@ -216,7 +228,9 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
                     type="email"
                     value={formValues.email}
                   />
-                  {formErrors.email && <small>{formErrors.email}</small>}
+                  {formErrors.email && (
+                    <small id={emailErrorId}>{formErrors.email}</small>
+                  )}
                 </label>
 
                 <label>
@@ -224,6 +238,9 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
                     {content.contact.fields.phone} {requiredLabel}
                   </span>
                   <input
+                    aria-describedby={
+                      formErrors.phone ? phoneErrorId : undefined
+                    }
                     aria-invalid={Boolean(formErrors.phone)}
                     autoComplete="tel"
                     name="phone"
@@ -233,7 +250,9 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
                     type="tel"
                     value={formValues.phone}
                   />
-                  {formErrors.phone && <small>{formErrors.phone}</small>}
+                  {formErrors.phone && (
+                    <small id={phoneErrorId}>{formErrors.phone}</small>
+                  )}
                 </label>
 
                 <label>
@@ -321,10 +340,13 @@ export function ContactSection({ content, locale }: ContactSectionProps) {
               />
 
               {formErrors.form && (
-                <p className="form-submit-error">{formErrors.form}</p>
+                <p className="form-submit-error" id={formErrorId} role="alert">
+                  {formErrors.form}
+                </p>
               )}
 
               <button
+                aria-describedby={formErrors.form ? formErrorId : undefined}
                 className="btn-primary form-submit"
                 disabled={
                   isSubmitting || (isTurnstileConfigured() && !turnstileToken)

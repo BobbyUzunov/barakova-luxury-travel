@@ -23,6 +23,7 @@ export function BlogModal({
     containerRef: modalRef,
     isOpen: true,
     onClose,
+    restoreFocusStrategy: "deferred",
   });
 
   return (
