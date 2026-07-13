@@ -1,3 +1,7 @@
+"use client";
+
+import { useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import type { Locale, SiteContent } from "../../../constants/content";
 import { contactPhoneHref, getCallAriaLabel } from "../../../constants/site";
 
@@ -10,7 +14,13 @@ export function MobileFloatingContact({
   content,
   locale,
 }: MobileFloatingContactProps) {
-  return (
+  const isMounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+
+  const callButton = (
     <a
       aria-label={getCallAriaLabel(locale)}
       className="mobile-sticky-call"
@@ -34,4 +44,10 @@ export function MobileFloatingContact({
       <span className="mobile-sticky-call-label">{content.hero.phoneLinkLabel}</span>
     </a>
   );
+
+  if (!isMounted) {
+    return null;
+  }
+
+  return createPortal(callButton, document.body);
 }

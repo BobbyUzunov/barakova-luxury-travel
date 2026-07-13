@@ -3060,12 +3060,15 @@ h2 {
   left: max(1rem, var(--safe-left));
   bottom: var(--mobile-sticky-bottom);
   z-index: 70;
-  width: min(24rem, calc(100vw - 2rem - var(--safe-left) - var(--safe-right)));
+  width: fit-content;
+  max-width: min(24rem, calc(100vw - 2rem - var(--safe-left) - var(--safe-right)));
+  pointer-events: none;
 }
 
 .inquiry-agent-launcher {
   position: relative;
   z-index: 1;
+  pointer-events: auto;
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
@@ -3370,7 +3373,8 @@ h2 {
 
 @media (max-width: 767px) {
   .inquiry-agent-shell {
-    width: min(
+    width: fit-content;
+    max-width: min(
       24rem,
       calc(100vw - 1rem - var(--safe-left) - var(--safe-right))
     );
