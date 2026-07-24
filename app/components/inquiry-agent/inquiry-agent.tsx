@@ -119,6 +119,39 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
   }, [isOpen]);
 
   useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const visualViewport = window.visualViewport;
+
+    if (!visualViewport) {
+      return;
+    }
+
+    const syncKeyboardOffset = () => {
+      const offset = Math.max(
+        0,
+        window.innerHeight - visualViewport.height - visualViewport.offsetTop,
+      );
+      panelRef.current?.style.setProperty(
+        "--inquiry-keyboard-offset",
+        `${offset}px`,
+      );
+    };
+
+    syncKeyboardOffset();
+    visualViewport.addEventListener("resize", syncKeyboardOffset);
+    visualViewport.addEventListener("scroll", syncKeyboardOffset);
+
+    return () => {
+      visualViewport.removeEventListener("resize", syncKeyboardOffset);
+      visualViewport.removeEventListener("scroll", syncKeyboardOffset);
+      panelRef.current?.style.removeProperty("--inquiry-keyboard-offset");
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, isSending]);
 
@@ -229,7 +262,10 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
         />
       ) : null}
 
-      <div className="inquiry-agent-shell" id="inquiry-agent-shell">
+      <div
+        className={`inquiry-agent-shell${isOpen ? " is-open" : ""}`}
+        id="inquiry-agent-shell"
+      >
         <button
           aria-controls={panelId}
           aria-expanded={isOpen}

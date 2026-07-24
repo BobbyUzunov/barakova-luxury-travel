@@ -3230,6 +3230,7 @@ h2 {
 
 .inquiry-agent-header {
   display: flex;
+  flex-shrink: 0;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
@@ -3275,9 +3276,10 @@ h2 {
 
 .inquiry-agent-messages {
   display: flex;
-  flex: 1;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: 0.75rem;
+  min-height: 0;
   padding: 0.9rem 1rem;
   overflow-y: auto;
 }
@@ -3323,6 +3325,7 @@ h2 {
 
 .inquiry-agent-form {
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   gap: 0.65rem;
   padding: 0 1rem 0.85rem;
@@ -3354,6 +3357,7 @@ h2 {
 }
 
 .inquiry-agent-note {
+  flex-shrink: 0;
   margin: 0;
   padding: 0 1rem 0.95rem;
   color: rgba(45, 42, 38, 0.58);
@@ -3411,17 +3415,112 @@ h2 {
     display: block;
   }
 
+  /*
+    Open chat as a near-fullscreen bottom sheet.
+    Closed shell stays fit-content (launcher width); absolute 100% panel
+    was inheriting that narrow width and made the chat unusable.
+  */
   .inquiry-agent-panel {
-    width: 100%;
-    max-height: min(42rem, calc(100svh - 5.5rem - var(--safe-top) - var(--safe-bottom)));
+    position: fixed;
+    left: max(0.65rem, var(--safe-left));
+    right: max(0.65rem, var(--safe-right));
+    bottom: calc(
+      max(0.65rem, var(--safe-bottom)) + var(--inquiry-keyboard-offset, 0px)
+    );
+    width: auto;
+    height: min(
+      92dvh,
+      calc(
+        100dvh - var(--safe-top) - 0.85rem - var(--inquiry-keyboard-offset, 0px)
+      )
+    );
+    max-height: min(
+      92dvh,
+      calc(
+        100dvh - var(--safe-top) - 0.85rem - var(--inquiry-keyboard-offset, 0px)
+      )
+    );
+    border-radius: 1.15rem;
+    transform-origin: center bottom;
+    transform: translateY(1.1rem) scale(0.98);
   }
 
-  body:has(.cookie-consent) .inquiry-agent-shell {
-    bottom: calc(6.5rem + var(--safe-bottom));
+  .inquiry-agent-panel.is-open {
+    transform: translateY(0) scale(1);
+  }
+
+  .inquiry-agent-header {
+    gap: 0.65rem;
+    padding: 0.85rem 0.85rem 0.65rem;
+  }
+
+  .inquiry-agent-subtitle {
+    display: none;
+  }
+
+  .inquiry-agent-title {
+    font-size: 1rem;
+  }
+
+  .inquiry-agent-messages {
+    min-height: 0;
+    padding: 0.75rem 0.85rem;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .inquiry-agent-message {
+    max-width: 95%;
+    padding: 0.65rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .inquiry-agent-form {
+    flex-shrink: 0;
+    gap: 0.55rem;
+    padding: 0 0.85rem 0.7rem;
+    border-top: 1px solid rgba(122, 102, 82, 0.1);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 252, 247, 0.92),
+      rgba(250, 245, 238, 0.98)
+    );
+  }
+
+  .inquiry-agent-input {
+    min-height: 2.85rem;
+    max-height: 6.5rem;
+    padding: 0.65rem 0.75rem;
+    font-size: 1rem;
+    resize: none;
   }
 
   .inquiry-agent-actions {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .inquiry-agent-contact,
+  .inquiry-agent-send {
+    min-height: 2.6rem;
+    padding-inline: 0.65rem;
+    font-size: 0.82rem;
+  }
+
+  .inquiry-agent-note {
+    flex-shrink: 0;
+    padding: 0 0.85rem 0.75rem;
+    font-size: 0.66rem;
+  }
+
+  body:has(.cookie-consent) .inquiry-agent-shell:not(.is-open) {
+    bottom: calc(6.5rem + var(--safe-bottom));
+  }
+
+  body:has(.inquiry-agent-shell.is-open) .mobile-sticky-call {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 
