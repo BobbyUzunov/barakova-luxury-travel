@@ -14,11 +14,8 @@ export async function verifyTurnstileToken(
 ): Promise<boolean> {
   const secretKey = process.env.TURNSTILE_SECRET_KEY;
 
-  if (!secretKey) {
-    return true;
-  }
-
-  if (!token) {
+  // Fail closed: never accept submissions when server verification is impossible.
+  if (!secretKey || !token) {
     return false;
   }
 

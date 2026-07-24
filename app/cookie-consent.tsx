@@ -6,7 +6,7 @@ import { useEffect, useRef, useSyncExternalStore } from "react";
 import type { Locale } from "../constants/content";
 import { localePath } from "../constants/i18n";
 import { resolveCookieBannerLocale } from "../lib/request-locale";
-import { lockElementInert } from "../lib/element-inert-lock";
+import { lockPageChrome } from "../lib/page-chrome-inert";
 import { useModalAccessibility } from "../lib/use-modal-accessibility";
 import {
   cookieConsentCopy,
@@ -71,17 +71,7 @@ export function CookieConsent() {
       return;
     }
 
-    const appContent = document.getElementById("app-content");
-    const inquiryAgentShell = document.getElementById("inquiry-agent-shell");
-    const unlockAppContent = appContent ? lockElementInert(appContent) : () => {};
-    const unlockInquiryAgent = inquiryAgentShell
-      ? lockElementInert(inquiryAgentShell)
-      : () => {};
-
-    return () => {
-      unlockInquiryAgent();
-      unlockAppContent();
-    };
+    return lockPageChrome();
   }, [isVisible]);
 
   const saveConsent = (value: CookieConsentValue) => {

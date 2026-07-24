@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { afterEach, describe, it } from "node:test";
 import {
   getTurnstileClientRequirement,
+  isTurnstileMisconfigured,
   isTurnstileSecretConfigured,
   isTurnstileSiteKeyConfigured,
 } from "./turnstile-config.ts";
@@ -30,23 +31,27 @@ describe("turnstile configuration matrix", () => {
 
     assert.equal(isTurnstileSiteKeyConfigured(), false);
     assert.equal(isTurnstileSecretConfigured(), false);
+    assert.equal(isTurnstileMisconfigured(), false);
     assert.deepEqual(getTurnstileClientRequirement(), {
       siteKeyConfigured: false,
       secretConfigured: false,
       requiresClientToken: false,
       verifiesOnServer: false,
+      isMisconfigured: false,
     });
   });
 
-  it("supports site key only", () => {
+  it("flags site key only as misconfigured", () => {
     process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = "site-key";
     delete process.env.TURNSTILE_SECRET_KEY;
 
+    assert.equal(isTurnstileMisconfigured(), true);
     assert.deepEqual(getTurnstileClientRequirement(), {
       siteKeyConfigured: true,
       secretConfigured: false,
       requiresClientToken: true,
       verifiesOnServer: false,
+      isMisconfigured: true,
     });
   });
 
@@ -54,11 +59,13 @@ describe("turnstile configuration matrix", () => {
     delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
     process.env.TURNSTILE_SECRET_KEY = "secret-key";
 
+    assert.equal(isTurnstileMisconfigured(), false);
     assert.deepEqual(getTurnstileClientRequirement(), {
       siteKeyConfigured: false,
       secretConfigured: true,
       requiresClientToken: false,
       verifiesOnServer: true,
+      isMisconfigured: false,
     });
   });
 
@@ -66,11 +73,13 @@ describe("turnstile configuration matrix", () => {
     process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = "site-key";
     process.env.TURNSTILE_SECRET_KEY = "secret-key";
 
+    assert.equal(isTurnstileMisconfigured(), false);
     assert.deepEqual(getTurnstileClientRequirement(), {
       siteKeyConfigured: true,
       secretConfigured: true,
       requiresClientToken: true,
       verifiesOnServer: true,
+      isMisconfigured: false,
     });
   });
 });

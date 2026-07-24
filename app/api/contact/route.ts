@@ -14,6 +14,7 @@ import {
   isTurnstileEnabled,
   verifyTurnstileToken,
 } from "../../../lib/verify-turnstile";
+import { isTurnstileMisconfigured } from "../../../lib/turnstile-config";
 
 const resendApiUrl = "https://api.resend.com/emails";
 const recipientEmail = process.env.CONTACT_RECIPIENT_EMAIL || defaultRecipientEmail;
@@ -30,7 +31,10 @@ export async function POST(request: Request) {
       );
     }
   } catch {
-    // Fail open when rate limiting is unavailable.
+    return NextResponse.json(
+      { message: contactApiMessage("serverError") },
+      { status: 503 },
+    );
   }
 
   let body: ContactRequestBody;
@@ -61,6 +65,13 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { message: contactApiMessage("invalidEmail", body.locale) },
       { status: 400 },
+    );
+  }
+
+  if (isTurnstileMisconfigured()) {
+    return NextResponse.json(
+      { message: contactApiMessage("notConfigured", body.locale) },
+      { status: 503 },
     );
   }
 

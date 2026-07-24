@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import type { BlogPost, SiteContent } from "../../../constants/content";
+import { lockPageChrome } from "../../../lib/page-chrome-inert";
 import { useModalAccessibility } from "../../../lib/use-modal-accessibility";
 
 type BlogModalProps = {
@@ -25,6 +26,8 @@ export function BlogModal({
     onClose,
     restoreFocusStrategy: "deferred",
   });
+
+  useEffect(() => lockPageChrome(), []);
 
   return (
     <div

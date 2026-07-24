@@ -3,37 +3,18 @@
 import Script from "next/script";
 import { useSyncExternalStore } from "react";
 import {
-  getStoredCookieConsent,
-  type CookieConsentValue,
-} from "../constants/privacy";
+  getCookieConsentServerSnapshot,
+  getCookieConsentSnapshot,
+  subscribeToCookieConsent,
+} from "../lib/cookie-consent-store";
 
 const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
 
-function subscribeToConsentChanges(onStoreChange: () => void) {
-  const handleConsentChange = () => onStoreChange();
-
-  window.addEventListener("barakova-cookie-consent", handleConsentChange);
-  window.addEventListener("storage", handleConsentChange);
-
-  return () => {
-    window.removeEventListener("barakova-cookie-consent", handleConsentChange);
-    window.removeEventListener("storage", handleConsentChange);
-  };
-}
-
-function getConsentSnapshot() {
-  return getStoredCookieConsent();
-}
-
-function getConsentServerSnapshot() {
-  return null;
-}
-
 export function Analytics() {
   const consent = useSyncExternalStore(
-    subscribeToConsentChanges,
-    getConsentSnapshot,
-    getConsentServerSnapshot,
+    subscribeToCookieConsent,
+    getCookieConsentSnapshot,
+    getCookieConsentServerSnapshot,
   );
 
   if (!googleAnalyticsId || consent !== "accepted") {

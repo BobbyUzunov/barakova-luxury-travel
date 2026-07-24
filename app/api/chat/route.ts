@@ -21,7 +21,10 @@ export async function POST(request: Request) {
       );
     }
   } catch {
-    // Fail open when rate limiting is unavailable.
+    return NextResponse.json(
+      { message: chatApiMessage("serverError") },
+      { status: 503 },
+    );
   }
 
   let normalizedBody: ReturnType<typeof normalizeChatBody>;

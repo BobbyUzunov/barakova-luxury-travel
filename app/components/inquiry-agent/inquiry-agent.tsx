@@ -12,7 +12,7 @@ import type { Locale } from "../../../constants/content";
 import { getSiteContent } from "../../../constants/content-by-locale";
 import { localizedHash } from "../../../constants/i18n";
 import type { ChatHistoryMessage } from "../../../lib/chat";
-import { lockElementInert } from "../../../lib/element-inert-lock";
+import { lockPageChrome } from "../../../lib/page-chrome-inert";
 import { useModalAccessibility } from "../../../lib/use-modal-accessibility";
 
 type ChatMessage = {
@@ -109,13 +109,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
       return;
     }
 
-    const appContent = document.getElementById("app-content");
-
-    if (!appContent) {
-      return;
-    }
-
-    return lockElementInert(appContent);
+    return lockPageChrome();
   }, [isOpen]);
 
   useEffect(() => {
@@ -124,6 +118,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
     }
 
     const visualViewport = window.visualViewport;
+    const panel = panelRef.current;
 
     if (!visualViewport) {
       return;
@@ -134,10 +129,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
         0,
         window.innerHeight - visualViewport.height - visualViewport.offsetTop,
       );
-      panelRef.current?.style.setProperty(
-        "--inquiry-keyboard-offset",
-        `${offset}px`,
-      );
+      panel?.style.setProperty("--inquiry-keyboard-offset", `${offset}px`);
     };
 
     syncKeyboardOffset();
@@ -147,7 +139,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
     return () => {
       visualViewport.removeEventListener("resize", syncKeyboardOffset);
       visualViewport.removeEventListener("scroll", syncKeyboardOffset);
-      panelRef.current?.style.removeProperty("--inquiry-keyboard-offset");
+      panel?.style.removeProperty("--inquiry-keyboard-offset");
     };
   }, [isOpen]);
 
