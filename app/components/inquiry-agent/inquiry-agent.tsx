@@ -109,7 +109,9 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
       return;
     }
 
-    return lockPageChrome();
+    // Only inert the page behind the chat — never the AI shell itself,
+    // or taps on the textarea fall through to the backdrop and close it.
+    return lockPageChrome({ includeInquiryAgent: false });
   }, [isOpen]);
 
   useEffect(() => {
