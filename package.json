@@ -12,6 +12,7 @@
     "generate-learning-guide-pdf": "node scripts/generate-learning-guide-pdf.mjs",
     "qa:a11y": "node scripts/a11y-keyboard-qa.mjs",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test lib/**/*.test.ts"
   },
   "dependencies": {
