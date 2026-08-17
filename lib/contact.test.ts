@@ -5,7 +5,7 @@ import {
   escapeHtml,
   normalizeBody,
   validateContactBody,
-} from "./contact.ts";
+} from "./contact";
 
 describe("contact helpers", () => {
   it("normalizes and truncates fields", () => {

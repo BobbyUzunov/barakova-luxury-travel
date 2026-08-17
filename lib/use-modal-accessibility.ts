@@ -1,6 +1,6 @@
 "use client";
 
-import { type RefObject, useEffect, useRef } from "react";
+import { type RefObject, useEffect, useLayoutEffect, useRef } from "react";
 import { lockBodyScroll } from "./body-scroll-lock";
 import { getFocusRestoreTarget } from "./focus-restore";
 import {
@@ -47,29 +47,30 @@ export function useModalAccessibility({
   useEffect(() => {
     return () => {
       if (
-        shouldRestoreModalFocusOnUnmount(
+        !shouldRestoreModalFocusOnUnmount(
           wasOpenRef.current,
           isOpenRef.current,
         )
       ) {
-        const restoreTarget = getFocusRestoreTarget(
-          restoreFocusRefRef.current,
-          previouslyFocusedRef.current,
-        );
-
         pendingRestoreCancelRef.current?.();
-        pendingRestoreCancelRef.current = scheduleFocusRestore(
-          restoreTarget,
-          restoreFocusStrategyRef.current,
-        );
+        pendingRestoreCancelRef.current = null;
+        return;
       }
 
+      const restoreTarget = getFocusRestoreTarget(
+        restoreFocusRefRef.current,
+        previouslyFocusedRef.current,
+      );
+
       pendingRestoreCancelRef.current?.();
-      pendingRestoreCancelRef.current = null;
+      pendingRestoreCancelRef.current = scheduleFocusRestore(
+        restoreTarget,
+        restoreFocusStrategyRef.current,
+      );
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isOpen) {
       return;
     }
@@ -121,8 +122,6 @@ export function useModalAccessibility({
     isOpen,
     lockScroll,
     onClose,
-    restoreFocusRef,
-    restoreFocusStrategy,
   ]);
 
   useEffect(() => {

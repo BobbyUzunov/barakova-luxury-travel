@@ -5,7 +5,7 @@ import {
   isTurnstileMisconfigured,
   isTurnstileSecretConfigured,
   isTurnstileSiteKeyConfigured,
-} from "./turnstile-config.ts";
+} from "./turnstile-config";
 
 const originalSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 const originalSecretKey = process.env.TURNSTILE_SECRET_KEY;

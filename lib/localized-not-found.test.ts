@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 import {
   isKnownLocalizedPath,
   renderLocalizedNotFoundDocument,
-} from "./localized-not-found.ts";
+} from "./localized-not-found";
 
 describe("localized proxy 404", () => {
   it("recognizes every supported route shape", () => {

@@ -144,10 +144,8 @@ export default async function LocaleLayout({
         />
       </head>
       <body>
-        <div id="app-content">
-          {children}
-          {modal}
-        </div>
+        <div id="app-content">{children}</div>
+        {modal}
         <LocalePersistence locale={locale} />
         <InquiryAgent locale={locale} />
         <CookieConsent />

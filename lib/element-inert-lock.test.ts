@@ -3,7 +3,7 @@ import { afterEach, describe, it } from "node:test";
 import {
   lockElementInert,
   resetElementInertLockForTests,
-} from "./element-inert-lock.ts";
+} from "./element-inert-lock";
 
 type MockElement = {
   inert: boolean;

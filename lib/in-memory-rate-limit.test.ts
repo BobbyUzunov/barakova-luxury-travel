@@ -7,7 +7,7 @@ import {
   resetRateLimitCleanupStateForTests,
   type InMemoryRateLimitEntry,
   type RateLimitCleanupPolicy,
-} from "./in-memory-rate-limit.ts";
+} from "./in-memory-rate-limit";
 
 const fastTestPolicy: RateLimitCleanupPolicy = {
   cooldownMs: 100,

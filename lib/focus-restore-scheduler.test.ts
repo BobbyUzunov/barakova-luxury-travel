@@ -1,10 +1,40 @@
 import assert from "node:assert/strict";
 import { afterEach, describe, it } from "node:test";
-import { scheduleFocusRestore } from "./focus-restore-scheduler.ts";
+import { scheduleFocusRestore } from "./focus-restore-scheduler";
+
+type TimeoutHandle = number;
+
+type MockWindow = {
+  setTimeout: (callback: () => void) => TimeoutHandle;
+  clearTimeout: (timeoutId?: TimeoutHandle) => void;
+};
 
 afterEach(() => {
   delete (globalThis as { window?: Window }).window;
 });
+
+function installDeferredFocusMocks(queue: Array<() => void>) {
+  const mockWindow: MockWindow = {
+    setTimeout(callback) {
+      queue.push(callback);
+      return queue.length;
+    },
+    clearTimeout(timeoutId) {
+      if (typeof timeoutId === "number") {
+        queue.splice(timeoutId - 1, 1);
+      }
+    },
+  };
+
+  globalThis.window = mockWindow as unknown as Window & typeof globalThis;
+
+  Object.defineProperty(globalThis, "document", {
+    configurable: true,
+    value: {
+      contains: () => true,
+    },
+  });
+}
 
 describe("deferred focus restoration", () => {
   it("restores focus after the current interaction", () => {
@@ -16,20 +46,7 @@ describe("deferred focus restoration", () => {
       },
     } as unknown as HTMLElement;
 
-    globalThis.window = {
-      setTimeout(callback: () => void) {
-        queue.push(callback);
-        return queue.length;
-      },
-      clearTimeout() {},
-    } as Window;
-
-    Object.defineProperty(globalThis, "document", {
-      configurable: true,
-      value: {
-        contains: () => true,
-      },
-    });
+    installDeferredFocusMocks(queue);
 
     const cancel = scheduleFocusRestore(target, "deferred");
 
@@ -49,22 +66,7 @@ describe("deferred focus restoration", () => {
       },
     } as unknown as HTMLElement;
 
-    globalThis.window = {
-      setTimeout(callback: () => void) {
-        queue.push(callback);
-        return queue.length;
-      },
-      clearTimeout(timeoutId: number) {
-        queue.splice(timeoutId - 1, 1);
-      },
-    } as Window;
-
-    Object.defineProperty(globalThis, "document", {
-      configurable: true,
-      value: {
-        contains: () => true,
-      },
-    });
+    installDeferredFocusMocks(queue);
 
     const cancel = scheduleFocusRestore(target, "deferred");
     cancel();

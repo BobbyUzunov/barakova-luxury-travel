@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { getFocusRestoreTarget } from "./focus-restore.ts";
+import { getFocusRestoreTarget } from "./focus-restore";
 import {
   getFocusWrapTarget,
   handleFocusTrapKeyDown,
-} from "./focus-trap.ts";
+} from "./focus-trap";
 
 describe("focus trap helpers", () => {
   it("wraps focus forward from the last element", () => {
@@ -44,7 +44,7 @@ describe("focus trap helpers", () => {
     const originalDocument = globalThis.document;
     globalThis.document = {
       activeElement: second,
-    } as Document;
+    } as unknown as Document;
 
     try {
       let prevented = false;
@@ -70,9 +70,9 @@ describe("focus restore helpers", () => {
     const launcher = { focus() {} };
 
     assert.equal(
-      getFocusRestoreTarget({ current: launcher as HTMLElement }, {
+      getFocusRestoreTarget({ current: launcher as unknown as HTMLElement }, {
         focus() {},
-      } as Element),
+      } as unknown as Element),
       launcher,
     );
   });
@@ -81,7 +81,7 @@ describe("focus restore helpers", () => {
     const previous = { focus() {} };
 
     assert.equal(
-      getFocusRestoreTarget(undefined, previous as Element),
+      getFocusRestoreTarget(undefined, previous as unknown as Element),
       previous,
     );
   });

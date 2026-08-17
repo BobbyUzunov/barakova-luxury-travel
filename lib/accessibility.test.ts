@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { getMobileMenuInertAttribute } from "./mobile-menu-a11y.ts";
+import { getMobileMenuInertAttribute } from "./mobile-menu-a11y";
 import {
   shouldRestoreModalFocus,
   shouldRestoreModalFocusOnUnmount,
-} from "./modal-focus-restore.ts";
-import { resetTurnstileChallenge } from "./turnstile-reset.ts";
+} from "./modal-focus-restore";
+import { resetTurnstileChallenge } from "./turnstile-reset";
 
 describe("modal focus restore helpers", () => {
   it("does not restore focus before a modal has opened", () => {

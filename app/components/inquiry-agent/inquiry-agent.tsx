@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -66,42 +67,14 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
     restoreFocusStrategy: "deferred",
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isOpen) {
+      launcherRef.current?.setAttribute("aria-hidden", "false");
       return;
     }
 
-    let outerFrameId = 0;
-    let innerFrameId = 0;
-
-    outerFrameId = window.requestAnimationFrame(() => {
-      innerFrameId = window.requestAnimationFrame(() => {
-        closeButtonRef.current?.focus({ preventScroll: true });
-      });
-    });
-
-    return () => {
-      window.cancelAnimationFrame(outerFrameId);
-      window.cancelAnimationFrame(innerFrameId);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    const launcher = launcherRef.current;
-
-    if (!isOpen) {
-      launcher?.setAttribute("aria-hidden", "false");
-      return;
-    }
-
-    const frameId = window.requestAnimationFrame(() => {
-      launcher?.setAttribute("aria-hidden", "true");
-    });
-
-    return () => {
-      window.cancelAnimationFrame(frameId);
-      launcher?.setAttribute("aria-hidden", "false");
-    };
+    closeButtonRef.current?.focus({ preventScroll: true });
+    launcherRef.current?.setAttribute("aria-hidden", "true");
   }, [isOpen]);
 
   useEffect(() => {
