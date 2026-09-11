@@ -35,7 +35,7 @@ export function ContentDetailPage({
         <Link className="detail-brand" href={homeHref}>
           <span>Barakova Luxury Travel</span>
           <small>
-            {locale === "bg" ? "by Богдана Баракова" : "by Bogdana Barakova"}
+            {locale === "bg" ? "от Богдана Баракова" : "by Bogdana Barakova"}
           </small>
         </Link>
         <Link className="detail-back-link" href={backHref}>

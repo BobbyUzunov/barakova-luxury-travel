@@ -39,11 +39,13 @@ export type SectionIntro = {
   eyebrow: string;
   title: string;
   description?: string;
+  viewAllLabel?: string;
 };
 
 export type SiteContent = {
   brand: {
     name: string;
+    shortName: string;
     subtitle: string;
   };
   navItems: NavItem[];
@@ -125,6 +127,7 @@ export type SiteContent = {
     contactCta: string;
     error: string;
     poweredNote: string;
+    disclaimer: string;
     sourceLabels: {
       faq: string;
       ai: string;

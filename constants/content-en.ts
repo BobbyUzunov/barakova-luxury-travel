@@ -3,6 +3,7 @@ import type { SiteContent } from "./content";
 export const contentEn = {
   brand: {
     name: "Barakova Luxury Travel",
+    shortName: "Barakova",
     subtitle: "by Bogdana Barakova",
   },
   navItems: [
@@ -82,6 +83,7 @@ export const contentEn = {
   destinationsSection: {
     eyebrow: "Destinations",
     title: "Luxury destinations around the world",
+    viewAllLabel: "View all destinations",
   },
   destinations: [
     {
@@ -318,6 +320,7 @@ export const contentEn = {
     title: "Premium cruise itineraries",
     description:
       "Selected sea itineraries shaped for effortless travel, refined rhythm, and a beautifully arranged experience.",
+    viewAllLabel: "View all cruises",
   },
   cruises: [
     {
@@ -447,6 +450,7 @@ export const contentEn = {
     title: "Personal travel stories and advice",
     description:
       "Personal notes, inspiration, and carefully selected advice for calmer, more meaningful travel.",
+    viewAllLabel: "View all articles",
   },
   blog: {
     readMoreLabel: "Read the article",
@@ -597,17 +601,19 @@ export const contentEn = {
     launcherByline: "by Barakova Luxury Travel",
     launcherBylineShort: "by Barakova",
     title: "AI assistant",
-    subtitle: "Ask a question and get an intelligent travel answer",
+    subtitle: "Ask a question and get an orienting travel answer",
     placeholder: "Type your question...",
     send: "Send",
     sending: "Thinking...",
     close: "Close chat",
     welcome:
-      "Hello! I am the AI assistant for Barakova Luxury Travel. Ask about services, destinations, the consultation process, or how to get in touch.",
+      "Hello! I am the AI assistant for Barakova Luxury Travel. Ask about services, destinations, the consultation process, or how to get in touch. For exact prices and availability, please use the inquiry form.",
     contactCta: "Go to inquiry form",
     error: "Something went wrong. Please try again.",
     poweredNote:
       "Common questions are answered instantly; more complex ones use AI assistance.",
+    disclaimer:
+      "Answers are orienting and do not confirm prices, availability, or bookings. For a personal consultation, use the inquiry form.",
     sourceLabels: {
       faq: "Quick answer",
       ai: "Personalized answer",
@@ -673,6 +679,6 @@ export const contentEn = {
     },
     copyright: "© 2026 Barakova Luxury Travel",
     rights: "All rights reserved.",
-    developerCredit: "Website crafted by Bobby Uzunov",
+    developerCredit: "Design & development: Bobby Uzunov",
   },
 } satisfies SiteContent;

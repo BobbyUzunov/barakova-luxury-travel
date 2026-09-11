@@ -68,7 +68,10 @@ export function SiteHeader({
     <header className="site-header-shell fixed inset-x-0 top-0 z-50 px-3 sm:px-6 lg:px-10">
       <nav className="site-header mx-auto max-w-7xl">
         <Link className="brand-lockup" href={localePath(locale)}>
-          <span>{content.brand.name}</span>
+          <span className="brand-name">
+            <span className="brand-name-full">{content.brand.name}</span>
+            <span className="brand-name-short">{content.brand.shortName}</span>
+          </span>
           <small>{content.brand.subtitle}</small>
         </Link>
 

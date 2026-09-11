@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         </Link>
         <Link
           className="detail-back-link"
-          href={localizedHash(locale, copy.backHash)}
+          href={localePath(locale, copy.backPath)}
         >
           {copy.backLabel}
         </Link>

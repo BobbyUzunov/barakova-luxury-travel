@@ -365,6 +365,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
           </form>
 
           <p className="inquiry-agent-note">{copy.poweredNote}</p>
+          <p className="inquiry-agent-disclaimer">{copy.disclaimer}</p>
         </section>
       </div>
     </>

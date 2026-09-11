@@ -9,6 +9,10 @@ describe("localized proxy 404", () => {
   it("recognizes every supported route shape", () => {
     assert.equal(isKnownLocalizedPath("/bg"), true);
     assert.equal(isKnownLocalizedPath("/en/privacy"), true);
+    assert.equal(isKnownLocalizedPath("/bg/cookies"), true);
+    assert.equal(isKnownLocalizedPath("/en/destinations"), true);
+    assert.equal(isKnownLocalizedPath("/bg/cruises"), true);
+    assert.equal(isKnownLocalizedPath("/en/blog"), true);
     assert.equal(isKnownLocalizedPath("/bg/destinations/maldives"), true);
     assert.equal(isKnownLocalizedPath("/en/cruises/mediterranean"), true);
     assert.equal(

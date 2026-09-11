@@ -104,7 +104,7 @@ export function CookieConsent() {
         <div className="cookie-consent-actions">
           <Link
             className="cookie-consent-link"
-            href={localePath(locale, "/privacy")}
+            href={localePath(locale, "/cookies")}
           >
             {copy.privacyLink}
           </Link>

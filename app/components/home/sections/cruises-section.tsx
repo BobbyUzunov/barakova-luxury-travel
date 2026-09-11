@@ -18,6 +18,14 @@ export function CruisesSection({ content, locale }: CruisesSectionProps) {
         {content.cruisesSection.description && (
           <span>{content.cruisesSection.description}</span>
         )}
+        {content.cruisesSection.viewAllLabel ? (
+          <Link
+            className="section-view-all"
+            href={localePath(locale, "/cruises")}
+          >
+            {content.cruisesSection.viewAllLabel}
+          </Link>
+        ) : null}
       </div>
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {content.cruises.map((cruise, index) => (

@@ -3,7 +3,8 @@ import type { SiteContent } from "./content";
 export const contentBg = {
   brand: {
     name: "Barakova Luxury Travel",
-    subtitle: "by Богдана Баракова",
+    shortName: "Barakova",
+    subtitle: "от Богдана Баракова",
   },
   navItems: [
     { label: "Начало", href: "#home" },
@@ -14,16 +15,16 @@ export const contentBg = {
     { label: "Блог", href: "#blog" },
     { label: "Контакт", href: "#contact" },
   ],
-  headerCta: "Заяви персонална консултация",
+  headerCta: "Заявете персонална консултация",
   hero: {
     label: "ПЕРСОНАЛНИ КОНСУЛТАЦИИ ЗА ЛУКСОЗНИ ПЪТУВАНИЯ",
     title: "Вашата мечтана почивка, планирана до последния детайл",
     subtitle:
       "Персонални туристически консултации за хора, които търсят луксозно преживяване без стрес, хаос и безкрайно търсене.",
-    primaryCta: "Заяви персонална консултация",
-    secondaryCta: "Разгледай дестинациите",
+    primaryCta: "Заявете персонална консултация",
+    secondaryCta: "Разгледайте дестинациите",
     phoneNote: "Безплатна първоначална консултация",
-    phoneLinkLabel: "Обади се веднага",
+    phoneLinkLabel: "Обадете се веднага",
   },
   imageAlts: {
     hero: "Богдана Баракова на плаж с разперени ръце към морето",
@@ -34,7 +35,7 @@ export const contentBg = {
   },
   servicesSection: {
     eyebrow: "Услуги",
-    title: "Как мога да ти помогна",
+    title: "Как мога да ви помогна",
   },
   services: [
     {
@@ -69,10 +70,10 @@ export const contentBg = {
     },
   ],
   steps: [
-    "Споделяш мечтаната дестинация",
+    "Споделяте мечтаната дестинация",
     "Уточняваме стил, бюджет и предпочитания",
-    "Получаваш подбрани предложения",
-    "Избираш спокойно най-подходящата почивка",
+    "Получавате подбрани предложения",
+    "Избирате спокойно най-подходящата почивка",
   ],
   processSection: {
     eyebrow: "Процес",
@@ -83,6 +84,7 @@ export const contentBg = {
   destinationsSection: {
     eyebrow: "Дестинации",
     title: "Луксозни дестинации по света",
+    viewAllLabel: "Вижте всички дестинации",
   },
   destinations: [
     {
@@ -318,6 +320,7 @@ export const contentBg = {
     title: "Премиум круизни маршрути",
     description:
       "Избрани морски маршрути за пътуване с повече лекота, стил и усещане за безупречно подредено преживяване.",
+    viewAllLabel: "Вижте всички круизи",
   },
   cruises: [
     {
@@ -440,16 +443,17 @@ export const contentBg = {
     highlightsTitle: "Какво да очаквате",
     galleryTitle: "Вдъхновение",
     closeLabel: "Затвори прозореца",
-    cta: "Заяви консултация за тази дестинация",
+    cta: "Заявете консултация за тази дестинация",
   },
   blogSection: {
     eyebrow: "Блог",
     title: "Лични пътешествия и съвети",
     description:
       "Лични бележки, вдъхновение и внимателно подбрани съвети за по-спокойно и смислено пътуване.",
+    viewAllLabel: "Вижте всички статии",
   },
   blog: {
-    readMoreLabel: "Прочети статията",
+    readMoreLabel: "Прочетете статията",
     closeLabel: "Затвори статията",
     posts: [
       {
@@ -589,24 +593,27 @@ export const contentBg = {
     eyebrow: "Контакт",
     title: "Готови ли сте за следващото си незабравимо пътуване?",
     subtitle: "Нека създадем вашето следващо луксозно преживяване.",
-    button: "Заяви персонална консултация",
+    button: "Заявете персонална консултация",
   },
   inquiryAgent: {
     launcherLabel: "AI асистент",
     launcherShortLabel: "AI",
-    launcherByline: "by Barakova Luxury Travel",
-    launcherBylineShort: "by Barakova",
+    launcherByline: "от Barakova Luxury Travel",
+    launcherBylineShort: "от Barakova",
     title: "AI асистент",
-    subtitle: "Задайте въпрос и получете интелигентен отговор за пътувания",
+    subtitle: "Задайте въпрос и получете ориентиращ отговор за пътувания",
     placeholder: "Напишете въпроса си...",
-    send: "Изпрати",
+    send: "Изпратете",
     sending: "Мисля...",
-    close: "Затвори чата",
+    close: "Затворете чата",
     welcome:
-      "Здравейте! Аз съм AI асистентът на Barakova Luxury Travel. Попитайте за услуги, дестинации, процеса на консултация или контакт.",
+      "Здравейте! Аз съм AI асистентът на Barakova Luxury Travel. Можете да попитате за услуги, дестинации, процеса на консултация или контакт. За точни цени и наличност използвайте формата за запитване.",
     contactCta: "Към формата за запитване",
     error: "Възникна проблем. Моля, опитайте отново.",
-    poweredNote: "Чести въпроси се отговарят веднага; по-сложните — с AI помощ.",
+    poweredNote:
+      "Честите въпроси получават бърз отговор; по-сложните — с AI помощ.",
+    disclaimer:
+      "Отговорите са ориентировъчни и не потвърждават цени, наличност или резервация. За персонална консултация използвайте формата.",
     sourceLabels: {
       faq: "Бърз отговор",
       ai: "Персонализиран отговор",
@@ -631,7 +638,7 @@ export const contentBg = {
     },
     fields: {
       fullName: "Име и фамилия",
-      email: "Email",
+      email: "Имейл",
       phone: "Телефон",
       destination: "Желана дестинация",
       travelPeriod: "Период на пътуване",
@@ -643,11 +650,11 @@ export const contentBg = {
       message: "Разкажете накратко какво търсите...",
     },
     requiredMark: "*",
-    submit: "Заяви персонална консултация",
+    submit: "Заявете персонална консултация",
     submitting: "Изпращане...",
     validation: {
       fullName: "Моля, въведете име и фамилия.",
-      email: "Моля, въведете валиден email адрес.",
+      email: "Моля, въведете валиден имейл адрес.",
       phone: "Моля, въведете телефон за връзка.",
       captcha: "Моля, потвърдете, че не сте робот.",
       submitError:
@@ -656,7 +663,7 @@ export const contentBg = {
     success: {
       title: "Благодарим за запитването.",
       message: "Ще се свържем с вас възможно най-скоро.",
-      reset: "Изпрати ново запитване",
+      reset: "Изпратете ново запитване",
     },
   },
   footer: {
@@ -672,6 +679,6 @@ export const contentBg = {
     },
     copyright: "© 2026 Barakova Luxury Travel",
     rights: "Всички права запазени.",
-    developerCredit: "Website crafted by Bobby Uzunov",
+    developerCredit: "Дизайн и разработка: Bobby Uzunov",
   },
 } satisfies SiteContent;

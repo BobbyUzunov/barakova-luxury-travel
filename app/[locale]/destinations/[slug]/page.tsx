@@ -107,7 +107,7 @@ export default async function DestinationPage({ params }: PageProps) {
         type="application/ld+json"
       />
       <ContentDetailPage
-        backHref={localizedHash(locale, copy.backHash)}
+        backHref={localePath(locale, copy.backPath)}
         backLabel={copy.backLabel}
         contactHref={localizedHash(locale, "#contact")}
         ctaLabel={copy.ctaLabel}

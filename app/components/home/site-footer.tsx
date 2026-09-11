@@ -63,18 +63,16 @@ export function SiteFooter({ content, locale }: SiteFooterProps) {
         <div>
           <p>{content.footer.copyright}</p>
           <p>{content.footer.rights}</p>
-          <Link className="footer-privacy-link" href={localePath(locale, "/privacy")}>
-            {locale === "bg" ? "Политика за поверителност" : "Privacy Policy"}
-          </Link>
+          <div className="footer-legal-links">
+            <Link className="footer-privacy-link" href={localePath(locale, "/privacy")}>
+              {locale === "bg" ? "Политика за поверителност" : "Privacy Policy"}
+            </Link>
+            <Link className="footer-privacy-link" href={localePath(locale, "/cookies")}>
+              {locale === "bg" ? "Политика за бисквитки" : "Cookie policy"}
+            </Link>
+          </div>
         </div>
-        <a
-          className="developer-credit"
-          href="https://github.com/BobbyUzunov"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          {content.footer.developerCredit}
-        </a>
+        <p className="developer-credit">{content.footer.developerCredit}</p>
       </div>
     </footer>
   );

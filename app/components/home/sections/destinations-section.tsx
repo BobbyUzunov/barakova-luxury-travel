@@ -18,6 +18,14 @@ export function DestinationsSection({
       <div className="section-heading">
         <p>{content.destinationsSection.eyebrow}</p>
         <h2>{content.destinationsSection.title}</h2>
+        {content.destinationsSection.viewAllLabel ? (
+          <Link
+            className="section-view-all"
+            href={localePath(locale, "/destinations")}
+          >
+            {content.destinationsSection.viewAllLabel}
+          </Link>
+        ) : null}
       </div>
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {content.destinations.map((destination, index) => (

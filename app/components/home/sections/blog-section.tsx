@@ -18,6 +18,11 @@ export function BlogSection({ content, locale }: BlogSectionProps) {
         {content.blogSection.description && (
           <span>{content.blogSection.description}</span>
         )}
+        {content.blogSection.viewAllLabel ? (
+          <Link className="section-view-all" href={localePath(locale, "/blog")}>
+            {content.blogSection.viewAllLabel}
+          </Link>
+        ) : null}
       </div>
 
       <div className="blog-grid mt-12">

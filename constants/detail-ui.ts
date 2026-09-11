@@ -3,7 +3,7 @@ import type { Locale } from "./content";
 type DetailPageCopy = {
   eyebrow: string;
   backLabel: string;
-  backHash: string;
+  backPath: string;
   ctaLabel: string;
   highlightsTitle: string;
   galleryTitle: string;
@@ -12,7 +12,7 @@ type DetailPageCopy = {
 
 type BlogPageCopy = {
   backLabel: string;
-  backHash: string;
+  backPath: string;
   authorLabel: string;
   ctaLabel: string;
 };
@@ -32,12 +32,12 @@ export const detailUi: Record<
   }
 > = {
   bg: {
-    brandSubtitle: "by Богдана Баракова",
+    brandSubtitle: "от Богдана Баракова",
     destination: {
       eyebrow: "Луксозна дестинация",
       backLabel: "Обратно към дестинациите",
-      backHash: "#destinations",
-      ctaLabel: "Заяви персонална консултация",
+      backPath: "/destinations",
+      ctaLabel: "Заявете персонална консултация",
       highlightsTitle: "Какво да очаквате",
       galleryTitle: "Вдъхновение",
       galleryPhotoLabel: "снимка",
@@ -45,17 +45,17 @@ export const detailUi: Record<
     cruise: {
       eyebrow: "Премиум круиз",
       backLabel: "Обратно към круизите",
-      backHash: "#cruises",
-      ctaLabel: "Заяви консултация за този круиз",
+      backPath: "/cruises",
+      ctaLabel: "Заявете консултация за този круиз",
       highlightsTitle: "Какво да очаквате",
       galleryTitle: "Маршрут и атмосфера",
       galleryPhotoLabel: "снимка",
     },
     blog: {
       backLabel: "Обратно към блога",
-      backHash: "#blog",
+      backPath: "/blog",
       authorLabel: "Автор",
-      ctaLabel: "Заяви персонална консултация",
+      ctaLabel: "Заявете персонална консултация",
     },
     notFound: {
       title: "Страницата не е намерена",
@@ -68,7 +68,7 @@ export const detailUi: Record<
     destination: {
       eyebrow: "Luxury destination",
       backLabel: "Back to destinations",
-      backHash: "#destinations",
+      backPath: "/destinations",
       ctaLabel: "Request a private consultation",
       highlightsTitle: "What to expect",
       galleryTitle: "Inspiration",
@@ -77,7 +77,7 @@ export const detailUi: Record<
     cruise: {
       eyebrow: "Premium cruise",
       backLabel: "Back to cruises",
-      backHash: "#cruises",
+      backPath: "/cruises",
       ctaLabel: "Request a consultation for this cruise",
       highlightsTitle: "What to expect",
       galleryTitle: "Route and atmosphere",
@@ -85,7 +85,7 @@ export const detailUi: Record<
     },
     blog: {
       backLabel: "Back to the blog",
-      backHash: "#blog",
+      backPath: "/blog",
       authorLabel: "Author",
       ctaLabel: "Request a private consultation",
     },

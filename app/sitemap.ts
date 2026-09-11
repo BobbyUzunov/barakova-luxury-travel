@@ -27,6 +27,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     });
 
+    entries.push({
+      url: `${siteUrl}${localePath(locale, "/cookies")}`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.3,
+    });
+
+    for (const hub of ["/destinations", "/cruises", "/blog"] as const) {
+      entries.push({
+        url: `${siteUrl}${localePath(locale, hub)}`,
+        lastModified,
+        changeFrequency: "weekly",
+        priority: 0.85,
+      });
+    }
+
     for (const slug of destinationSlugs) {
       entries.push({
         url: `${siteUrl}${localePath(locale, `/destinations/${slug}`)}`,

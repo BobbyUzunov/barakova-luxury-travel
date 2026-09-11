@@ -1,5 +1,6 @@
 import type { Locale } from "../constants/content";
 import { detailUi } from "../constants/detail-ui";
+import { isHubPath } from "../constants/hub-pages";
 import { localePath } from "../constants/i18n";
 import { blogSlugs, cruiseSlugs, destinationSlugs } from "../constants/seo-slugs";
 
@@ -9,6 +10,8 @@ const slugsBySection = {
   destinations: new Set<string>(destinationSlugs),
 } as const;
 
+const standalonePages = new Set(["privacy", "cookies"]);
+
 export function isKnownLocalizedPath(pathname: string) {
   const segments = pathname.split("/").filter(Boolean);
 
@@ -17,7 +20,8 @@ export function isKnownLocalizedPath(pathname: string) {
   }
 
   if (segments.length === 2) {
-    return segments[1] === "privacy";
+    const page = segments[1];
+    return standalonePages.has(page) || isHubPath(page);
   }
 
   if (segments.length !== 3) {

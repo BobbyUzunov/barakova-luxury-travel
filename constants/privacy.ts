@@ -2,6 +2,7 @@ import type { Locale } from "./content";
 import { contactEmail } from "./site";
 
 type PrivacySection = {
+  id?: string;
   title: string;
   paragraphs: string[];
 };
@@ -20,7 +21,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
   bg: {
     pageTitle: "Политика за поверителност",
     backLabel: "Обратно към началото",
-    lastUpdated: "Последна актуализация: юли 2026",
+    lastUpdated: "Последна актуализация: септември 2026",
     intro:
       "Barakova Luxury Travel уважава вашата поверителност. Тази политика описва какви данни събираме, защо ги използваме и какви са вашите права.",
     otherLocaleTitle: "Версия на английски",
@@ -70,6 +71,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
         ],
       },
       {
+        id: "cookies",
         title: "Бисквитки и външни технологии",
         paragraphs: [
           "Google Analytics: аналитични бисквитки за трафик и използване на сайта — само след ваше съгласие чрез банера за бисквитки.",
@@ -91,7 +93,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
   en: {
     pageTitle: "Privacy Policy",
     backLabel: "Back to home",
-    lastUpdated: "Last updated: July 2026",
+    lastUpdated: "Last updated: September 2026",
     intro:
       "Barakova Luxury Travel respects your privacy. This policy explains what data we collect, why we use it, and what your rights are.",
     otherLocaleTitle: "Bulgarian version",
@@ -141,6 +143,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
         ],
       },
       {
+        id: "cookies",
         title: "Cookies and third-party technologies",
         paragraphs: [
           "Google Analytics: analytics cookies for traffic and site usage — only after your consent via the cookie banner.",
@@ -173,14 +176,14 @@ export const cookieConsentCopy: Record<
       "Използваме бисквитки за анализ на трафика и зареждане на фоновото видео. Можете да приемете или откажете незадължителните бисквитки.",
     accept: "Приемам",
     reject: "Отказвам",
-    privacyLink: "Политика за поверителност",
+    privacyLink: "Политика за бисквитки",
   },
   en: {
     message:
       "We use cookies for traffic analytics and loading the background video. You can accept or decline non-essential cookies.",
     accept: "Accept",
     reject: "Decline",
-    privacyLink: "Privacy Policy",
+    privacyLink: "Cookie policy",
   },
 };
 

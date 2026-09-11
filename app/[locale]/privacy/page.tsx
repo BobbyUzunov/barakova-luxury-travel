@@ -67,7 +67,7 @@ export default async function PrivacyPage({ params }: PageProps) {
         <p className="privacy-intro">{content.intro}</p>
 
         {content.sections.map((section) => (
-          <section key={section.title}>
+          <section id={section.id} key={section.title}>
             <h2>{section.title}</h2>
             {section.paragraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>

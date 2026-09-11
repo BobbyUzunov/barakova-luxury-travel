@@ -76,12 +76,23 @@ h2 {
   text-decoration: none;
 }
 
+.brand-name {
+  display: block;
+  min-width: 0;
+}
+
+.brand-name-full,
+.brand-name-short,
 .brand-lockup span {
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(0.82rem, 3.9vw, 1rem);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.brand-name-short {
+  display: none;
 }
 
 .brand-lockup small {
@@ -566,24 +577,31 @@ h2 {
 
   .hero-section--video .hero-soft-overlay--video {
     background:
-      linear-gradient(180deg, rgba(45, 42, 38, 0.56), rgba(45, 42, 38, 0.2) 48%, rgba(200, 169, 106, 0.16)),
-      rgba(200, 169, 106, 0.1);
+      linear-gradient(180deg, rgba(45, 42, 38, 0.68), rgba(45, 42, 38, 0.34) 48%, rgba(200, 169, 106, 0.18)),
+      rgba(45, 42, 38, 0.18);
   }
 
   .hero-section--video .hero-gradient-overlay--video {
     background:
       linear-gradient(
         180deg,
-        rgba(45, 42, 38, 0.74) 0%,
-        rgba(45, 42, 38, 0.38) 40%,
-        rgba(248, 243, 236, 0.56) 100%
+        rgba(45, 42, 38, 0.82) 0%,
+        rgba(45, 42, 38, 0.48) 40%,
+        rgba(248, 243, 236, 0.62) 100%
       ),
       linear-gradient(
         90deg,
-        rgba(248, 243, 236, 0.42),
-        rgba(200, 169, 106, 0.12) 55%,
+        rgba(248, 243, 236, 0.5),
+        rgba(200, 169, 106, 0.14) 55%,
         transparent 88%
       );
+  }
+
+  .hero-section--video .hero-title {
+    color: #fffaf3;
+    text-shadow:
+      0 2px 24px rgba(45, 42, 38, 0.55),
+      0 1px 8px rgba(45, 42, 38, 0.4);
   }
 
   .hero-video-iframe {
@@ -662,6 +680,42 @@ h2 {
   color: rgba(45, 42, 38, 0.66);
   font-size: 1rem;
   line-height: 1.78;
+}
+
+.section-view-all {
+  display: inline-flex;
+  margin-top: 1rem;
+  color: var(--soft-brown);
+  font-size: 0.86rem;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.hub-page-intro {
+  padding-bottom: 0.5rem;
+}
+
+.hub-page-title {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  line-height: 1.05;
+}
+
+.hub-page-description {
+  margin: 0.85rem 0 0;
+  max-width: 40rem;
+  color: rgba(45, 42, 38, 0.68);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.footer-legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.35rem;
 }
 
 .lux-card,
@@ -1896,8 +1950,7 @@ h2 {
 }
 
 .footer-links a,
-.footer-language-list button,
-.developer-credit {
+.footer-language-list button {
   color: rgba(45, 42, 38, 0.68);
   font-weight: 750;
   text-decoration: none;
@@ -1934,8 +1987,7 @@ h2 {
 }
 
 .footer-links a:hover,
-.footer-contact-meta a:hover,
-.developer-credit:hover {
+.footer-contact-meta a:hover {
   color: var(--soft-brown);
   text-decoration-color: var(--champagne);
   transform: translateX(2px);
@@ -1973,10 +2025,12 @@ h2 {
 }
 
 .developer-credit {
+  margin: 0;
   width: fit-content;
   color: rgba(45, 42, 38, 0.42);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .animate-rise {
@@ -2005,7 +2059,16 @@ h2 {
   }
 
   .brand-lockup {
-    max-width: min(52vw, 14rem);
+    max-width: min(46vw, 11.5rem);
+  }
+
+  .brand-name-full {
+    display: none;
+  }
+
+  .brand-name-short {
+    display: block;
+    font-size: 0.92rem;
   }
 
   .brand-lockup span {
@@ -2952,6 +3015,10 @@ h2 {
   text-underline-offset: 0.16em;
 }
 
+.footer-legal-links .footer-privacy-link {
+  margin-top: 0;
+}
+
 .not-found-page {
   display: grid;
   min-height: 100vh;
@@ -3359,9 +3426,18 @@ h2 {
 .inquiry-agent-note {
   flex-shrink: 0;
   margin: 0;
-  padding: 0 1rem 0.95rem;
+  padding: 0 1rem 0.35rem;
   color: rgba(45, 42, 38, 0.58);
   font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.inquiry-agent-disclaimer {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0 1rem 0.95rem;
+  color: rgba(45, 42, 38, 0.52);
+  font-size: 0.68rem;
   line-height: 1.45;
 }
 
