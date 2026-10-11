@@ -400,6 +400,7 @@ h2 {
 .hero-image {
   position: absolute;
   inset: 0;
+  z-index: 2;
   object-fit: cover;
   object-position: center 72%;
   transition: opacity 500ms ease;
@@ -412,14 +413,18 @@ h2 {
 .hero-video {
   position: absolute;
   inset: 0;
+  z-index: 1;
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
   transition: opacity 500ms ease;
 }
 
 .hero-video--playing {
+  z-index: 3;
   opacity: 1;
+  visibility: visible;
 }
 
 .hero-video-iframe {
