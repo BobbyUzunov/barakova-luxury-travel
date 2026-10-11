@@ -186,7 +186,7 @@ export const contentEn = {
       description:
         "Mediterranean charm, beautiful coasts, history, and Italian cuisine.",
       image:
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1753695855696-215fc5f88828?auto=format&fit=crop&w=1200&q=88",
       detail:
         "Sicily is rich, sunlit, and full of character. It brings together coastal landscapes, historic towns, wine experiences, and the Italian rhythm that makes a holiday feel truly memorable.",
       highlights: [
@@ -195,9 +195,9 @@ export const contentEn = {
         "A beautiful fit for romantic or culture-led itineraries",
       ],
       gallery: [
-        "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1400&q=88",
-        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=88",
-        "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1753695855696-215fc5f88828?auto=format&fit=crop&w=1400&q=88",
+        "https://images.unsplash.com/photo-1767777995688-a72b6d316260?auto=format&fit=crop&w=1200&q=88",
+        "https://images.unsplash.com/photo-1691160330058-d6ea8616d60c?auto=format&fit=crop&w=1200&q=88",
       ],
     },
     {
