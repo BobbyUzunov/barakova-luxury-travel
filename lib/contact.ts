@@ -28,7 +28,7 @@ const fieldLabelsByLocale: Record<
 > = {
   bg: {
     fullName: "Име и фамилия",
-    email: "Email",
+    email: "Имейл",
     phone: "Телефон",
     destination: "Желана дестинация",
     travelPeriod: "Период на пътуване",

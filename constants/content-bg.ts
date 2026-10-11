@@ -442,7 +442,7 @@ export const contentBg = {
     eyebrow: "Дестинация",
     highlightsTitle: "Какво да очаквате",
     galleryTitle: "Вдъхновение",
-    closeLabel: "Затвори прозореца",
+    closeLabel: "Затворете прозореца",
     cta: "Заявете консултация за тази дестинация",
   },
   blogSection: {
@@ -454,7 +454,7 @@ export const contentBg = {
   },
   blog: {
     readMoreLabel: "Прочетете статията",
-    closeLabel: "Затвори статията",
+    closeLabel: "Затворете статията",
     posts: [
       {
         title: "Как избирам хотел, който наистина си заслужава",

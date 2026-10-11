@@ -40,7 +40,7 @@ export function HomePageShell({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuLabel = locale === "bg" ? "Меню" : "Menu";
   const closeMenuLabel =
-    locale === "bg" ? "Затвори менюто" : "Close menu";
+    locale === "bg" ? "Затворете менюто" : "Close menu";
 
   const scrollToContact = useCallback(() => {
     setIsMenuOpen(false);
