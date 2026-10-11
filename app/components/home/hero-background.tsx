@@ -10,8 +10,11 @@ import {
   canUseHeroVideo,
   getHeroVideoLoadDelayMs,
   heroVimeoEmbedUrl,
+  isHeroVideoPlayerError,
   isMobileViewport,
   shouldLoadHeroVideoOnMobile,
+  shouldRevealHeroVideo,
+  type HeroVimeoPlayerMessage,
 } from "../../../constants/hero-video";
 import {
   getCookieConsentServerSnapshot,
@@ -55,10 +58,18 @@ function postToVimeoPlayer(
 function configureVimeoPlayer(iframe: HTMLIFrameElement) {
   postToVimeoPlayer(iframe, "addEventListener", "ready");
   postToVimeoPlayer(iframe, "addEventListener", "playing");
+  postToVimeoPlayer(iframe, "addEventListener", "timeupdate");
+  postToVimeoPlayer(iframe, "addEventListener", "playProgress");
+  postToVimeoPlayer(iframe, "addEventListener", "error");
   postToVimeoPlayer(iframe, "play");
+}
 
-  if (isMobileViewport()) {
-    postToVimeoPlayer(iframe, "setQuality", "360p");
+function parseVimeoMessage(data: string): HeroVimeoPlayerMessage | null {
+  try {
+    const parsed = JSON.parse(data) as HeroVimeoPlayerMessage;
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch {
+    return null;
   }
 }
 
@@ -170,21 +181,26 @@ export function HeroBackground({
         return;
       }
 
-      try {
-        const data = JSON.parse(event.data) as { event?: string };
+      const data = parseVimeoMessage(event.data);
+      if (!data) {
+        return;
+      }
 
-        if (data.event === "ready") {
-          const iframe = iframeRef.current;
-          if (iframe) {
-            configureVimeoPlayer(iframe);
-          }
+      if (data.event === "ready") {
+        const iframe = iframeRef.current;
+        if (iframe) {
+          configureVimeoPlayer(iframe);
         }
+      }
 
-        if (data.event === "playing") {
-          setVideoPlaying(true);
-        }
-      } catch {
-        // Ignore non-JSON Vimeo messages.
+      if (isHeroVideoPlayerError(data)) {
+        setVideoPlaying(false);
+        setVideoFailed(true);
+        return;
+      }
+
+      if (shouldRevealHeroVideo(data)) {
+        setVideoPlaying(true);
       }
     };
 
@@ -263,12 +279,15 @@ export function HeroBackground({
           className={`hero-video${videoPlaying ? " hero-video--playing" : ""}`}
         >
           <iframe
-            allow="autoplay; fullscreen; picture-in-picture"
+            allow="autoplay; fullscreen"
             className="hero-video-iframe"
-            loading="lazy"
-            onError={() => setVideoFailed(true)}
+            onError={() => {
+              setVideoPlaying(false);
+              setVideoFailed(true);
+            }}
             onLoad={handleIframeLoad}
             ref={iframeRef}
+            referrerPolicy="strict-origin-when-cross-origin"
             src={heroVimeoEmbedUrl}
             tabIndex={-1}
             title={videoTitle || imageAlt}
