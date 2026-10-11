@@ -32,7 +32,7 @@ export const detailUi: Record<
   }
 > = {
   bg: {
-    brandSubtitle: "от Богдана Баракова",
+    brandSubtitle: "by Богдана Баракова",
     destination: {
       eyebrow: "Луксозна дестинация",
       backLabel: "Обратно към дестинациите",

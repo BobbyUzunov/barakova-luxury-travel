@@ -4,7 +4,7 @@ export const contentBg = {
   brand: {
     name: "Barakova Luxury Travel",
     shortName: "Barakova",
-    subtitle: "от Богдана Баракова",
+    subtitle: "by Богдана Баракова",
   },
   navItems: [
     { label: "Начало", href: "#home" },
@@ -598,8 +598,8 @@ export const contentBg = {
   inquiryAgent: {
     launcherLabel: "AI асистент",
     launcherShortLabel: "AI",
-    launcherByline: "от Barakova Luxury Travel",
-    launcherBylineShort: "от Barakova",
+    launcherByline: "by Barakova Luxury Travel",
+    launcherBylineShort: "by Barakova",
     title: "AI асистент",
     subtitle: "Задайте въпрос и получете ориентиращ отговор за пътувания",
     placeholder: "Напишете въпроса си...",
