@@ -21,7 +21,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
   bg: {
     pageTitle: "Политика за поверителност",
     backLabel: "Обратно към началото",
-    lastUpdated: "Последна актуализация: септември 2026",
+    lastUpdated: "Последна актуализация: октомври 2026",
     intro:
       "Barakova Luxury Travel уважава вашата поверителност. Тази политика описва какви данни събираме, защо ги използваме и какви са вашите права.",
     otherLocaleTitle: "Версия на английски",
@@ -40,7 +40,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
           "При изпращане на запитване през контактната форма събираме име, имейл, телефон и други доброволно предоставени данни (дестинация, период, бюджет, съобщение).",
           "При използване на AI асистента на сайта обработваме съдържанието на вашите съобщения и кратка история на разговора в рамките на текущата сесия, за да можем да отговорим на запитването ви.",
           "За защита срещу спам контактната форма използва Cloudflare Turnstile. При проверката Cloudflare може да обработва технически данни (напр. IP адрес и данни за браузъра) и да поставя необходими бисквитки.",
-          "При посещение на сайта може да се събират технически данни чрез аналитични бисквитки (напр. Google Analytics) само ако сте дали съгласие. Фоновото видео от Vimeo също се зарежда само след съгласие чрез банера за бисквитки.",
+          "При посещение на сайта може да се събират технически данни чрез аналитични бисквитки (напр. Google Analytics) само ако сте дали съгласие. Фоновото видео на началната страница се зарежда от Vimeo веднага, с изключено проследяване, и не зависи от банера за бисквитки.",
         ],
       },
       {
@@ -59,7 +59,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
           "Съобщенията към AI асистента обработваме на основание вашето съгласие и законен интерес да отговорим на запитването ви.",
           "Turnstile се използва на основание законен интерес за сигурност и предотвратяване на злоупотреби.",
           "Аналитичните бисквитки се активират само след изрично съгласие.",
-          "Фоновото видео от Vimeo се зарежда само след изрично съгласие чрез банера за бисквитки.",
+          "Фоновото видео се зарежда от Vimeo с изключено проследяване, без да се чака съгласие за бисквитки.",
         ],
       },
       {
@@ -76,7 +76,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
         paragraphs: [
           "Google Analytics: аналитични бисквитки за трафик и използване на сайта — само след ваше съгласие чрез банера за бисквитки.",
           "Cloudflare Turnstile: технически/сигурностни бисквитки при изпращане на контактната форма, за да разграничим реални потребители от автоматизиран трафик. Повече: https://www.cloudflare.com/privacypolicy/",
-          "Vimeo: фоновото видео на началната страница се зарежда само след ваше съгласие; тогава Vimeo може да поставя бисквитки и да събира данни за плейъра. Повече: https://vimeo.com/privacy",
+          "Vimeo: фоновото видео на началната страница се зарежда при отваряне на сайта. Плейърът е с изключено проследяване, за да не се поставят аналитични бисквитки от Vimeo. Повече: https://vimeo.com/privacy",
           "Локално съхранение: предпочитания за бисквитки и език се пазят в localStorage на вашия браузър.",
         ],
       },
@@ -93,7 +93,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
   en: {
     pageTitle: "Privacy Policy",
     backLabel: "Back to home",
-    lastUpdated: "Last updated: September 2026",
+    lastUpdated: "Last updated: October 2026",
     intro:
       "Barakova Luxury Travel respects your privacy. This policy explains what data we collect, why we use it, and what your rights are.",
     otherLocaleTitle: "Bulgarian version",
@@ -112,7 +112,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
           "When you submit an inquiry through the contact form, we collect your name, email, phone, and any optional details you provide (destination, travel period, budget, message).",
           "When you use the on-site AI assistant, we process the content of your messages and a short conversation history within the current session so we can respond to your inquiry.",
           "To protect against spam, the contact form uses Cloudflare Turnstile. During verification, Cloudflare may process technical data (e.g. IP address and browser data) and set necessary cookies.",
-          "When you visit the site, analytics cookies (e.g. Google Analytics) may collect technical data only if you have given consent. The Vimeo background video also loads only after consent via the cookie banner.",
+          "When you visit the site, analytics cookies (e.g. Google Analytics) may collect technical data only if you have given consent. The homepage background video loads from Vimeo immediately, with tracking disabled, and does not depend on the cookie banner.",
         ],
       },
       {
@@ -131,7 +131,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
           "AI assistant messages are processed based on your consent and our legitimate interest in responding to your inquiry.",
           "Turnstile is used on the basis of legitimate interest in security and abuse prevention.",
           "Analytics cookies are activated only after explicit consent.",
-          "The Vimeo background video loads only after explicit consent via the cookie banner.",
+          "The background video loads from Vimeo with tracking disabled, without waiting for cookie consent.",
         ],
       },
       {
@@ -148,7 +148,7 @@ export const privacyContent: Record<Locale, PrivacyContent> = {
         paragraphs: [
           "Google Analytics: analytics cookies for traffic and site usage — only after your consent via the cookie banner.",
           "Cloudflare Turnstile: technical/security cookies when submitting the contact form, to distinguish real users from automated traffic. More: https://www.cloudflare.com/privacypolicy/",
-          "Vimeo: the homepage background video loads only after your consent; Vimeo may then set cookies and collect player data. More: https://vimeo.com/privacy",
+          "Vimeo: the homepage background video loads when the site opens. The player has tracking disabled so Vimeo does not set analytics cookies. More: https://vimeo.com/privacy",
           "Local storage: cookie and language preferences are stored in your browser's localStorage.",
         ],
       },
@@ -173,14 +173,14 @@ export const cookieConsentCopy: Record<
 > = {
   bg: {
     message:
-      "Използваме бисквитки за анализ на трафика и зареждане на фоновото видео. Можете да приемете или откажете незадължителните бисквитки.",
+      "Използваме бисквитки за анализ на трафика. Можете да приемете или откажете незадължителните бисквитки.",
     accept: "Приемам",
     reject: "Отказвам",
     privacyLink: "Политика за бисквитки",
   },
   en: {
     message:
-      "We use cookies for traffic analytics and loading the background video. You can accept or decline non-essential cookies.",
+      "We use cookies for traffic analytics. You can accept or decline non-essential cookies.",
     accept: "Accept",
     reject: "Decline",
     privacyLink: "Cookie policy",

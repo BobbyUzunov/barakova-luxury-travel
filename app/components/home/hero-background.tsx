@@ -16,11 +16,6 @@ import {
   shouldRevealHeroVideo,
   type HeroVimeoPlayerMessage,
 } from "../../../constants/hero-video";
-import {
-  getCookieConsentServerSnapshot,
-  getCookieConsentSnapshot,
-  subscribeToCookieConsent,
-} from "../../../lib/cookie-consent-store";
 
 const VIDEO_LOAD_TIMEOUT_MS = 12_000;
 const MOBILE_VIDEO_LOAD_TIMEOUT_MS = 8_000;
@@ -86,18 +81,12 @@ export function HeroBackground({
     getMobileViewportSnapshot,
     () => false,
   );
-  const consent = useSyncExternalStore(
-    subscribeToCookieConsent,
-    getCookieConsentSnapshot,
-    getCookieConsentServerSnapshot,
-  );
   const [isVisible, setIsVisible] = useState(false);
   const [loadVideo, setLoadVideo] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const resolvedImageSrc = isMobile ? heroImageMobile : imageSrc;
   const imageQuality = isMobile ? 72 : 85;
-  const hasVideoConsent = consent === "accepted";
 
   useEffect(() => {
     const container = containerRef.current;
@@ -120,7 +109,7 @@ export function HeroBackground({
   }, []);
 
   useEffect(() => {
-    if (!hasVideoConsent || !isVisible || !canUseHeroVideo() || !shouldLoadHeroVideoOnMobile()) {
+    if (!isVisible || !canUseHeroVideo() || !shouldLoadHeroVideoOnMobile()) {
       return;
     }
 
@@ -169,10 +158,10 @@ export function HeroBackground({
       }
       preconnect.remove();
     };
-  }, [hasVideoConsent, isVisible]);
+  }, [isVisible]);
 
   useEffect(() => {
-    if (!loadVideo || !hasVideoConsent) {
+    if (!loadVideo) {
       return;
     }
 
@@ -206,10 +195,10 @@ export function HeroBackground({
 
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
-  }, [hasVideoConsent, loadVideo]);
+  }, [loadVideo]);
 
   useEffect(() => {
-    if (!hasVideoConsent || !loadVideo || videoFailed || videoPlaying) {
+    if (!loadVideo || videoFailed || videoPlaying) {
       return;
     }
 
@@ -222,14 +211,14 @@ export function HeroBackground({
     }, timeoutMs);
 
     return () => window.clearTimeout(timeoutId);
-  }, [hasVideoConsent, loadVideo, videoFailed, videoPlaying]);
+  }, [loadVideo, videoFailed, videoPlaying]);
 
   useEffect(() => {
-    onVideoActiveChange?.(hasVideoConsent && videoPlaying && !videoFailed);
-  }, [hasVideoConsent, onVideoActiveChange, videoFailed, videoPlaying]);
+    onVideoActiveChange?.(videoPlaying && !videoFailed);
+  }, [onVideoActiveChange, videoFailed, videoPlaying]);
 
   useEffect(() => {
-    if (!hasVideoConsent || !videoPlaying) {
+    if (!videoPlaying) {
       return;
     }
 
@@ -245,7 +234,7 @@ export function HeroBackground({
     document.addEventListener("visibilitychange", onVisibilityChange);
     return () =>
       document.removeEventListener("visibilitychange", onVisibilityChange);
-  }, [hasVideoConsent, videoPlaying]);
+  }, [videoPlaying]);
 
   const handleIframeLoad = () => {
     const iframe = iframeRef.current;
@@ -256,7 +245,7 @@ export function HeroBackground({
     configureVimeoPlayer(iframe);
   };
 
-  const showVideo = hasVideoConsent && loadVideo && !videoFailed;
+  const showVideo = loadVideo && !videoFailed;
 
   return (
     <div aria-hidden="true" className="hero-media" ref={containerRef}>

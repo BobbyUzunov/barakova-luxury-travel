@@ -51,12 +51,7 @@ export type SiteContent = {
   navItems: NavItem[];
   headerCta: string;
   hero: {
-    label: string;
     title: string;
-    subtitle: string;
-    primaryCta: string;
-    secondaryCta: string;
-    phoneNote: string;
     phoneLinkLabel: string;
   };
   imageAlts: {

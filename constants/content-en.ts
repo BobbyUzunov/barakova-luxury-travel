@@ -17,13 +17,7 @@ export const contentEn = {
   ],
   headerCta: "Send inquiry",
   hero: {
-    label: "PERSONAL LUXURY TRAVEL CONSULTING",
     title: "Your dream escape, planned down to the finest detail",
-    subtitle:
-      "Personal travel consulting for clients who want a luxury experience without stress, noise, or endless searching.",
-    primaryCta: "Request a Private Consultation",
-    secondaryCta: "Explore destinations",
-    phoneNote: "Free initial consultation",
     phoneLinkLabel: "Call now",
   },
   imageAlts: {
