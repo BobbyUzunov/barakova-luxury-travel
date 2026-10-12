@@ -53,6 +53,7 @@ export type SiteContent = {
   hero: {
     title: string;
     phoneLinkLabel: string;
+    scrollLabel: string;
   };
   imageAlts: {
     hero: string;

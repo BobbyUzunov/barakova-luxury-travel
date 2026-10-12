@@ -19,6 +19,7 @@ export const contentEn = {
   hero: {
     title: "Your dream escape, planned down to the finest detail",
     phoneLinkLabel: "Call now",
+    scrollLabel: "Continue down",
   },
   imageAlts: {
     hero: "Bogdana Barakova on a beach with open arms facing the sea",
