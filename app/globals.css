@@ -834,6 +834,7 @@ h2 {
 .section-heading span {
   display: block;
   margin-top: 1.2rem;
+  margin-inline: auto;
   max-width: 35rem;
   color: rgba(45, 42, 38, 0.66);
   font-size: 1rem;

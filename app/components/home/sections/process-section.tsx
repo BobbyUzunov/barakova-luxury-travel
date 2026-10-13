@@ -8,7 +8,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
   return (
     <section className="section-shell process-section" id="process">
       <div className="process-layout">
-        <div className="section-heading text-left">
+        <div className="section-heading">
           <p>{content.processSection.eyebrow}</p>
           <h2>{content.processSection.title}</h2>
           {content.processSection.description && (
