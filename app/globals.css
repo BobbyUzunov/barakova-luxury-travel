@@ -427,24 +427,19 @@ h2 {
   container-type: size;
 }
 
-.hero-image,
-.hero-image-backdrop {
+.hero-image {
   position: absolute;
   inset: 0;
+  z-index: 2;
   object-fit: cover;
-  object-position: center center;
+  object-position: 62% 70%;
   transition: opacity 500ms ease;
 }
 
-.hero-image {
-  z-index: 2;
-}
-
-.hero-image-backdrop {
-  z-index: 1;
-  display: none;
-  filter: blur(18px);
-  transform: scale(1.08);
+@media (min-width: 768px) {
+  .hero-image {
+    object-position: 54% 68%;
+  }
 }
 
 .hero-image--video-ready {
@@ -644,15 +639,6 @@ h2 {
     min-height: 100svh;
     min-height: 100dvh;
     padding: 0;
-  }
-
-  .hero-image-backdrop {
-    display: block;
-  }
-
-  .hero-image {
-    object-fit: contain;
-    object-position: center center;
   }
 
   .hero-scroll {

@@ -249,19 +249,6 @@ export function HeroBackground({
 
   return (
     <div aria-hidden="true" className="hero-media" ref={containerRef}>
-      {isMobile ? (
-        <Image
-          alt=""
-          aria-hidden
-          className={`hero-image-backdrop${videoPlaying ? " hero-image--video-ready" : ""}`}
-          fetchPriority="high"
-          fill
-          priority
-          quality={imageQuality}
-          sizes={`(max-width: ${heroMobileMaxWidth}px) 100vw, 100vw`}
-          src={resolvedImageSrc}
-        />
-      ) : null}
       <Image
         alt={imageAlt}
         className={`hero-image${videoPlaying ? " hero-image--video-ready" : ""}`}
