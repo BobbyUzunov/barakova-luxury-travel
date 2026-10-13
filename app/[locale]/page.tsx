@@ -38,8 +38,10 @@ export default async function Page({ params }: PageProps) {
   return (
     <HomePageShell content={content} locale={locale}>
       <HeroSection content={content} />
-      <ServicesSection content={content} />
-      <ProcessSection content={content} />
+      <div className="services-process-band">
+        <ServicesSection content={content} />
+        <ProcessSection content={content} />
+      </div>
       <DestinationsSection content={content} locale={locale} />
       <CruisesSection content={content} locale={locale} />
       <TrustSection content={content} />

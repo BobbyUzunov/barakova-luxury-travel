@@ -6,8 +6,8 @@ type ProcessSectionProps = {
 
 export function ProcessSection({ content }: ProcessSectionProps) {
   return (
-    <section className="section-shell">
-      <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+    <section className="section-shell process-section" id="process">
+      <div className="process-layout">
         <div className="section-heading text-left">
           <p>{content.processSection.eyebrow}</p>
           <h2>{content.processSection.title}</h2>
@@ -15,7 +15,7 @@ export function ProcessSection({ content }: ProcessSectionProps) {
             <span>{content.processSection.description}</span>
           )}
         </div>
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="process-steps">
           {content.steps.map((step, index) => (
             <article className="step-card" key={step}>
               <div>{index + 1}</div>

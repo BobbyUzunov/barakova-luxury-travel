@@ -6,12 +6,12 @@ type ServicesSectionProps = {
 
 export function ServicesSection({ content }: ServicesSectionProps) {
   return (
-    <section className="section-shell pt-12" id="services">
+    <section className="section-shell services-section" id="services">
       <div className="section-heading">
         <p>{content.servicesSection.eyebrow}</p>
         <h2>{content.servicesSection.title}</h2>
       </div>
-      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="services-grid">
         {content.services.map((service, index) => (
           <article
             className="lux-card animate-soft-in"
