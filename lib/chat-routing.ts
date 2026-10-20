@@ -147,11 +147,123 @@ export function shouldPreferAiReply(message: string, locale: Locale) {
   return false;
 }
 
+export function isPreferenceStatement(message: string, locale: Locale) {
+  const normalizedMessage = normalizeText(message);
+
+  if (!normalizedMessage) {
+    return false;
+  }
+
+  const preferencePatterns =
+    locale === "bg"
+      ? [
+          /(^|[^\p{L}])искам([^\p{L}]|$)/u,
+          /(^|[^\p{L}])искаме([^\p{L}]|$)/u,
+          /(^|[^\p{L}])планирам([^\p{L}]|$)/u,
+          /(^|[^\p{L}])търся([^\p{L}]|$)/u,
+          /(^|[^\p{L}])предпочитам([^\p{L}]|$)/u,
+          /(^|[^\p{L}])за\s+двама([^\p{L}]|$)/u,
+          /(^|[^\p{L}])двойка([^\p{L}]|$)/u,
+          /(^|[^\p{L}])семейство([^\p{L}]|$)/u,
+          /(^|[^\p{L}])бюджет([^\p{L}]|$)/u,
+          /(^|[^\p{L}])около\s+\d+/u,
+          /(^|[^\p{L}])през\s+(януари|февруари|март|април|май|юни|юли|август|септември|октомври|ноември|декември)([^\p{L}]|$)/u,
+          /(^|[^\p{L}])всъщност([^\p{L}]|$)/u,
+          /(^|[^\p{L}])по-скоро([^\p{L}]|$)/u,
+          /(^|[^\p{L}])вместо([^\p{L}]|$)/u,
+          /(^|[^\p{L}])второто([^\p{L}]|$)/u,
+          /(^|[^\p{L}])първото([^\p{L}]|$)/u,
+        ]
+      : [
+          /\bi\s+want\b/i,
+          /\bwe\s+want\b/i,
+          /\bi\s+am\s+planning\b/i,
+          /\blooking\s+for\b/i,
+          /\bprefer\b/i,
+          /\bfor\s+two\b/i,
+          /\bcouple\b/i,
+          /\bfamily\b/i,
+          /\bbudget\b/i,
+          /\baround\s+\d+/i,
+          /\bin\s+(january|february|march|april|may|june|july|august|september|october|november|december)\b/i,
+          /\bactually\b/i,
+          /\brather\b/i,
+          /\binstead\b/i,
+          /\bthe\s+second\b/i,
+          /\bthe\s+first\b/i,
+        ];
+
+  return preferencePatterns.some((pattern) => pattern.test(normalizedMessage));
+}
+
+export function isClearStandaloneFaqIntent(message: string, locale: Locale) {
+  const normalizedMessage = normalizeText(message);
+
+  if (!normalizedMessage) {
+    return false;
+  }
+
+  const patterns =
+    locale === "bg"
+      ? [
+          /как\s+да\s+се\s+свържа/u,
+          /какъв\s+(е\s+)?телефон/u,
+          /(^|[^\p{L}])телефон([^\p{L}]|$)/u,
+          /(^|[^\p{L}])имейл([^\p{L}]|$)/u,
+          /(^|[^\p{L}])email([^\p{L}]|$)/u,
+          /какви\s+услуги/u,
+          /как\s+работи\s+(процес|консултац)/u,
+          /безплатна\s+ли\s+(е\s+)?консултац/u,
+          /кои\s+дестинации/u,
+          /имате\s+ли\s+круизи/u,
+          /кой\s+(е\s+)?(barakova|богдана)/u,
+        ]
+      : [
+          /how\s+can\s+i\s+contact/i,
+          /what\s+is\s+your\s+phone/i,
+          /\bphone\b/i,
+          /\bemail\b/i,
+          /what\s+services/i,
+          /how\s+does\s+the\s+process/i,
+          /is\s+the\s+consultation\s+free/i,
+          /which\s+destinations/i,
+          /do\s+you\s+offer\s+cruises/i,
+          /who\s+is\s+(barakova|bogdana)/i,
+        ];
+
+  return patterns.some((pattern) => pattern.test(normalizedMessage));
+}
+
+export function isConversationalFollowUp(
+  message: string,
+  history: { role: string; content: string }[],
+) {
+  const normalizedMessage = normalizeText(message);
+  const words = normalizedMessage.split(/\s+/).filter(Boolean);
+  const priorUserTurns = history.filter((entry) => entry.role === "user").length;
+
+  if (!normalizedMessage || priorUserTurns === 0) {
+    return false;
+  }
+
+  if (words.length <= 6) {
+    return true;
+  }
+
+  return /^(и\s+|а\s+|also\s+|and\s+|the\s+second|второто|първото|всъщност|actually)/u.test(
+    normalizedMessage,
+  );
+}
+
 export function isSimpleDestinationQuestion(message: string, locale: Locale) {
   const normalizedMessage = normalizeText(message);
   const words = normalizedMessage.split(/\s+/).filter(Boolean);
 
   if (shouldPreferAiReply(message, locale)) {
+    return false;
+  }
+
+  if (isPreferenceStatement(message, locale)) {
     return false;
   }
 

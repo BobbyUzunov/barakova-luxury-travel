@@ -62,8 +62,15 @@ export async function POST(request: Request) {
       );
     }
 
+    if (validation.error === "invalid-email") {
+      return NextResponse.json(
+        { message: contactApiMessage("invalidEmail", body.locale) },
+        { status: 400 },
+      );
+    }
+
     return NextResponse.json(
-      { message: contactApiMessage("invalidEmail", body.locale) },
+      { message: contactApiMessage("invalidTravelDates", body.locale) },
       { status: 400 },
     );
   }

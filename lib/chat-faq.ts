@@ -4,8 +4,12 @@ import {
   contactEmail,
   contactPhoneDisplay,
 } from "../constants/site";
+import type { ChatHistoryMessage } from "./chat";
 import {
   destinationMentionedIn,
+  isClearStandaloneFaqIntent,
+  isConversationalFollowUp,
+  isPreferenceStatement,
   isSimpleDestinationQuestion,
   normalizeText,
   shouldPreferAiReply,
@@ -357,7 +361,11 @@ export function findFaqById(locale: Locale, faqId: string) {
   return getFaqEntries(locale).find((entry) => entry.id === faqId) ?? null;
 }
 
-export function matchFaqAnswer(locale: Locale, message: string) {
+export function matchFaqAnswer(
+  locale: Locale,
+  message: string,
+  history: ChatHistoryMessage[] = [],
+) {
   const normalizedMessage = normalizeText(message);
 
   if (!normalizedMessage) {
@@ -365,6 +373,19 @@ export function matchFaqAnswer(locale: Locale, message: string) {
   }
 
   if (shouldPreferAiReply(message, locale)) {
+    return null;
+  }
+
+  if (isPreferenceStatement(message, locale)) {
+    return null;
+  }
+
+  const clearStandalone = isClearStandaloneFaqIntent(message, locale);
+
+  if (
+    !clearStandalone &&
+    isConversationalFollowUp(message, history)
+  ) {
     return null;
   }
 

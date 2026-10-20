@@ -9,6 +9,10 @@ import {
 } from "../../../lib/chat";
 import { getClientIp } from "../../../lib/contact";
 import { isChatRateLimited } from "../../../lib/rate-limit";
+import {
+  applyTravelProfileUpdate,
+  extractHeuristicProfileUpdate,
+} from "../../../lib/travel-profile";
 
 export async function POST(request: Request) {
   const ip = getClientIp(request);
@@ -53,11 +57,21 @@ export async function POST(request: Request) {
     const faqEntry = findFaqById(normalizedBody.locale, normalizedBody.faqId);
 
     if (faqEntry) {
+      const profile = applyTravelProfileUpdate(
+        normalizedBody.profile,
+        extractHeuristicProfileUpdate(
+          normalizedBody.message || faqEntry.quickReply || "",
+          normalizedBody.locale,
+        ),
+        normalizedBody.locale,
+      );
+
       return NextResponse.json({
         reply: faqEntry.answer,
         source: "faq",
         faqId: faqEntry.id,
         suggestContact: faqEntry.id === "contact" || faqEntry.id === "budget",
+        profile,
       });
     }
   }
@@ -65,9 +79,19 @@ export async function POST(request: Request) {
   const faqMatch = matchFaqAnswer(
     normalizedBody.locale,
     normalizedBody.message,
+    normalizedBody.history,
   );
 
   if (faqMatch) {
+    const profile = applyTravelProfileUpdate(
+      normalizedBody.profile,
+      extractHeuristicProfileUpdate(
+        normalizedBody.message,
+        normalizedBody.locale,
+      ),
+      normalizedBody.locale,
+    );
+
     return NextResponse.json({
       reply: faqMatch.answer,
       source: "faq",
@@ -76,6 +100,7 @@ export async function POST(request: Request) {
         faqMatch.id === "contact" ||
         faqMatch.id === "budget" ||
         faqMatch.id === "consultation",
+      profile,
     });
   }
 
@@ -83,11 +108,13 @@ export async function POST(request: Request) {
     locale: normalizedBody.locale,
     message: normalizedBody.message,
     history: normalizedBody.history,
+    profile: normalizedBody.profile,
   });
 
   return NextResponse.json({
     reply: aiResult.reply,
     source: aiResult.source,
     suggestContact: aiResult.suggestContact,
+    profile: aiResult.profile,
   });
 }

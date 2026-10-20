@@ -8,27 +8,87 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 import type { Locale } from "../../../constants/content";
 import { getSiteContent } from "../../../constants/content-by-locale";
 import { localizedHash } from "../../../constants/i18n";
-import type { ChatHistoryMessage } from "../../../lib/chat";
+import {
+  clearChatSession,
+  getChatSessionSnapshot,
+  writeChatSession,
+  type StoredChatMessage,
+} from "../../../lib/chat-session-storage";
+import {
+  clearContactFormDraft,
+  createContactFormDraft,
+  readContactFormDraft,
+  writeContactFormDraft,
+} from "../../../lib/contact-form-draft";
+import { buildInquiryChatRequestBody } from "../../../lib/inquiry-chat-request";
 import { lockPageChrome } from "../../../lib/page-chrome-inert";
+import {
+  createEmptyTravelProfile,
+  type TravelProfile,
+} from "../../../lib/travel-profile";
+import { buildTravelSummary } from "../../../lib/travel-summary";
 import { useModalAccessibility } from "../../../lib/use-modal-accessibility";
 
-type ChatMessage = {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  source?: "faq" | "ai" | "fallback";
-};
+type ChatMessage = StoredChatMessage;
 
 type InquiryAgentProps = {
   locale: Locale;
 };
 
+type LocalChatDraft = {
+  locale: Locale;
+  messages: ChatMessage[];
+  profile: TravelProfile;
+  suggestContact: boolean;
+};
+
 function createMessageId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function createWelcomeMessage(content: string): ChatMessage {
+  return {
+    id: "welcome",
+    role: "assistant",
+    content,
+    source: "faq",
+  };
+}
+
+function subscribeToChatSession(onStoreChange: () => void) {
+  if (typeof window === "undefined") {
+    return () => undefined;
+  }
+
+  const handler = () => onStoreChange();
+  window.addEventListener("barakova-chat-session", handler);
+  return () => window.removeEventListener("barakova-chat-session", handler);
+}
+
+function notifyChatSessionChanged() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.dispatchEvent(new Event("barakova-chat-session"));
+}
+
+function getServerChatSessionSnapshot() {
+  return null;
+}
+
+function persistChatSession(session: {
+  locale: Locale;
+  messages: ChatMessage[];
+  profile: TravelProfile;
+}) {
+  writeChatSession(session);
+  notifyChatSessionChanged();
 }
 
 export function InquiryAgent({ locale }: InquiryAgentProps) {
@@ -41,25 +101,53 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const requestIdRef = useRef(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [handoffPreviewOpen, setHandoffPreviewOpen] = useState(false);
+  const [handoffStorageError, setHandoffStorageError] = useState(false);
+  const [handoffCopyDone, setHandoffCopyDone] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: "welcome",
-      role: "assistant",
-      content: copy.welcome,
-      source: "faq",
-    },
-  ]);
+  const handoffUseButtonRef = useRef<HTMLButtonElement>(null);
+  const [draft, setDraft] = useState<LocalChatDraft | null>(null);
+
+  const storedSession = useSyncExternalStore(
+    subscribeToChatSession,
+    () => getChatSessionSnapshot(locale),
+    getServerChatSessionSnapshot,
+  );
+
+  if (draft && draft.locale !== locale) {
+    setDraft(null);
+  }
+
+  const welcomeMessage = createWelcomeMessage(copy.welcome);
+  const messages =
+    draft && draft.locale === locale
+      ? draft.messages
+      : (storedSession?.messages ?? [welcomeMessage]);
+  const profile =
+    draft && draft.locale === locale
+      ? draft.profile
+      : (storedSession?.profile ?? createEmptyTravelProfile(locale));
+  const suggestContact =
+    draft && draft.locale === locale ? draft.suggestContact : false;
 
   const closePanel = useCallback(() => {
+    setHandoffPreviewOpen(false);
+    setHandoffStorageError(false);
+    setHandoffCopyDone(false);
     setIsOpen(false);
-  }, []);
+  }, [
+    setHandoffPreviewOpen,
+    setHandoffStorageError,
+    setHandoffCopyDone,
+    setIsOpen,
+  ]);
 
   useModalAccessibility({
     containerRef: panelRef,
-    initialFocusRef: closeButtonRef,
+    initialFocusRef: handoffPreviewOpen ? handoffUseButtonRef : closeButtonRef,
     isOpen,
     lockScroll: true,
     onClose: closePanel,
@@ -73,9 +161,13 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
       return;
     }
 
-    closeButtonRef.current?.focus({ preventScroll: true });
+    if (handoffPreviewOpen) {
+      handoffUseButtonRef.current?.focus({ preventScroll: true });
+    } else {
+      closeButtonRef.current?.focus({ preventScroll: true });
+    }
     launcherRef.current?.setAttribute("aria-hidden", "true");
-  }, [isOpen]);
+  }, [isOpen, handoffPreviewOpen]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -118,9 +210,112 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
     };
   }, [isOpen]);
 
+  const messagesSignature = `${messages.length}:${messages.at(-1)?.id ?? ""}:${suggestContact}`;
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [messages, isSending]);
+  }, [messagesSignature, isSending]);
+
+  const updateDraft = (next: {
+    messages: ChatMessage[];
+    profile: TravelProfile;
+    suggestContact: boolean;
+  }) => {
+    setDraft({
+      locale,
+      messages: next.messages,
+      profile: next.profile,
+      suggestContact: next.suggestContact,
+    });
+    persistChatSession({
+      locale,
+      messages: next.messages,
+      profile: next.profile,
+    });
+  };
+
+  const resetConversation = () => {
+    requestIdRef.current += 1;
+    setIsSending(false);
+    setInputValue("");
+    setHandoffPreviewOpen(false);
+    setHandoffStorageError(false);
+    setHandoffCopyDone(false);
+    const nextMessages = [createWelcomeMessage(copy.welcome)];
+    const nextProfile = createEmptyTravelProfile(locale);
+    clearChatSession();
+    notifyChatSessionChanged();
+    const pendingDraft = readContactFormDraft(locale);
+    if (pendingDraft && !pendingDraft.applied) {
+      clearContactFormDraft();
+    }
+    setDraft({
+      locale,
+      messages: nextMessages,
+      profile: nextProfile,
+      suggestContact: false,
+    });
+  };
+
+  const navigateToContactForm = () => {
+    const contactHash = localizedHash(locale, "contact");
+    const isHomePage =
+      window.location.pathname === `/${locale}` ||
+      window.location.pathname === `/${locale}/`;
+
+    closePanel();
+
+    if (isHomePage) {
+      window.requestAnimationFrame(() => {
+        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+      });
+      return;
+    }
+
+    window.location.href = contactHash;
+  };
+
+  const transferSummaryToForm = async () => {
+    const summary = buildTravelSummary(profile);
+    if (!summary.hasUsefulData) {
+      setHandoffPreviewOpen(false);
+      setHandoffStorageError(false);
+      navigateToContactForm();
+      return;
+    }
+
+    const wrote = writeContactFormDraft(
+      createContactFormDraft({
+        locale,
+        summary,
+      }),
+    );
+
+    if (!wrote) {
+      setHandoffStorageError(true);
+      setHandoffCopyDone(false);
+      return;
+    }
+
+    setHandoffStorageError(false);
+    setHandoffCopyDone(false);
+    setHandoffPreviewOpen(false);
+    navigateToContactForm();
+  };
+
+  const copyHandoffSummary = async () => {
+    const summary = buildTravelSummary(profile);
+    if (!summary.hasUsefulData || !navigator.clipboard?.writeText) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(summary.text);
+      setHandoffCopyDone(true);
+    } catch {
+      setHandoffCopyDone(false);
+    }
+  };
 
   const sendMessage = async ({ message }: { message?: string }) => {
     const trimmedMessage = message?.trim();
@@ -129,23 +324,31 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
       return;
     }
 
+    const requestId = requestIdRef.current + 1;
+    requestIdRef.current = requestId;
+
     const userMessage: ChatMessage = {
       id: createMessageId(),
       role: "user",
       content: trimmedMessage,
     };
 
+    const profileSnapshot = profile;
+    const requestBody = buildInquiryChatRequestBody({
+      locale,
+      message: trimmedMessage,
+      messages,
+      profile: profileSnapshot,
+    });
     const nextMessages = [...messages, userMessage];
-    setMessages(nextMessages);
+
+    updateDraft({
+      messages: nextMessages,
+      profile: profileSnapshot,
+      suggestContact,
+    });
     setInputValue("");
     setIsSending(true);
-
-    const history: ChatHistoryMessage[] = messages
-      .filter((entry) => entry.id !== "welcome")
-      .map((entry) => ({
-        role: entry.role,
-        content: entry.content,
-      }));
 
     try {
       const response = await fetch("/api/chat", {
@@ -153,44 +356,60 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          message: trimmedMessage,
-          locale,
-          history,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       const payload = (await response.json()) as {
         reply?: string;
         source?: "faq" | "ai" | "fallback";
+        suggestContact?: boolean;
+        profile?: TravelProfile;
         message?: string;
       };
+
+      if (requestId !== requestIdRef.current) {
+        return;
+      }
 
       if (!response.ok || !payload.reply) {
         throw new Error(payload.message || "chat-error");
       }
 
-      setMessages((current) => [
-        ...current,
-        {
-          id: createMessageId(),
-          role: "assistant",
-          content: payload.reply ?? "",
-          source: payload.source,
-        },
-      ]);
+      updateDraft({
+        messages: [
+          ...nextMessages,
+          {
+            id: createMessageId(),
+            role: "assistant",
+            content: payload.reply,
+            source: payload.source,
+          },
+        ],
+        profile: payload.profile ?? profileSnapshot,
+        suggestContact: payload.suggestContact === true ? true : suggestContact,
+      });
     } catch {
-      setMessages((current) => [
-        ...current,
-        {
-          id: createMessageId(),
-          role: "assistant",
-          content: copy.error,
-          source: "fallback",
-        },
-      ]);
+      if (requestId !== requestIdRef.current) {
+        return;
+      }
+
+      updateDraft({
+        messages: [
+          ...nextMessages,
+          {
+            id: createMessageId(),
+            role: "assistant",
+            content: copy.error,
+            source: "fallback",
+          },
+        ],
+        profile: profileSnapshot,
+        suggestContact,
+      });
     } finally {
-      setIsSending(false);
+      if (requestId === requestIdRef.current) {
+        setIsSending(false);
+      }
     }
   };
 
@@ -204,19 +423,20 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
   };
 
   const handleContactClick = () => {
-    closePanel();
-    const contactHash = localizedHash(locale, "contact");
-    const isHomePage =
-      window.location.pathname === `/${locale}` ||
-      window.location.pathname === `/${locale}/`;
-
-    if (isHomePage) {
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    const summary = buildTravelSummary(profile);
+    if (summary.hasUsefulData) {
+      setHandoffStorageError(false);
+      setHandoffCopyDone(false);
+      setHandoffPreviewOpen(true);
       return;
     }
 
-    window.location.href = contactHash;
+    navigateToContactForm();
   };
+
+  const handoffSummary = handoffPreviewOpen ? buildTravelSummary(profile) : null;
+  const showHandoffPreview =
+    handoffPreviewOpen && handoffSummary !== null && handoffSummary.hasUsefulData;
 
   return (
     <>
@@ -291,78 +511,161 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
               </h2>
               <p className="inquiry-agent-subtitle">{copy.subtitle}</p>
             </div>
-            <button
-              aria-label={copy.close}
-              className="inquiry-agent-close"
-              onClick={closePanel}
-              ref={closeButtonRef}
-              type="button"
-            >
-              ×
-            </button>
-          </header>
-
-          <div className="inquiry-agent-messages" role="log" aria-live="polite">
-            {messages.map((message) => (
-              <article
-                className={`inquiry-agent-message inquiry-agent-message--${message.role}`}
-                key={message.id}
-              >
-                <p>{message.content}</p>
-                {message.role === "assistant" && message.source ? (
-                  <span className="inquiry-agent-source">
-                    {message.source === "faq"
-                      ? copy.sourceLabels.faq
-                      : copy.sourceLabels.ai}
-                  </span>
-                ) : null}
-              </article>
-            ))}
-            {isSending ? (
-              <article className="inquiry-agent-message inquiry-agent-message--assistant inquiry-agent-message--typing">
-                <p>{copy.sending}</p>
-              </article>
-            ) : null}
-            <div ref={messagesEndRef} />
-          </div>
-
-          <form className="inquiry-agent-form" onSubmit={handleSubmit}>
-            <label className="sr-only" htmlFor={inputId}>
-              {copy.placeholder}
-            </label>
-            <textarea
-              className="inquiry-agent-input"
-              disabled={isSending}
-              id={inputId}
-              onChange={(event) => setInputValue(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" && !event.shiftKey) {
-                  event.preventDefault();
-                  event.currentTarget.form?.requestSubmit();
-                }
-              }}
-              placeholder={copy.placeholder}
-              ref={inputRef}
-              rows={2}
-              value={inputValue}
-            />
-            <div className="inquiry-agent-actions">
+            <div className="inquiry-agent-header-actions">
               <button
-                className="btn-secondary inquiry-agent-contact"
-                onClick={handleContactClick}
+                className="inquiry-agent-new-chat"
+                onClick={resetConversation}
                 type="button"
               >
-                {copy.contactCta}
+                {copy.newChat}
               </button>
               <button
-                className="btn-primary inquiry-agent-send"
-                disabled={isSending || !inputValue.trim()}
-                type="submit"
+                aria-label={copy.close}
+                className="inquiry-agent-close"
+                onClick={closePanel}
+                ref={closeButtonRef}
+                type="button"
               >
-                {isSending ? copy.sending : copy.send}
+                ×
               </button>
             </div>
-          </form>
+          </header>
+
+          {showHandoffPreview && handoffSummary ? (
+            <div className="inquiry-agent-handoff">
+              <div className="inquiry-agent-handoff-copy">
+                <h3 className="inquiry-agent-handoff-title">
+                  {copy.handoffPreviewTitle}
+                </h3>
+                <p className="inquiry-agent-handoff-lead">
+                  {copy.handoffPreviewLead}
+                </p>
+                <pre className="inquiry-agent-handoff-summary">
+                  {handoffSummary.text}
+                </pre>
+              </div>
+              {handoffStorageError ? (
+                <div className="inquiry-agent-handoff-error" role="alert">
+                  <p>{copy.handoffStorageError}</p>
+                  <div className="inquiry-agent-actions inquiry-agent-handoff-actions">
+                    <button
+                      className="btn-secondary"
+                      onClick={() => {
+                        void copyHandoffSummary();
+                      }}
+                      type="button"
+                    >
+                      {handoffCopyDone
+                        ? copy.handoffCopyDone
+                        : copy.handoffCopySummary}
+                    </button>
+                    <button
+                      className="btn-primary"
+                      onClick={() => {
+                        void transferSummaryToForm();
+                      }}
+                      ref={handoffUseButtonRef}
+                      type="button"
+                    >
+                      {copy.handoffStorageRetry}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="inquiry-agent-actions inquiry-agent-handoff-actions">
+                  <button
+                    className="btn-secondary"
+                    onClick={() => {
+                      setHandoffPreviewOpen(false);
+                      setHandoffStorageError(false);
+                    }}
+                    type="button"
+                  >
+                    {copy.handoffPreviewBack}
+                  </button>
+                  <button
+                    className="btn-primary"
+                    onClick={() => {
+                      void transferSummaryToForm();
+                    }}
+                    ref={handoffUseButtonRef}
+                    type="button"
+                  >
+                    {copy.handoffPreviewUse}
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <div className="inquiry-agent-messages" role="log" aria-live="polite">
+                {messages.map((message) => (
+                  <article
+                    className={`inquiry-agent-message inquiry-agent-message--${message.role}`}
+                    key={message.id}
+                  >
+                    <p>{message.content}</p>
+                    {message.role === "assistant" && message.source ? (
+                      <span className="inquiry-agent-source">
+                        {message.source === "faq"
+                          ? copy.sourceLabels.faq
+                          : copy.sourceLabels.ai}
+                      </span>
+                    ) : null}
+                  </article>
+                ))}
+                {isSending ? (
+                  <article className="inquiry-agent-message inquiry-agent-message--assistant inquiry-agent-message--typing">
+                    <p>{copy.sending}</p>
+                  </article>
+                ) : null}
+                {suggestContact ? (
+                  <div className="inquiry-agent-contact-suggest">
+                    <p>{copy.contactSuggest}</p>
+                  </div>
+                ) : null}
+                <div ref={messagesEndRef} />
+              </div>
+
+              <form className="inquiry-agent-form" onSubmit={handleSubmit}>
+                <label className="sr-only" htmlFor={inputId}>
+                  {copy.placeholder}
+                </label>
+                <textarea
+                  className="inquiry-agent-input"
+                  disabled={isSending}
+                  id={inputId}
+                  onChange={(event) => setInputValue(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" && !event.shiftKey) {
+                      event.preventDefault();
+                      event.currentTarget.form?.requestSubmit();
+                    }
+                  }}
+                  placeholder={copy.placeholder}
+                  ref={inputRef}
+                  rows={2}
+                  value={inputValue}
+                />
+                <div className="inquiry-agent-actions">
+                  <button
+                    className="btn-secondary inquiry-agent-contact"
+                    onClick={handleContactClick}
+                    type="button"
+                  >
+                    {copy.contactCta}
+                  </button>
+                  <button
+                    className="btn-primary inquiry-agent-send"
+                    disabled={isSending || !inputValue.trim()}
+                    type="submit"
+                  >
+                    {isSending ? copy.sending : copy.send}
+                  </button>
+                </div>
+              </form>
+            </>
+          )}
 
           <p className="inquiry-agent-note">{copy.poweredNote}</p>
           <p className="inquiry-agent-disclaimer">{copy.disclaimer}</p>

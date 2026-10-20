@@ -121,6 +121,16 @@ export type SiteContent = {
     close: string;
     welcome: string;
     contactCta: string;
+    contactSuggest: string;
+    handoffPreviewTitle: string;
+    handoffPreviewLead: string;
+    handoffPreviewBack: string;
+    handoffPreviewUse: string;
+    handoffStorageError: string;
+    handoffStorageRetry: string;
+    handoffCopySummary: string;
+    handoffCopyDone: string;
+    newChat: string;
     error: string;
     poweredNote: string;
     disclaimer: string;
@@ -145,7 +155,9 @@ export type SiteContent = {
       email: string;
       phone: string;
       destination: string;
-      travelPeriod: string;
+      travelStartDate: string;
+      travelEndDate: string;
+      datesFlexible: string;
       travelers: string;
       budget: string;
       message: string;
@@ -153,13 +165,24 @@ export type SiteContent = {
     placeholders: {
       message: string;
     };
+    dateHelp: string;
     requiredMark: string;
     submit: string;
     submitting: string;
+    handoffAppliedNotice: string;
+    handoffConflictNotice: string;
+    handoffReplaceSummary: string;
+    handoffMessageTooLongNotice: string;
+    handoffEditMessage: string;
     validation: {
       fullName: string;
       email: string;
       phone: string;
+      travelStartDate: string;
+      travelEndDate: string;
+      travelEndBeforeStart: string;
+      travelStartInPast: string;
+      messageTooLong: string;
       captcha: string;
       submitError: string;
     };

@@ -604,6 +604,19 @@ export const contentEn = {
     welcome:
       "Hello! I am the AI assistant for Barakova Luxury Travel. Ask about services, destinations, the consultation process, or how to get in touch. For exact prices and availability, please use the inquiry form.",
     contactCta: "Go to inquiry form",
+    contactSuggest:
+      "When you are ready, you can continue with the inquiry form.",
+    handoffPreviewTitle: "Review before the form",
+    handoffPreviewLead:
+      "This is a summary of the preferences collected so far. You can return to the conversation to refine details, or use them in the form.",
+    handoffPreviewBack: "Back to conversation",
+    handoffPreviewUse: "Use in the form",
+    handoffStorageError:
+      "We could not prepare the form locally. Try again or copy the summary.",
+    handoffStorageRetry: "Try again",
+    handoffCopySummary: "Copy summary",
+    handoffCopyDone: "Copied",
+    newChat: "New conversation",
     error: "Something went wrong. Please try again.",
     poweredNote:
       "Common questions are answered instantly; more complex ones use AI assistance.",
@@ -636,7 +649,9 @@ export const contentEn = {
       email: "Email",
       phone: "Phone",
       destination: "Desired destination",
-      travelPeriod: "Travel period",
+      travelStartDate: "Start date",
+      travelEndDate: "End date",
+      datesFlexible: "Dates are flexible / not yet confirmed",
       travelers: "Number of travelers",
       budget: "Approximate budget",
       message: "Message",
@@ -644,13 +659,28 @@ export const contentEn = {
     placeholders: {
       message: "Briefly tell us what you are looking for...",
     },
+    dateHelp: "Dates are optional. Choose them from the calendar.",
     requiredMark: "*",
     submit: "Request a Private Consultation",
     submitting: "Sending...",
+    handoffAppliedNotice:
+      "We added information from the conversation. Please review before sending.",
+    handoffConflictNotice:
+      "The summary in the form was edited. You can keep it or replace it with the latest conversation summary.",
+    handoffReplaceSummary: "Replace conversation summary",
+    handoffMessageTooLongNotice:
+      "There is not enough room for the summary. Shorten your message and try again — your text was left unchanged.",
+    handoffEditMessage: "Edit message",
     validation: {
       fullName: "Please enter your full name.",
       email: "Please enter a valid email address.",
       phone: "Please enter a phone number.",
+      travelStartDate: "Please choose a valid start date.",
+      travelEndDate: "Please choose a valid end date.",
+      travelEndBeforeStart: "The end date cannot be before the start date.",
+      travelStartInPast: "The start date cannot be before today.",
+      messageTooLong:
+        "The message is too long. Shorten your text or the summary before sending.",
       captcha: "Please confirm you are not a robot.",
       submitError:
         "There was a problem sending your inquiry. Please try again.",

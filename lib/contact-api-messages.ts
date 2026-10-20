@@ -5,6 +5,7 @@ export type ContactApiMessageKey =
   | "invalidBody"
   | "missingFields"
   | "invalidEmail"
+  | "invalidTravelDates"
   | "captchaFailed"
   | "notConfigured"
   | "deliveryFailed"
@@ -26,6 +27,10 @@ const messages: Record<ContactApiMessageKey, Record<Locale, string>> = {
   invalidEmail: {
     bg: "Моля, въведете валиден имейл адрес.",
     en: "Invalid email address.",
+  },
+  invalidTravelDates: {
+    bg: "Моля, проверете началните и крайните дати на пътуването.",
+    en: "Please check the travel start and end dates.",
   },
   captchaFailed: {
     bg: "Проверката срещу спам не беше успешна. Моля, опитайте отново.",

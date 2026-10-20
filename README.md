@@ -88,7 +88,7 @@ TURNSTILE_SECRET_KEY=
 
 ```bash
 OPENAI_API_KEY=
-OPENAI_CHAT_MODEL=gpt-4o-mini
+OPENAI_CHAT_MODEL=gpt-5.4-mini
 ```
 
 Без `OPENAI_API_KEY` асистентът отговаря само от вградените FAQ.

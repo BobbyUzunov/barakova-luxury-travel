@@ -1,5 +1,12 @@
 import type { Locale } from "../constants/content";
 import { resolveRequestLocale } from "./contact-api-messages";
+import {
+  formatTravelPeriodForEmail,
+  normalizeDatesFlexible,
+  normalizeOptionalIsoDate,
+  validateTravelDates,
+  type TravelDatesValidationError,
+} from "./contact-dates";
 
 export type ContactRequestBody = {
   fullName?: string;
@@ -7,6 +14,9 @@ export type ContactRequestBody = {
   phone?: string;
   destination?: string;
   travelPeriod?: string;
+  travelStartDate?: string;
+  travelEndDate?: string;
+  datesFlexible?: boolean;
   travelers?: string;
   budget?: string;
   message?: string;
@@ -19,13 +29,18 @@ export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const maxFieldLength = 500;
 export const maxMessageLength = 4000;
 
-const fieldLabelsByLocale: Record<
-  Locale,
-  Record<
-    keyof Omit<ContactRequestBody, "website" | "turnstileToken">,
-    string
-  >
-> = {
+type EmailDisplayField =
+  | "fullName"
+  | "email"
+  | "phone"
+  | "destination"
+  | "travelPeriod"
+  | "travelers"
+  | "budget"
+  | "message"
+  | "locale";
+
+const fieldLabelsByLocale: Record<Locale, Record<EmailDisplayField, string>> = {
   bg: {
     fullName: "Име и фамилия",
     email: "Имейл",
@@ -90,12 +105,25 @@ export function normalizeText(value: unknown, maxLength = maxFieldLength) {
 }
 
 export function normalizeBody(body: ContactRequestBody): ContactRequestBody {
+  const locale = resolveRequestLocale(body.locale);
+  const travelStartDate = normalizeOptionalIsoDate(body.travelStartDate);
+  const travelEndDate = normalizeOptionalIsoDate(body.travelEndDate);
+  const datesFlexible = normalizeDatesFlexible(body.datesFlexible);
+  const travelPeriod =
+    formatTravelPeriodForEmail(
+      { travelStartDate, travelEndDate, datesFlexible },
+      locale,
+    ) || normalizeText(body.travelPeriod);
+
   return {
     fullName: normalizeText(body.fullName),
     email: normalizeText(body.email),
     phone: normalizeText(body.phone),
     destination: normalizeText(body.destination),
-    travelPeriod: normalizeText(body.travelPeriod),
+    travelStartDate,
+    travelEndDate,
+    datesFlexible,
+    travelPeriod,
     travelers: normalizeText(body.travelers),
     budget: normalizeText(body.budget),
     message: normalizeText(body.message, maxMessageLength),
@@ -108,7 +136,8 @@ export function normalizeBody(body: ContactRequestBody): ContactRequestBody {
 export type ContactValidationError =
   | "missing-fields"
   | "invalid-email"
-  | "honeypot";
+  | "honeypot"
+  | TravelDatesValidationError;
 
 export function validateContactBody(body: ContactRequestBody) {
   if (body.website) {
@@ -123,6 +152,16 @@ export function validateContactBody(body: ContactRequestBody) {
     return { ok: false as const, error: "invalid-email" as const };
   }
 
+  const dates = validateTravelDates({
+    travelStartDate: body.travelStartDate,
+    travelEndDate: body.travelEndDate,
+    datesFlexible: body.datesFlexible,
+  });
+
+  if (!dates.ok) {
+    return { ok: false as const, error: dates.error };
+  }
+
   return { ok: true as const };
 }
 
@@ -130,10 +169,24 @@ export function buildEmailHtml(body: ContactRequestBody) {
   const locale = resolveRequestLocale(body.locale);
   const fieldLabels = fieldLabelsByLocale[locale];
   const heading = emailHeadings[locale];
+  const displayOrder: EmailDisplayField[] = [
+    "fullName",
+    "email",
+    "phone",
+    "destination",
+    "travelPeriod",
+    "travelers",
+    "budget",
+    "message",
+    "locale",
+  ];
 
-  const rows = Object.entries(fieldLabels)
-    .map(([field, label]) => {
-      const value = body[field as keyof ContactRequestBody]?.trim() || "-";
+  const rows = displayOrder
+    .map((field) => {
+      const label = fieldLabels[field];
+      const raw = body[field];
+      const value =
+        typeof raw === "string" ? raw.trim() || "-" : raw === true ? "yes" : "-";
 
       return `
         <tr>

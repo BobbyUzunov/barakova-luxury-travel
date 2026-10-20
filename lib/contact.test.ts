@@ -20,6 +20,74 @@ describe("contact helpers", () => {
     assert.equal(body.message?.length, 4000);
   });
 
+  it("normalizes travel dates into a readable travelPeriod for email", () => {
+    const ranged = normalizeBody({
+      fullName: "Test User",
+      email: "test@example.com",
+      phone: "0883770909",
+      travelStartDate: "2027-03-15",
+      travelEndDate: "2027-03-22",
+      locale: "bg",
+    });
+    assert.equal(ranged.travelPeriod, "2027-03-15 – 2027-03-22");
+    assert.match(
+      buildEmailHtml(ranged),
+      /2027-03-15 – 2027-03-22/,
+    );
+
+    const flexible = normalizeBody({
+      fullName: "Test User",
+      email: "test@example.com",
+      phone: "0883770909",
+      datesFlexible: true,
+      locale: "en",
+    });
+    assert.equal(
+      flexible.travelPeriod,
+      "Dates are flexible / not yet confirmed",
+    );
+
+    const startOnly = normalizeBody({
+      fullName: "Test User",
+      email: "test@example.com",
+      phone: "0883770909",
+      travelStartDate: "2027-03-15",
+      locale: "en",
+    });
+    assert.equal(
+      startOnly.travelPeriod,
+      "From 2027-03-15 (end date not set)",
+    );
+  });
+
+  it("rejects invalid or reversed travel dates on the server", () => {
+    const reversed = validateContactBody(
+      normalizeBody({
+        fullName: "Test User",
+        email: "test@example.com",
+        phone: "0883770909",
+        travelStartDate: "2027-03-22",
+        travelEndDate: "2027-03-15",
+      }),
+    );
+    assert.equal(reversed.ok, false);
+    if (!reversed.ok) {
+      assert.equal(reversed.error, "end-before-start");
+    }
+
+    const invalid = validateContactBody({
+      fullName: "Test User",
+      email: "test@example.com",
+      phone: "0883770909",
+      travelStartDate: "2027-02-30",
+      datesFlexible: false,
+    });
+    assert.equal(invalid.ok, false);
+    if (!invalid.ok) {
+      assert.equal(invalid.error, "invalid-start");
+    }
+  });
+
   it("rejects honeypot submissions", () => {
     const result = validateContactBody(
       normalizeBody({

@@ -1,4 +1,9 @@
 import type { Locale } from "../constants/content";
+import {
+  createEmptyTravelProfile,
+  sanitizeTravelProfile,
+  type TravelProfile,
+} from "./travel-profile";
 
 export type ChatMessageRole = "user" | "assistant";
 
@@ -12,22 +17,29 @@ export type ChatRequestBody = {
   faqId?: string;
   locale?: string;
   history?: ChatHistoryMessage[];
+  profile?: unknown;
 };
 
 export type ChatReplySource = "faq" | "ai" | "fallback";
 
 export const maxChatMessageLength = 1000;
-export const maxChatHistoryLength = 8;
+export const maxChatHistoryLength = 12;
 
 export function resolveChatLocale(locale?: string): Locale {
   return locale === "en" ? "en" : "bg";
 }
 
 export function normalizeChatBody(body: ChatRequestBody) {
+  const locale = resolveChatLocale(body.locale);
+  const sanitizedProfile = sanitizeTravelProfile(body.profile, locale);
+  const profile: TravelProfile = sanitizedProfile
+    ? { ...sanitizedProfile, locale }
+    : createEmptyTravelProfile(locale);
+
   return {
     message: (body.message ?? "").trim().slice(0, maxChatMessageLength),
     faqId: (body.faqId ?? "").trim().slice(0, 80),
-    locale: resolveChatLocale(body.locale),
+    locale,
     history: Array.isArray(body.history)
       ? body.history
           .filter(
@@ -42,6 +54,7 @@ export function normalizeChatBody(body: ChatRequestBody) {
           }))
           .filter((entry) => entry.content.length > 0)
       : [],
+    profile,
   };
 }
 
