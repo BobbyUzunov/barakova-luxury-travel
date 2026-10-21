@@ -897,6 +897,12 @@ h2 {
   .process-steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  /* Override global card min-heights only inside this band. */
+  .services-process-band .lux-card,
+  .services-process-band .step-card {
+    min-height: auto;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -904,81 +910,21 @@ h2 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .services-process-band {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    height: 100svh;
-    height: 100dvh;
-    min-height: 100svh;
-    min-height: 100dvh;
-  }
-
+  /* Content-sized band: do not force both sections into one viewport. */
   .services-process-band > .section-shell {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.85rem;
-    height: 100%;
-    min-height: 0;
-    overflow: hidden;
-    padding-block: 1.15rem;
-  }
-
-  .services-process-band .section-heading h2 {
-    margin-top: 0.4rem;
-    font-size: clamp(1.55rem, 2.4vw, 2.15rem);
-  }
-
-  .services-process-band .section-heading span {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    line-height: 1.45;
+    padding-block: 4rem;
   }
 
   .services-process-band .services-grid,
   .services-process-band .process-steps {
-    flex: 1;
-    grid-auto-rows: 1fr;
-    align-content: stretch;
-    gap: 0.7rem;
-    margin-top: 0;
-    min-height: 0;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
   }
 
+  /* Equal height only within a row; rows size to their content. */
   .services-process-band .lux-card,
   .services-process-band .step-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 0;
-    padding: 0.85rem 0.95rem;
-  }
-
-  .services-process-band .card-number {
-    font-size: 1.35rem;
-  }
-
-  .services-process-band .lux-card h3 {
-    margin-top: 0.5rem;
-    font-size: 1rem;
-  }
-
-  .services-process-band .lux-card p {
-    margin-top: 0.35rem;
-    font-size: 0.88rem;
-    line-height: 1.45;
-  }
-
-  .services-process-band .step-card div {
-    width: 2.2rem;
-    height: 2.2rem;
-    font-size: 0.92rem;
-  }
-
-  .services-process-band .step-card h3 {
-    margin-top: 0.65rem;
-    font-size: 1rem;
-    line-height: 1.28;
+    min-height: auto;
   }
 }
 
@@ -2689,21 +2635,17 @@ h2 {
   }
 
   .services-process-band > .section-shell {
-    padding-block: 1.15rem;
+    padding-block: 4.5rem;
     padding-inline: 3rem;
   }
 
   .services-process-band .lux-card,
   .services-process-band .step-card {
-    min-height: 0;
+    min-height: auto;
   }
 
   .section-heading h2 {
     font-size: clamp(2rem, 9vw, 4.55rem);
-  }
-
-  .services-process-band .section-heading h2 {
-    font-size: clamp(1.55rem, 2.4vw, 2.15rem);
   }
 
   .hero-section {
