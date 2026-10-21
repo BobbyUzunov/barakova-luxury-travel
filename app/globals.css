@@ -986,9 +986,13 @@ h2 {
 }
 
 .step-card {
-  min-height: 10.5rem;
-  border-radius: 1.45rem;
-  padding: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.95rem;
+  min-height: auto;
+  border-radius: 1.25rem;
+  padding: 1rem 1.2rem;
   transition:
     transform 220ms ease,
     border-color 220ms ease;
@@ -1001,8 +1005,9 @@ h2 {
 
 .step-card div {
   display: grid;
-  width: 2.85rem;
-  height: 2.85rem;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
   place-items: center;
   border: 1px solid rgba(200, 169, 106, 0.42);
   border-radius: 999px;
@@ -1012,11 +1017,13 @@ h2 {
 }
 
 .step-card h3 {
-  margin-top: 1.35rem;
+  margin-top: 0;
+  flex: 1;
+  min-width: 0;
   color: var(--charcoal);
-  font-size: 1.16rem;
+  font-size: 1.08rem;
   font-weight: 800;
-  line-height: 1.38;
+  line-height: 1.35;
 }
 
 .destination-card {
@@ -2468,10 +2475,6 @@ h2 {
   .trust-card {
     min-height: 14rem;
     padding: 1.45rem;
-  }
-
-  .step-card {
-    min-height: 12rem;
   }
 
   .destination-media {
