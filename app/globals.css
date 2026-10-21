@@ -3499,7 +3499,7 @@ h2 {
   bottom: var(--mobile-sticky-bottom);
   z-index: 70;
   width: fit-content;
-  max-width: min(24rem, calc(100vw - 2rem - var(--safe-left) - var(--safe-right)));
+  max-width: min(28.5rem, calc(100vw - 2rem - var(--safe-left) - var(--safe-right)));
   pointer-events: none;
 }
 
@@ -3638,8 +3638,8 @@ h2 {
   z-index: 2;
   display: flex;
   flex-direction: column;
-  width: min(24rem, calc(100vw - 2rem - var(--safe-left) - var(--safe-right)));
-  max-height: min(38rem, calc(100svh - 7rem - var(--safe-top) - var(--safe-bottom)));
+  width: min(27.5rem, calc(100vw - 2rem - var(--safe-left) - var(--safe-right)));
+  max-height: calc(100svh - 5.5rem - var(--safe-top) - var(--safe-bottom));
   border: 1px solid rgba(122, 102, 82, 0.16);
   border-radius: 1.35rem;
   background:
@@ -3669,40 +3669,43 @@ h2 {
 .inquiry-agent-header {
   display: flex;
   flex-shrink: 0;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1rem 0.75rem;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
   border-bottom: 1px solid rgba(122, 102, 82, 0.12);
+}
+
+.inquiry-agent-header-copy {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .inquiry-agent-eyebrow {
   margin: 0;
   color: var(--soft-brown);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  line-height: 1.35;
 }
 
 .inquiry-agent-title {
-  margin: 0.2rem 0 0;
-  font-size: 1.1rem;
-  line-height: 1.3;
+  margin: 0.15rem 0 0;
+  font-size: 1.02rem;
+  line-height: 1.25;
 }
 
 .inquiry-agent-subtitle {
-  margin: 0.35rem 0 0;
-  color: rgba(45, 42, 38, 0.72);
-  font-size: 0.86rem;
-  line-height: 1.5;
+  display: none;
 }
 
 .inquiry-agent-header-actions {
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
 
 .inquiry-agent-new-chat {
@@ -3818,6 +3821,14 @@ h2 {
   line-height: 1.5;
 }
 
+.inquiry-agent-messages-wrap {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .inquiry-agent-messages {
   display: flex;
   flex: 1 1 auto;
@@ -3825,7 +3836,30 @@ h2 {
   gap: 0.75rem;
   min-height: 0;
   padding: 0.9rem 1rem;
+  overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: auto;
+}
+
+.inquiry-agent-jump-latest {
+  position: absolute;
+  left: 50%;
+  bottom: 0.65rem;
+  z-index: 2;
+  transform: translateX(-50%);
+  max-width: calc(100% - 1.5rem);
+  padding: 0.45rem 0.85rem;
+  border: 1px solid rgba(122, 102, 82, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 252, 247, 0.96);
+  color: var(--soft-brown);
+  box-shadow: 0 10px 28px rgba(45, 42, 38, 0.14);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  touch-action: manipulation;
 }
 
 .inquiry-agent-message {
@@ -3921,10 +3955,35 @@ h2 {
 @media (min-width: 768px) {
   .inquiry-agent-shell {
     bottom: 1.5rem;
+    max-width: min(
+      28.5rem,
+      calc(100vw - 2.5rem - var(--safe-left) - var(--safe-right))
+    );
   }
 
   .inquiry-agent-panel {
-    max-height: min(36rem, calc(100svh - 3.5rem - var(--safe-top) - var(--safe-bottom)));
+    width: min(
+      28rem,
+      calc(100vw - 2.5rem - var(--safe-left) - var(--safe-right))
+    );
+    /* Use available viewport height; avoid a hard 36rem ceiling on short screens. */
+    height: min(
+      48rem,
+      calc(100svh - 3.25rem - var(--safe-top) - var(--safe-bottom))
+    );
+    max-height: calc(100svh - 3.25rem - var(--safe-top) - var(--safe-bottom));
+  }
+
+  .inquiry-agent-form {
+    padding-bottom: 0.7rem;
+  }
+
+  .inquiry-agent-note {
+    padding-bottom: 0.25rem;
+  }
+
+  .inquiry-agent-disclaimer {
+    padding-bottom: 0.8rem;
   }
 }
 
@@ -4003,23 +4062,23 @@ h2 {
   }
 
   .inquiry-agent-header {
-    gap: 0.65rem;
-    padding: 0.85rem 0.85rem 0.65rem;
-  }
-
-  .inquiry-agent-subtitle {
-    display: none;
+    gap: 0.55rem;
+    padding: 0.7rem 0.85rem;
   }
 
   .inquiry-agent-title {
-    font-size: 1rem;
+    font-size: 0.98rem;
   }
 
   .inquiry-agent-messages {
     min-height: 0;
     padding: 0.75rem 0.85rem;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
+  }
+
+  .inquiry-agent-jump-latest {
+    bottom: 0.55rem;
+    font-size: 0.74rem;
   }
 
   .inquiry-agent-message {

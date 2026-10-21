@@ -616,6 +616,7 @@ export const contentBg = {
     handoffCopySummary: "Копирай резюмето",
     handoffCopyDone: "Копирано",
     newChat: "Нов разговор",
+    scrollToLatest: "Към последните съобщения",
     error: "Възникна проблем. Моля, опитайте отново.",
     poweredNote:
       "Честите въпроси получават бърз отговор; по-сложните — с AI помощ.",

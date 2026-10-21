@@ -100,14 +100,18 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
   const panelRef = useRef<HTMLElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const requestIdRef = useRef(0);
+  const stickToBottomRef = useRef(true);
+  const pendingOpenScrollRef = useRef<"top" | "bottom" | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [handoffPreviewOpen, setHandoffPreviewOpen] = useState(false);
   const [handoffStorageError, setHandoffStorageError] = useState(false);
   const [handoffCopyDone, setHandoffCopyDone] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [showJumpToLatest, setShowJumpToLatest] = useState(false);
   const handoffUseButtonRef = useRef<HTMLButtonElement>(null);
   const [draft, setDraft] = useState<LocalChatDraft | null>(null);
 
@@ -210,11 +214,93 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
     };
   }, [isOpen]);
 
+  const isFreshConversation =
+    messages.length === 1 && messages[0]?.id === "welcome";
   const messagesSignature = `${messages.length}:${messages.at(-1)?.id ?? ""}:${suggestContact}`;
 
+  const syncJumpVisibilityFromScroll = () => {
+    const container = messagesRef.current;
+    if (!container) {
+      setShowJumpToLatest(false);
+      return;
+    }
+
+    const distanceFromBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight;
+    const nearBottom = distanceFromBottom <= 72;
+    stickToBottomRef.current = nearBottom;
+    setShowJumpToLatest(
+      !nearBottom && container.scrollHeight > container.clientHeight + 8,
+    );
+  };
+
+  const scrollMessagesContainer = (
+    position: "top" | "bottom",
+    behavior: ScrollBehavior = "auto",
+  ) => {
+    const container = messagesRef.current;
+    if (!container) {
+      return;
+    }
+
+    const top = position === "top" ? 0 : container.scrollHeight;
+    container.scrollTo({ top, behavior });
+    stickToBottomRef.current = true;
+  };
+
+  const openPanel = () => {
+    const sessionMessages =
+      draft && draft.locale === locale
+        ? draft.messages
+        : (getChatSessionSnapshot(locale)?.messages ?? [
+            createWelcomeMessage(copy.welcome),
+          ]);
+    const fresh =
+      sessionMessages.length === 1 && sessionMessages[0]?.id === "welcome";
+    pendingOpenScrollRef.current = fresh ? "top" : "bottom";
+    stickToBottomRef.current = !fresh;
+    setShowJumpToLatest(false);
+    setIsOpen(true);
+  };
+
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [messagesSignature, isSending]);
+    if (!isOpen || !pendingOpenScrollRef.current) {
+      return;
+    }
+
+    const target = pendingOpenScrollRef.current;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const delayMs = prefersReducedMotion ? 0 : 440;
+
+    const timeoutId = window.setTimeout(() => {
+      scrollMessagesContainer(target, "auto");
+      pendingOpenScrollRef.current = null;
+    }, delayMs);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen || pendingOpenScrollRef.current) {
+      return;
+    }
+
+    if (isFreshConversation) {
+      scrollMessagesContainer("top", "auto");
+      return;
+    }
+
+    if (!stickToBottomRef.current) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    scrollMessagesContainer("bottom", prefersReducedMotion ? "auto" : "smooth");
+  }, [isFreshConversation, isOpen, isSending, messagesSignature]);
 
   const updateDraft = (next: {
     messages: ChatMessage[];
@@ -241,6 +327,9 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
     setHandoffPreviewOpen(false);
     setHandoffStorageError(false);
     setHandoffCopyDone(false);
+    stickToBottomRef.current = true;
+    pendingOpenScrollRef.current = null;
+    setShowJumpToLatest(false);
     const nextMessages = [createWelcomeMessage(copy.welcome)];
     const nextProfile = createEmptyTravelProfile(locale);
     clearChatSession();
@@ -254,6 +343,9 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
       messages: nextMessages,
       profile: nextProfile,
       suggestContact: false,
+    });
+    window.requestAnimationFrame(() => {
+      scrollMessagesContainer("top", "auto");
     });
   };
 
@@ -458,7 +550,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
           aria-expanded={isOpen}
           aria-label={`${copy.launcherLabel}. ${copy.launcherByline}`}
           className={`inquiry-agent-launcher${isOpen ? " is-chat-open" : ""}`}
-          onClick={() => setIsOpen(true)}
+          onClick={openPanel}
           ref={launcherRef}
           type="button"
         >
@@ -501,7 +593,7 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
           role={isOpen ? "dialog" : undefined}
         >
           <header className="inquiry-agent-header">
-            <div>
+            <div className="inquiry-agent-header-copy">
               <p className="inquiry-agent-eyebrow">
                 <span className="inquiry-agent-ai-badge">{copy.launcherShortLabel}</span>
                 {content.brand.name}
@@ -509,7 +601,6 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
               <h2 className="inquiry-agent-title" id={`${panelId}-title`}>
                 {copy.title}
               </h2>
-              <p className="inquiry-agent-subtitle">{copy.subtitle}</p>
             </div>
             <div className="inquiry-agent-header-actions">
               <button
@@ -598,33 +689,61 @@ export function InquiryAgent({ locale }: InquiryAgentProps) {
             </div>
           ) : (
             <>
-              <div className="inquiry-agent-messages" role="log" aria-live="polite">
-                {messages.map((message) => (
-                  <article
-                    className={`inquiry-agent-message inquiry-agent-message--${message.role}`}
-                    key={message.id}
+              <div className="inquiry-agent-messages-wrap">
+                <div
+                  className="inquiry-agent-messages"
+                  onScroll={syncJumpVisibilityFromScroll}
+                  ref={messagesRef}
+                  role="log"
+                  aria-live="polite"
+                >
+                  {messages.map((message) => (
+                    <article
+                      className={`inquiry-agent-message inquiry-agent-message--${message.role}`}
+                      key={message.id}
+                    >
+                      <p>{message.content}</p>
+                      {message.role === "assistant" &&
+                      message.source &&
+                      message.id !== "welcome" ? (
+                        <span className="inquiry-agent-source">
+                          {message.source === "faq"
+                            ? copy.sourceLabels.faq
+                            : copy.sourceLabels.ai}
+                        </span>
+                      ) : null}
+                    </article>
+                  ))}
+                  {isSending ? (
+                    <article className="inquiry-agent-message inquiry-agent-message--assistant inquiry-agent-message--typing">
+                      <p>{copy.sending}</p>
+                    </article>
+                  ) : null}
+                  {suggestContact ? (
+                    <div className="inquiry-agent-contact-suggest">
+                      <p>{copy.contactSuggest}</p>
+                    </div>
+                  ) : null}
+                  <div ref={messagesEndRef} />
+                </div>
+                {showJumpToLatest ? (
+                  <button
+                    className="inquiry-agent-jump-latest"
+                    onClick={() => {
+                      const prefersReducedMotion = window.matchMedia(
+                        "(prefers-reduced-motion: reduce)",
+                      ).matches;
+                      scrollMessagesContainer(
+                        "bottom",
+                        prefersReducedMotion ? "auto" : "smooth",
+                      );
+                      setShowJumpToLatest(false);
+                    }}
+                    type="button"
                   >
-                    <p>{message.content}</p>
-                    {message.role === "assistant" && message.source ? (
-                      <span className="inquiry-agent-source">
-                        {message.source === "faq"
-                          ? copy.sourceLabels.faq
-                          : copy.sourceLabels.ai}
-                      </span>
-                    ) : null}
-                  </article>
-                ))}
-                {isSending ? (
-                  <article className="inquiry-agent-message inquiry-agent-message--assistant inquiry-agent-message--typing">
-                    <p>{copy.sending}</p>
-                  </article>
+                    {copy.scrollToLatest}
+                  </button>
                 ) : null}
-                {suggestContact ? (
-                  <div className="inquiry-agent-contact-suggest">
-                    <p>{copy.contactSuggest}</p>
-                  </div>
-                ) : null}
-                <div ref={messagesEndRef} />
               </div>
 
               <form className="inquiry-agent-form" onSubmit={handleSubmit}>

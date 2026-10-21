@@ -617,6 +617,7 @@ export const contentEn = {
     handoffCopySummary: "Copy summary",
     handoffCopyDone: "Copied",
     newChat: "New conversation",
+    scrollToLatest: "Jump to latest messages",
     error: "Something went wrong. Please try again.",
     poweredNote:
       "Common questions are answered instantly; more complex ones use AI assistance.",

@@ -131,6 +131,7 @@ export type SiteContent = {
     handoffCopySummary: string;
     handoffCopyDone: string;
     newChat: string;
+    scrollToLatest: string;
     error: string;
     poweredNote: string;
     disclaimer: string;
