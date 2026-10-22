@@ -895,9 +895,12 @@ h2 {
 }
 
 .process-steps {
+  --process-marker-size: 2.5rem;
+  --process-gap: 1.75rem;
+  --process-line: rgba(200, 169, 106, 0.42);
   position: relative;
   display: grid;
-  gap: 1.75rem;
+  gap: var(--process-gap);
   margin: 2.75rem 0 0;
   padding: 0;
   list-style: none;
@@ -906,7 +909,7 @@ h2 {
 .process-step {
   position: relative;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: var(--process-marker-size) minmax(0, 1fr);
   align-items: start;
   column-gap: 1rem;
   row-gap: 0.35rem;
@@ -919,9 +922,10 @@ h2 {
   position: relative;
   z-index: 1;
   display: grid;
+  box-sizing: border-box;
   flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: var(--process-marker-size);
+  height: var(--process-marker-size);
   place-items: center;
   border: 1px solid rgba(200, 169, 106, 0.45);
   border-radius: 999px;
@@ -937,7 +941,7 @@ h2 {
 
 .process-step-copy {
   min-width: 0;
-  padding-top: 0.2rem;
+  padding-top: 0.35rem;
 }
 
 .process-step-copy h3 {
@@ -955,16 +959,17 @@ h2 {
   line-height: 1.65;
 }
 
-/* Mobile: vertical route with a soft spine behind markers. */
+/* Mobile: vertical spine through marker centers. */
 .process-steps::before {
   content: "";
   position: absolute;
-  top: 1.25rem;
-  bottom: 1.25rem;
-  left: 1.2rem;
+  top: calc(var(--process-marker-size) / 2);
+  bottom: calc(var(--process-marker-size) / 2);
+  left: calc(var(--process-marker-size) / 2);
   z-index: 0;
   width: 1px;
-  background: rgba(200, 169, 106, 0.38);
+  transform: translateX(-50%);
+  background: var(--process-line);
   pointer-events: none;
 }
 
@@ -974,8 +979,9 @@ h2 {
   }
 
   .process-steps {
+    --process-gap: 1.75rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 1.75rem;
+    column-gap: var(--process-gap);
     row-gap: 2.25rem;
   }
 
@@ -1009,21 +1015,27 @@ h2 {
 /* Four equal journey columns once the longest BG/EN copy fits. */
 @media (min-width: 1100px) {
   .process-steps {
+    --process-gap: 1.5rem;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: 1.5rem;
+    column-gap: var(--process-gap);
     row-gap: 0;
   }
 
-  /* Soft gold path through the centers of the four markers. */
-  .process-steps::before {
-    display: block;
-    top: 1.25rem;
-    bottom: auto;
-    left: calc(12.5% - 0.05rem);
-    right: calc(12.5% - 0.05rem);
-    width: auto;
+  /*
+    Draw the path from marker center to next marker center.
+    Circles sit above the line with an opaque fill, so the route reads continuous.
+  */
+  .process-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--process-marker-size) / 2);
+    left: calc(var(--process-marker-size) / 2);
+    z-index: 0;
+    width: calc(100% + var(--process-gap));
     height: 1px;
-    background: rgba(200, 169, 106, 0.42);
+    transform: translateY(-50%);
+    background: var(--process-line);
+    pointer-events: none;
   }
 }
 
@@ -1037,15 +1049,12 @@ h2 {
     padding-block: 4rem;
   }
 
-  .services-process-band .services-grid,
-  .services-process-band .process-steps {
+  .services-process-band .services-grid {
     gap: 1.25rem;
     margin-top: 2.5rem;
   }
 
   .services-process-band .process-steps {
-    gap: unset;
-    column-gap: 1.5rem;
     margin-top: 2.75rem;
   }
 
