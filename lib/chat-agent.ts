@@ -38,7 +38,7 @@ function buildKnowledgeContext(locale: Locale) {
     .map((cruise) => `- ${cruise.name}: ${cruise.description}`)
     .join("\n");
   const steps = content.steps
-    .map((step, index) => `${index + 1}. ${step}`)
+    .map((step, index) => `${index + 1}. ${step.title}: ${step.description}`)
     .join("\n");
 
   return [

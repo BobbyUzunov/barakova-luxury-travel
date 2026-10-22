@@ -64,16 +64,32 @@ export const contentEn = {
     },
   ],
   steps: [
-    "You share your dream destination",
-    "We clarify style, budget, and preferences",
-    "You receive selected proposals",
-    "You choose the most suitable vacation with confidence",
+    {
+      title: "Share your vision",
+      description:
+        "Tell us where you would love to go and how you want to feel.",
+    },
+    {
+      title: "Refine the details",
+      description:
+        "We discuss your dates, budget and the little things that matter to you.",
+    },
+    {
+      title: "Explore your options",
+      description:
+        "Discover carefully selected options shaped around your preferences.",
+    },
+    {
+      title: "Choose with confidence",
+      description:
+        "We help you compare the possibilities and clarify the next steps.",
+    },
   ],
   processSection: {
-    eyebrow: "Process",
-    title: "How the consultation works",
+    eyebrow: "Your Journey",
+    title: "From inspiration to your next journey",
     description:
-      "A calm, thoughtful and clear process where every detail is shaped around your preferences, budget and sense of comfort.",
+      "Your wishes are our starting point. Together, we refine the details and find the right direction.",
   },
   destinationsSection: {
     eyebrow: "Destinations",

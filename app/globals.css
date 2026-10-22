@@ -883,56 +883,89 @@ h2 {
   margin-top: 3rem;
 }
 
+/* Process journey: numbered steps without heavy cards. */
+.process-section-heading h2 {
+  font-size: clamp(1.85rem, 4.2vw, 2.65rem);
+  line-height: 1.12;
+}
+
+.process-section-heading span {
+  max-width: 38rem;
+  color: rgba(45, 42, 38, 0.72);
+}
+
 .process-steps {
+  position: relative;
   display: grid;
-  gap: 1.25rem;
-  margin-top: 3rem;
+  gap: 1.75rem;
+  margin: 2.75rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* Process cards: stacked number + title; square on tablet/desktop. */
-.process-section .step-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0;
-  min-height: auto;
-  border-radius: 1.25rem;
-  padding: 1.25rem;
-  transition:
-    transform 220ms ease,
-    box-shadow 220ms ease,
-    border-color 220ms ease,
-    background 220ms ease;
+.process-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  column-gap: 1rem;
+  row-gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  cursor: default;
 }
 
-.process-section .step-card:hover {
-  border-color: rgba(200, 169, 106, 0.62);
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 30px 86px rgba(45, 42, 38, 0.12);
-  transform: translateY(-6px);
-}
-
-.process-section .step-card div {
+.process-step-marker {
+  position: relative;
+  z-index: 1;
   display: grid;
   flex-shrink: 0;
   width: 2.5rem;
   height: 2.5rem;
   place-items: center;
-  border: 1px solid rgba(200, 169, 106, 0.42);
+  border: 1px solid rgba(200, 169, 106, 0.45);
   border-radius: 999px;
-  background: var(--white);
+  background: var(--warm-beige);
   color: var(--soft-brown);
-  font-weight: 800;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
 }
 
-.process-section .step-card h3 {
-  margin-top: 1.15rem;
+.process-step-copy {
+  min-width: 0;
+  padding-top: 0.2rem;
+}
+
+.process-step-copy h3 {
+  margin: 0;
   color: var(--charcoal);
-  font-size: 1.12rem;
+  font-size: 1.05rem;
   font-weight: 800;
   line-height: 1.35;
-  overflow-wrap: break-word;
+}
+
+.process-step-copy p {
+  margin: 0.45rem 0 0;
+  color: rgba(45, 42, 38, 0.74);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+/* Mobile: vertical route with a soft spine behind markers. */
+.process-steps::before {
+  content: "";
+  position: absolute;
+  top: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.2rem;
+  z-index: 0;
+  width: 1px;
+  background: rgba(200, 169, 106, 0.38);
+  pointer-events: none;
 }
 
 @media (min-width: 640px) {
@@ -940,29 +973,57 @@ h2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .process-section .process-steps {
+  .process-steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.75rem;
+    row-gap: 2.25rem;
   }
 
-  /* Prefer square cards; grow when zoom/text needs more height. */
-  .process-section .step-card {
-    aspect-ratio: 1 / 1;
-    min-height: max-content;
-    padding: 1.35rem;
+  .process-steps::before {
+    display: none;
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .process-step-copy {
+    width: 100%;
+    padding-top: 0;
+    margin-top: 1rem;
+  }
+
+  .process-step-copy h3 {
+    min-height: 2.7em;
   }
 
   /* Override global card min-heights only inside this band. */
-  .services-process-band .lux-card,
-  .services-process-band .step-card {
+  .services-process-band .lux-card {
     min-height: max-content;
   }
 }
 
-/* Four equal process cards once the longest BG/EN titles fit comfortably. */
+/* Four equal journey columns once the longest BG/EN copy fits. */
 @media (min-width: 1100px) {
-  .process-section .process-steps {
+  .process-steps {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.25rem;
+    column-gap: 1.5rem;
+    row-gap: 0;
+  }
+
+  /* Soft gold path through the centers of the four markers. */
+  .process-steps::before {
+    display: block;
+    top: 1.25rem;
+    bottom: auto;
+    left: calc(12.5% - 0.05rem);
+    right: calc(12.5% - 0.05rem);
+    width: auto;
+    height: 1px;
+    background: rgba(200, 169, 106, 0.42);
   }
 }
 
@@ -982,15 +1043,18 @@ h2 {
     margin-top: 2.5rem;
   }
 
-  /* Equal height only within a row; rows size to their content. */
-  .services-process-band .lux-card,
-  .services-process-band .step-card {
+  .services-process-band .process-steps {
+    gap: unset;
+    column-gap: 1.5rem;
+    margin-top: 2.75rem;
+  }
+
+  .services-process-band .lux-card {
     min-height: max-content;
   }
 }
 
 .lux-card,
-.step-card,
 .trust-card {
   border: 1px solid rgba(200, 169, 106, 0.24);
   background: rgba(255, 255, 255, 0.68);
@@ -1044,12 +1108,6 @@ h2 {
   margin-top: 0.8rem;
   color: rgba(45, 42, 38, 0.72);
   line-height: 1.72;
-}
-
-/* Base step-card tokens kept for shared border/shadow with lux-card;
-   layout lives under .process-section above. */
-.step-card {
-  min-height: auto;
 }
 
 .destination-card {
@@ -2673,13 +2731,16 @@ h2 {
     padding-inline: 3rem;
   }
 
-  .services-process-band .lux-card,
-  .services-process-band .step-card {
+  .services-process-band .lux-card {
     min-height: max-content;
   }
 
   .section-heading h2 {
     font-size: clamp(2rem, 9vw, 4.55rem);
+  }
+
+  .process-section-heading h2 {
+    font-size: clamp(2rem, 3.4vw, 2.85rem);
   }
 
   .hero-section {

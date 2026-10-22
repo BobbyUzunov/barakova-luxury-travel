@@ -28,7 +28,7 @@ function buildStaticFaqs(locale: Locale): FaqEntry[] {
     .map((service) => `• ${service.title}: ${service.description}`)
     .join("\n");
   const stepsList = content.steps
-    .map((step, index) => `${index + 1}. ${step}`)
+    .map((step, index) => `${index + 1}. ${step.title}: ${step.description}`)
     .join("\n");
   const destinationsList = content.destinations
     .map((destination) => destination.name)

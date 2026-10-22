@@ -64,7 +64,10 @@ export type SiteContent = {
   servicesSection: SectionIntro;
   services: TitledDescription[];
   processSection: SectionIntro;
-  steps: string[];
+  steps: Array<{
+    title: string;
+    description: string;
+  }>;
   destinationsSection: SectionIntro;
   destinations: Destination[];
   cruisesSection: SectionIntro;
